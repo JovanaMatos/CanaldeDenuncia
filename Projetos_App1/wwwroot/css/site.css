@@ -19,9 +19,34 @@ html {
 
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-body {
-    margin-bottom: 60px;
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative; 
+    height: 100px;
+    box-shadow: 0 0 20px rgb(202, 198, 198);
+}
+
+
+.config-language {
+    position: absolute;
+    right: 10px; 
+    margin-right: 10px;  
    
+}
+
+.homeTitle {
+    margin-top: 50px;
+    color: rgba(26,51,94,255);
+    text-align:center;
+}
+
+h1{
+    font-family: "Roboto", sans-serif;
+    font-size: 50px;
+    font-weight: 700;
 }
 
 .homeContainer{
@@ -29,13 +54,14 @@ body {
     justify-content: center;
     text-align: center;
     align-content: center;
-    margin-top: 50px;
+    padding-top:10px
+   
 }
 
 
 
-.bnt-home {
-    width: 500px;
+.bnt-home1 {
+    width: 600px;
     background-color: #40bd6b;
     border: none;
     color: #fff;
@@ -43,22 +69,26 @@ body {
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
     border-radius: 8px;
+    font-family: "Roboto", sans-serif;
     /*ver sombreamento*/
+}
+.bnt-home2{
+    margin-top: 50px;
+}
+
+.bnt-home1:hover {
+    background: #180f4a;
+
 }
 
 
 .clientLogo{
-    width: 700px;
-    height: 600px;
-    padding-right: 50px;
+    width: 600px;
+    height: 400px;
+    padding-right:80px;
+    margin-right: 20px;
+
 }
 
-.homeTitle {
-    color: rgba(26,51,94,255);
-    font-family: "Roboto", sans-serif;
-    font-size:50px;
-    font-weight: 700;
-}
