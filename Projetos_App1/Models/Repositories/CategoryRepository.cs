@@ -1,4 +1,5 @@
 ﻿using Projetos_App1.Models.Repositories.Interfaces;
+using System.ComponentModel.Design;
 
 namespace Projetos_App1.Models.Repositories
 {
@@ -14,13 +15,24 @@ namespace Projetos_App1.Models.Repositories
         // retornando uma lista de category para tipo classe Category
         public IEnumerable<Category> Categories { get => _context.Categories; }
 
-      
-        Category GetCategory(int id)
-        {
-            var a = _context.CompaniesCategories;
-            var x = _context.Categories.SelectMany(c => c.Categories).Join<.
 
-            throw new NotImplementedException();
+        public List <Category> GetCategory(int companyId)
+        {
+           
+            var companiesCategories = _context.CompaniesCategories;
+
+            
+            var categories = _context.Categories
+
+                .Join(companiesCategories,
+                      c => c.CategoryId,  
+                      cc => cc.CategoryId, 
+                      (c, cc) => new { c, cc }) 
+                .Where(result => result.cc.CompaniesId == companyId) 
+                .Select(result => result.c) 
+                .ToList(); 
+
+            return categories;
         }
     }
 }

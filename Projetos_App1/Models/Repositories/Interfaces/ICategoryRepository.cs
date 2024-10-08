@@ -4,6 +4,6 @@
     {
         IEnumerable<Category> Categories { get; }
 
-        Category GetCategory(string id);
+       List <Category> GetCategory(int id);
     }
 }
