@@ -1,0 +1,101 @@
+﻿@model IEnumerable<Projetos_App1.Models.Complaint>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PassWord)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintSubject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintResponse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintStartDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintCloseDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompaniesCategory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyRelation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrentResponsible)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ShippingMethods)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassWord)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintSubject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintResponse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintStartDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintCloseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompaniesCategory.CompaniesCategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyRelation.CompanyRelationId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ComplaintStatus.ComplaintStatusId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrentResponsible.ResponsiblesId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShippingMethods.ShippingMethodsId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ComplaintId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ComplaintId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ComplaintId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

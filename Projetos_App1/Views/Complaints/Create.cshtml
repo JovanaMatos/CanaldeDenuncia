@@ -1,0 +1,88 @@
+﻿@model Projetos_App1.Models.Complaint
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Complaint</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ComplaintId" class="control-label"></label>
+                <input asp-for="ComplaintId" class="form-control" />
+                <span asp-validation-for="ComplaintId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PassWord" class="control-label"></label>
+                <input asp-for="PassWord" class="form-control" />
+                <span asp-validation-for="PassWord" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="ComplaintType" /> @Html.DisplayNameFor(model => model.ComplaintType)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintSubject" class="control-label"></label>
+                <input asp-for="ComplaintSubject" class="form-control" />
+                <span asp-validation-for="ComplaintSubject" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintDescription" class="control-label"></label>
+                <input asp-for="ComplaintDescription" class="form-control" />
+                <span asp-validation-for="ComplaintDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintResponse" class="control-label"></label>
+                <input asp-for="ComplaintResponse" class="form-control" />
+                <span asp-validation-for="ComplaintResponse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintStartDate" class="control-label"></label>
+                <input asp-for="ComplaintStartDate" class="form-control" />
+                <span asp-validation-for="ComplaintStartDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintCloseDate" class="control-label"></label>
+                <input asp-for="ComplaintCloseDate" class="form-control" />
+                <span asp-validation-for="ComplaintCloseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompaniesCategoryId" class="control-label"></label>
+                <select asp-for="CompaniesCategoryId" class ="form-control" asp-items="ViewBag.CompaniesCategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ShippingMethodsId" class="control-label"></label>
+                <select asp-for="ShippingMethodsId" class ="form-control" asp-items="ViewBag.ShippingMethodsId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="ComplaintStatusId" class="control-label"></label>
+                <select asp-for="ComplaintStatusId" class ="form-control" asp-items="ViewBag.ComplaintStatusId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CompanyRelationId" class="control-label"></label>
+                <select asp-for="CompanyRelationId" class ="form-control" asp-items="ViewBag.CompanyRelationId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentResponsibleId" class="control-label"></label>
+                <select asp-for="CurrentResponsibleId" class ="form-control" asp-items="ViewBag.CurrentResponsibleId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
