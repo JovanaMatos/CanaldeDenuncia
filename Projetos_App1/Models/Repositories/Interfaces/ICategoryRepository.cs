@@ -3,5 +3,7 @@
     public interface ICategoryRepository
     {
         IEnumerable<Category> Categories { get; }
+
+        Category GetCategory(string id);
     }
 }

@@ -12,14 +12,17 @@ namespace Projetos_App1.Models.Repositories
             _context = context;
         }
 
-        public IEnumerable<Complaint> Complaints => _context.Complaints;
+        public IEnumerable<Complaint> Complaints => _context.Complaints;//todos
 
-        public Complaint GetComplaintById(string id)
+        public Complaint GetComplaintById(string id)//especifico
         {
-            return _context.Complaints.Include(cr => cr.CompanyRelation)
-                .Include(cc => cc.CompaniesCategory).Include(a => a.AttachedFiles)
-                .Include(cs => cs.ComplaintStatus).FirstOrDefault(x => x.ComplaintId == id);
-                
+            return _context.Complaints.Include(c => c.CompaniesCategory)
+                                      .Include(c => c.CompanyRelation)
+                                      .Include(c => c.ComplaintStatus)
+                                      .Include(c => c.CurrentResponsible)
+                                      .Include(c => c.ShippingMethods)
+                                      .FirstOrDefault(x => x.ComplaintId == id);
+
         }
     }
 }

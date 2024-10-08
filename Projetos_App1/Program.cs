@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Projetos_App1.Models;
+using Projetos_App1.Models.Repositories;
+using Projetos_App1.Models.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddTransient<IComplaintRepository, ComplaintRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

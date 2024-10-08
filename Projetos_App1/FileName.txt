@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,7 +21,7 @@ namespace Projetos_App1.Controllers
         // GET: Complaints
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Complaints;
+            var appDbContext = _context.Complaints.Include(c => c.CompaniesCategory).Include(c => c.CompanyRelation).Include(c => c.ComplaintStatus).Include(c => c.CurrentResponsible).Include(c => c.ShippingMethods);
             return View(await appDbContext.ToListAsync());
         }
 

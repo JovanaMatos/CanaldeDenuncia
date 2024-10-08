@@ -15,6 +15,7 @@ public partial class AppDbContext : DbContext
     {
     }
 
+    
     public virtual DbSet<AttachedFile> AttachedFiles { get; set; }
 
     public virtual DbSet<Category> Categories { get; set; }
