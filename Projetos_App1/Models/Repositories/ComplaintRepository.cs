@@ -16,6 +16,8 @@ namespace Projetos_App1.Models.Repositories
 
         public Complaint GetComplaintById(string id)//especifico
         {
+
+
             return _context.Complaints.Include(c => c.CompaniesCategory)
                                       .Include(c => c.CompanyRelation)
                                       .Include(c => c.ComplaintStatus)

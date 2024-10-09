@@ -1,5 +1,7 @@
 ﻿using Projetos_App1.Models.Repositories.Interfaces;
 using System.ComponentModel.Design;
+using System.Linq;
+using System.Reflection.Metadata;
 
 namespace Projetos_App1.Models.Repositories
 {
@@ -16,23 +18,22 @@ namespace Projetos_App1.Models.Repositories
         public IEnumerable<Category> Categories { get => _context.Categories; }
 
 
-        public List <Category> GetCategory(int companyId)
+        public List<Category> GetCategory()
         {
-           
+            int companyId = 1;
             var companiesCategories = _context.CompaniesCategories;
 
-            
-            var categories = _context.Categories
 
-                .Join(companiesCategories,
-                      c => c.CategoryId,  
-                      cc => cc.CategoryId, 
-                      (c, cc) => new { c, cc }) 
-                .Where(result => result.cc.CompaniesId == companyId) 
-                .Select(result => result.c) 
-                .ToList(); 
+            //ele faz um join onde existe as categorias no companyCategories e depois com a condição de mostrar
+            //apenas onde campanies.id seja igual ao id que vem
+            var queryCategory = _context.Categories.Join(companiesCategories,
+                                                     category => category.CategoryId, compCategory => compCategory.CategoryId,
+                                                     (category, compCategory) => new { category, compCategory })//guardando var e finalizando join
+                                                     .Where(x => x.compCategory.CompaniesId == companyId)
+                                                     .Select(x => x.category)
+                                                     .ToList();
 
-            return categories;
+            return queryCategory;
         }
     }
 }

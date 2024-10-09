@@ -25,15 +25,15 @@
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
     <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="Index">criar </a>
+        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="List">List </a>
     </div>
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="ListCat">Teste</a>
     </div>
 </nav>
 
-@* 
-<form asp-action="Create" method="post">
+
+<form asp-action="CreateComplaint" method="post">
 
     <div class="mb-3">
         <label for="formGroupExampleInput" class="form-label"></label>
@@ -41,15 +41,17 @@
         <span asp-validation-for="@Model.complaint.ComplaintSubject" class="text-danger"></span>
     </div>
 
-    <select  asp-for="@Model.complaint.CompaniesCategory.CompaniesId" class="form-select" aria-label="Default select example">
+    <select asp-for="@Model.complaint.CompaniesCategory.CompaniesId" class="form-select" aria-label="Default select example">
         <option selected>Empresa</option>
 
         @foreach (var item in Model.company)
         {
             <option value="@item.CompaniesId">@item.Name</option>
 
+
         }
     </select>
+
 
     <br />
 
@@ -65,7 +67,7 @@
 
     <div class="mb-3">
         <label for="formGroupExampleInput" class="form-label"></label>
-        <input asp-for="@Model.Whistleblowing.Name" type="text" class="form-control"  placeholder="Nome">
+        <input asp-for="@Model.Whistleblowing.Name" type="text" class="form-control" placeholder="Nome">
     </div>
 
 
@@ -91,7 +93,7 @@
 
     <div class="form-group">
         <label for="exampleFormControlTextarea1"></label>
-        <textarea asp-for="@Model.complaint.ComplaintDescription" class="form-control"  placeholder="Descrição" rows=" 3"></textarea>
+        <textarea asp-for="@Model.complaint.ComplaintDescription" class="form-control" placeholder="Descrição" rows=" 3"></textarea>
     </div>
 
     <br />
@@ -110,4 +112,3 @@
 <section hidden class="text-center">
     <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>
 </section>
- *@

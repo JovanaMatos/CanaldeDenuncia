@@ -11,7 +11,7 @@ namespace Projetos_App1.Models.Repositories
             _context = context;
         }
 
-        public IEnumerable<CompaniesCategory> CompaniesCategory => _context.CompaniesCategories;
+       
 
         public CompaniesCategory GetCompaniesCategory(int companyId)
         {

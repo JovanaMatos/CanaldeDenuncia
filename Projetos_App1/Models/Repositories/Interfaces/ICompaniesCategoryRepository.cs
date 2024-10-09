@@ -2,7 +2,7 @@
 {
     public interface ICompaniesCategoryRepository
     {
-        IEnumerable<CompaniesCategory> CompaniesCategory { get; }
+   
 
         CompaniesCategory GetCompaniesCategory(int id);
     }
