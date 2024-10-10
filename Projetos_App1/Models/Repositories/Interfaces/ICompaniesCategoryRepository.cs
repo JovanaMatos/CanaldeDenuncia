@@ -4,6 +4,6 @@
     {
    
 
-        CompaniesCategory GetCompaniesCategory(int id);
+        int GetCompaniesCategoryById(int companyId, int categoryId);
     }
 }

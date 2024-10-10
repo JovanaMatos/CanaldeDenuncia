@@ -13,10 +13,13 @@ namespace Projetos_App1.Models.Repositories
 
        
 
-        public CompaniesCategory GetCompaniesCategory(int companyId)
+        public int GetCompaniesCategoryById(int companyId, int categoryId)
         {
-            
-            throw new NotImplementedException();
+
+            var companyCategoryId = _context.CompaniesCategories.Where(cc => cc.CompaniesId.Equals(companyId) && cc.CategoryId.Equals(categoryId))
+                                                                 .Select(cc => cc.CompaniesCategoryId)
+                                                                 .FirstOrDefault();
+            return companyCategoryId;
         }
 
      

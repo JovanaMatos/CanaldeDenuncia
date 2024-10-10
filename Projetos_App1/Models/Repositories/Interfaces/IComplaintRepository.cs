@@ -4,6 +4,7 @@
     {
         IEnumerable<Complaint> Complaints { get; }
 
+        void SaveComplaint(Complaint complaint);
         Complaint GetComplaintById(string id);
 
     }

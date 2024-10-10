@@ -14,7 +14,14 @@ namespace Projetos_App1.Models.Repositories
 
         public IEnumerable<Complaint> Complaints => _context.Complaints;//todos
 
-        public Complaint GetComplaintById(string id)//especifico
+
+        public void SaveComplaint(Complaint complaint)
+        {
+            _context.Complaints.Add(complaint); // salvando denuncia em bd
+            _context.SaveChanges();
+        }
+
+        public Complaint GetComplaintById(string id)//buscar por id
         {
 
 

@@ -1,4 +1,4 @@
-﻿@model Projetos_App1.ViewModels.ListComplaintViewModel
+﻿@model Projetos_App1.ViewModels.ComplaintViewModel
 
 
 @{
@@ -21,7 +21,7 @@
     </div>
 
 </div>
-
+@* 
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
     <div class="container-fluid">
@@ -31,20 +31,20 @@
         <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="ListCat">Teste</a>
     </div>
 </nav>
+ *@
 
-
-<form asp-action="CreateComplaint" method="post">
+<form asp-controller="Complaint" asp-action="CreateComplaint" method="post" class="form-horizontal">
 
     <div class="mb-3">
-        <label for="formGroupExampleInput" class="form-label"></label>
-        <input asp-for="@Model.complaint.ComplaintSubject" type="text" class="form-control" id="formGroupExampleInput" placeholder="Assunto">
+
+        <input asp-for="@Model.complaint.ComplaintSubject" type="text" class="form-control" placeholder="Assunto" required>
         <span asp-validation-for="@Model.complaint.ComplaintSubject" class="text-danger"></span>
     </div>
 
-    <select asp-for="@Model.complaint.CompaniesCategory.CompaniesId" class="form-select" aria-label="Default select example">
-        <option selected>Empresa</option>
+    <select asp-for="@Model.companyid" class="form-select"  required>
+        <option value="" selected>Empresa</option>
 
-        @foreach (var item in Model.company)
+        @foreach (var item in Model.listCompany)
         {
             <option value="@item.CompaniesId">@item.Name</option>
 
@@ -55,56 +55,59 @@
 
     <br />
 
-    <select asp-for="@Model.complaint.CompanyRelation" class="form-select" aria-label=".form-select-lg example">
+    <select asp-for="@Model.companyRelationid" class="form-select">
         <option selected>Relação com empresa</option>
-        @foreach (var item in Model.relation)
+        @foreach (var item in Model.listRelation)
         {
             <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
-
         }
     </select>
-
+    <br />
 
     <div class="mb-3">
-        <label for="formGroupExampleInput" class="form-label"></label>
-        <input asp-for="@Model.Whistleblowing.Name" type="text" class="form-control" placeholder="Nome">
+        <input asp-for="@Model.Whistleblowing.Name" type="text" class="form-control" placeholder="Nome" required>
     </div>
-
 
     <div class="row">
         <div class="col">
-            <input asp-for="@Model.Whistleblowing.PhoneNumber" type="text" class="form-control" placeholder="Telemovel(Opcional)">
+            <input asp-for="@Model.Whistleblowing.PhoneNumber" type="tel" class="form-control" placeholder="Telemovel(Opcional)">
         </div>
 
         <div class="col">
-            <input asp-for="@Model.Whistleblowing.Email" type="text" class="form-control" placeholder="Email(Opcional)">
+            <input asp-for="@Model.Whistleblowing.Email" type="email" class="form-control" placeholder="Email(Opcional)">
         </div>
     </div>
     <br />
 
-    <select asp-for="complaint.CompaniesCategory.CategoryId" class="form-select" aria-label="Default select example">
-        <option selected>Categoria</option>
-        @foreach (var item in Model.category)
+    <select asp-for="@Model.categoryid" class="form-select" required>
+        <option value="" selected>Categoria</option>
+        @foreach (var item in Model.listCategory)
         {
             <option value="@item.CategoryId">@item.Categories</option>
 
         }
     </select>
 
-    <div class="form-group">
-        <label for="exampleFormControlTextarea1"></label>
-        <textarea asp-for="@Model.complaint.ComplaintDescription" class="form-control" placeholder="Descrição" rows=" 3"></textarea>
-    </div>
-
-    <br />
+    <br /><br />
 
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary btn-lg" />
+       
+        <textarea asp-for="@Model.complaint.ComplaintDescription" class="form-control" placeholder="Descrição" id= "texto" rows=" 10" required></textarea>
+    </div>
+
+ @*    <br />
+    <input type="file" name="arquivos" multiple> *@
+    <br /> <br />
+
+    <div class="form-group text-center">
+        <button type="submit" value = "CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
     </div>
     <br />
+
+
 
 </form>
-    }
+
 <br />
 <br />
 <br />

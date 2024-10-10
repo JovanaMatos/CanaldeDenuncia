@@ -15,6 +15,7 @@ builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<ICompaniesCategoryRepository, CompaniesCategoryRepository>();
 builder.Services.AddTransient<ICompanyRelationRepository, CompanyRelationRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
+builder.Services.AddTransient<IWhistleblowingRepository, WhistleblowingRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

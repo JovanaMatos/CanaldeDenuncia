@@ -6,7 +6,7 @@ namespace Projetos_App1.Models;
 
 public partial class Whistleblowing
 {
-    
+
     public int WhistleblowingId { get; set; }
 
     [Display(Name = "Nome")]
@@ -25,4 +25,5 @@ public partial class Whistleblowing
     public string ComplaintId { get; set; } = null!;
 
     public virtual Complaint Complaint { get; set; } = null!;
+
 }

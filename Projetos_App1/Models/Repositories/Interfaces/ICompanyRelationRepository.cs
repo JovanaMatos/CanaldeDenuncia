@@ -3,5 +3,10 @@
     public interface ICompanyRelationRepository
     {
         IEnumerable<CompanyRelation> companyRelations { get; }
+
+
+
     }
+
+
 }
