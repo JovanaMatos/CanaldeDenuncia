@@ -16,6 +16,7 @@ builder.Services.AddTransient<ICompaniesCategoryRepository, CompaniesCategoryRep
 builder.Services.AddTransient<ICompanyRelationRepository, CompanyRelationRepository>();
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IWhistleblowingRepository, WhistleblowingRepository>();
+builder.Services.AddTransient<IAttachedFileRepository, AttachedFileRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -39,6 +40,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Complaint}/{action=CreateComplaint}/{id?}");
 
 app.Run();

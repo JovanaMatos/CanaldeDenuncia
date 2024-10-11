@@ -13,11 +13,10 @@ public partial class Complaint
     public bool ComplaintType { get; set; }
 
 
-    [Display(Name = "Assunto")]
+
     [StringLength(100, MinimumLength = 10, ErrorMessage = "O {0} deve ter no minimo {1} e no máximo {2}")]
     public string ComplaintSubject { get; set; } = null!;
 
-    [Display(Name = "Descrição")]
     [MinLength(20, ErrorMessage = "Descrição deve ter no minimo {1} caracteres")]
     public string ComplaintDescription { get; set; } = null!;
 
@@ -28,7 +27,6 @@ public partial class Complaint
     public DateTime? ComplaintCloseDate { get; set; }
 
 
-    [Display(Name = "Categoria | Empresa")]
 
     public int CompaniesCategoryId { get; set; }
 
@@ -36,7 +34,6 @@ public partial class Complaint
 
     public int ComplaintStatusId { get; set; }
 
-    [Display(Name = "Relação com a empresa")]
     public int? CompanyRelationId { get; set; }
 
     public int? CurrentResponsibleId { get; set; }

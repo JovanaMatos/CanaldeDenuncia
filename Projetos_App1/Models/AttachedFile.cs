@@ -9,7 +9,7 @@ public partial class AttachedFile
 
     public string FilesName { get; set; } = null!;
 
-    public int ImgSize { get; set; }
+    public long ImgSize { get; set; }
 
     public string FileType { get; set; } = null!;
 
@@ -20,4 +20,5 @@ public partial class AttachedFile
     public string ComplaintId { get; set; } = null!;
 
     public virtual Complaint Complaint { get; set; } = null!;
+
 }

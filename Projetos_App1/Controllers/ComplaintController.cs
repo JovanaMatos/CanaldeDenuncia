@@ -13,11 +13,12 @@ namespace Projetos_App1.Controllers
         private readonly ICompanyRepository _companyRepository;
         private readonly ICompaniesCategoryRepository _companiesCategoryRepository;
         private readonly IWhistleblowingRepository _whistleblowingRepository;
+        private readonly IAttachedFileRepository _attachedFileRepository;
 
         public ComplaintController(IComplaintRepository complaintRepository,
-              ICategoryRepository categoryRepository, ICompanyRelationRepository companyRelation,
-              ICompanyRepository companyRepository, ICompaniesCategoryRepository companiesCategoryRepository,
-              IWhistleblowingRepository whistleblowingRepository)
+                                   ICategoryRepository categoryRepository, ICompanyRelationRepository companyRelation,
+                                   ICompanyRepository companyRepository, ICompaniesCategoryRepository companiesCategoryRepository,
+                                   IWhistleblowingRepository whistleblowingRepository, IAttachedFileRepository attachedFile)
         {
             _complaintRepository = complaintRepository;
             _categoryRepository = categoryRepository;
@@ -25,6 +26,7 @@ namespace Projetos_App1.Controllers
             _companyRepository = companyRepository;
             _companiesCategoryRepository = companiesCategoryRepository;
             _whistleblowingRepository = whistleblowingRepository;
+            _attachedFileRepository = attachedFile;
         }
 
         [HttpGet]
@@ -33,9 +35,6 @@ namespace Projetos_App1.Controllers
             var companies = _companyRepository.companies;
             var categories = _categoryRepository.GetCategory();
             var relationship = _companyRelationRepository.companyRelations;
-
-
-
 
             var complainVm = new ComplaintViewModel
             {
@@ -49,73 +48,56 @@ namespace Projetos_App1.Controllers
 
         //tratar id
 
-
         [HttpPost]
         public IActionResult CreateComplaint(ComplaintViewModel complaintVm)
-        {
-            if (complaintVm == null)
-            {
-                return View("Error");
-            }
-            var id = "kjsnsjfgfisdcefao123456";
+        {    
+            Complaint complaint = complaintVm.ChangeTocomplaint(complaintVm);
+
+            Random randNum = new Random();
+            var id2 = randNum.Next(1000) ;
             var password = "12osdhuichsuiodhchUIO3456";
+            var id = Convert.ToString(id2);
 
-            Complaint complaint = new Complaint()
+            complaint.ComplaintId = id;
+            complaint.PassWord = password;
+            complaint.ShippingMethodsId = 1;
+            complaint.ComplaintType = true;
+            complaint.ComplaintStartDate = DateTime.Now;
+            complaint.CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintVm.companyid, complaintVm.categoryid);
+            complaint.ComplaintStatusId = 1;
+
+            _complaintRepository.SaveComplaint(complaint);
+
+            if (complaintVm.Name != null)
             {
-                ComplaintId = id,
-                PassWord = password,
-                ShippingMethodsId = 1,
-                ComplaintType = true,
-                ComplaintSubject = complaintVm.complaint.ComplaintSubject,
-                ComplaintDescription = complaintVm.complaint.ComplaintDescription,
-                ComplaintStartDate = DateTime.Now,
-                CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintVm.companyid, complaintVm.categoryid),
-                CompanyRelationId = complaintVm.complaint.CompanyRelationId,
-                ComplaintStatusId = 1
+                Whistleblowing whistleblowing = complaintVm.ChangeToWhistleblowing(complaintVm);
+                whistleblowing.ComplaintId = id;
 
-
-            };
-
-
-
-             _complaintRepository.SaveComplaint(complaint);
-
-
-             if (complaintVm.Whistleblowing != null)
-            {
-                   
-                    Whistleblowing whistleblowing = new Whistleblowing()
-                    {
-                        ComplaintId= id,
-                        Name = complaintVm.Whistleblowing.Name,
-                        Email = complaintVm.Whistleblowing.Email,
-                        Adress = complaintVm.Whistleblowing.Adress,
-                        PhoneNumber = complaintVm.Whistleblowing.PhoneNumber
-                        
-                    };
-                   
-                    _whistleblowingRepository.SaveWhistleblowing(whistleblowing);
+                _whistleblowingRepository.SaveWhistleblowing(whistleblowing);
             }
 
+            if (complaintVm._files != null)
+            {
+                AttachedFile newAttachedFile = complaintVm.UploadImg(complaintVm._files);
+                newAttachedFile.ComplaintId = id;
+                _attachedFileRepository.AddAttachedFiles(newAttachedFile);
 
+            }
 
-            return RedirectToAction( "List", "Complaint");
-}
+            return RedirectToAction("List", "Complaint");
+        }
 
+        public IActionResult List()
+        {
+            var complaint = _complaintRepository.Complaints;
 
+            return View(complaint);
+        }
+        public IActionResult ListCat()
+        {
+            var category = _categoryRepository.Categories;
 
-public IActionResult List()
-{
-    var complaint = _complaintRepository.Complaints;
-
-    return View(complaint);
-}
-public IActionResult ListCat()
-{
-
-    var category = _categoryRepository.Categories;
-
-    return View(category);
-}
+            return View(category);
+        }
     }
 }

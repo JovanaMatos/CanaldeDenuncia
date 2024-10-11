@@ -2,11 +2,13 @@
 
 namespace Projetos_App1.Controllers
 {
-    public class ListComplaintController : Controller
+    public class AttachedFileController : Controller
     {
         public IActionResult Index()
         {
             return View();
         }
+
+
     }
 }

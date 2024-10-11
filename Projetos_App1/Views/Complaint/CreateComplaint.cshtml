@@ -21,7 +21,7 @@
     </div>
 
 </div>
-@* 
+@*
 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
     <div class="container-fluid">
@@ -35,13 +35,15 @@
 
 <form asp-controller="Complaint" asp-action="CreateComplaint" method="post" class="form-horizontal">
 
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
     <div class="mb-3">
 
-        <input asp-for="@Model.complaint.ComplaintSubject" type="text" class="form-control" placeholder="Assunto" required>
-        <span asp-validation-for="@Model.complaint.ComplaintSubject" class="text-danger"></span>
+        <input asp-for="@Model.ComplaintSubject" type="text" class="form-control" placeholder="Assunto">
+        <span asp-validation-for="@Model.ComplaintSubject" class="text-danger"></span>
     </div>
 
-    <select asp-for="@Model.companyid" class="form-select"  required>
+    <select asp-for="@Model.companyid" id="companyListId" class="form-select">
         <option value="" selected>Empresa</option>
 
         @foreach (var item in Model.listCompany)
@@ -65,42 +67,54 @@
     <br />
 
     <div class="mb-3">
-        <input asp-for="@Model.Whistleblowing.Name" type="text" class="form-control" placeholder="Nome" required>
+        <input asp-for="@Model.Name" type="text" class="form-control" placeholder="Nome">
+        <span asp-validation-for="@Model.Name" class="text-danger"></span>
     </div>
 
     <div class="row">
         <div class="col">
-            <input asp-for="@Model.Whistleblowing.PhoneNumber" type="tel" class="form-control" placeholder="Telemovel(Opcional)">
+            <input asp-for="@Model.PhoneNumber" type="tel" class="form-control" placeholder="Telemovel(Opcional)">
+            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
         </div>
 
         <div class="col">
-            <input asp-for="@Model.Whistleblowing.Email" type="email" class="form-control" placeholder="Email(Opcional)">
+            <input asp-for="@Model.Email" type="email" class="form-control" placeholder="Email(Opcional)">
+            <span asp-validation-for="@Model.Email" class="text-danger"></span>
         </div>
     </div>
     <br />
 
-    <select asp-for="@Model.categoryid" class="form-select" required>
+    <select asp-for="@Model.categoryid" class="form-select">
+
         <option value="" selected>Categoria</option>
+
         @foreach (var item in Model.listCategory)
         {
             <option value="@item.CategoryId">@item.Categories</option>
 
         }
+
     </select>
 
     <br /><br />
 
     <div class="form-group">
-       
-        <textarea asp-for="@Model.complaint.ComplaintDescription" class="form-control" placeholder="Descrição" id= "texto" rows=" 10" required></textarea>
+
+        <textarea asp-for="@Model.ComplaintDescription" class="form-control" placeholder="Descrição" id="texto" rows=" 10" required></textarea>
     </div>
 
- @*    <br />
-    <input type="file" name="arquivos" multiple> *@
-    <br /> <br />
+    <br />
+
+    <div class="input-group mb-3">
+        <input asp-for="@Model._files[0]" type="file" class="form-control" id="inputGroupFile02" multiple>
+        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+    </div>
+
+
+    <br /> <br /> <br /> <br />
 
     <div class="form-group text-center">
-        <button type="submit" value = "CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
+        <button type="submit" value="CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
     </div>
     <br />
 
@@ -115,3 +129,10 @@
 <section hidden class="text-center">
     <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>
 </section>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
