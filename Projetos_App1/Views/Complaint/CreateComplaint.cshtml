@@ -33,7 +33,7 @@
 </nav>
  *@
 
-<form asp-controller="Complaint" asp-action="CreateComplaint" method="post" class="form-horizontal">
+<form asp-controller="Complaint" asp-action="CreateComplaint" method="post" class="form-horizontal" enctype="multipart/form-data">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
@@ -105,10 +105,14 @@
 
     <br />
 
+
     <div class="input-group mb-3">
-        <input asp-for="@Model._files[0]" type="file" class="form-control" id="inputGroupFile02" multiple>
-        <label class="input-group-text" for="inputGroupFile02">Upload</label>
+        <input asp-for="_files" type="file" class="form-control" id="file" multiple />
+        <label class="input-group-text" for="file">Upload</label>
+        <span asp-validation-for="_files" class="text-danger"></span>
     </div>
+
+
 
 
     <br /> <br /> <br /> <br />

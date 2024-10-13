@@ -10,7 +10,7 @@ public partial class Complaint
 
     public string PassWord { get; set; } = null!;
 
-    public bool ComplaintType { get; set; }
+    public bool Complaint_privacy_type { get; set; }
 
 
 

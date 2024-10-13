@@ -16,7 +16,8 @@ namespace Projetos_App1.ViewModels
         [Required(ErrorMessage = "Campo obrigatório")]
         public string Name { get; set; } = null!;
 
-        public IList<IFormFile> _files { get; set; }
+        public IList<IFormFile> _files { get; set; } = new List<IFormFile>();
+
 
 
         [EmailAddress(ErrorMessage = "Fomato de email, invalido!")]
@@ -25,7 +26,7 @@ namespace Projetos_App1.ViewModels
 
         [Phone]
         [Display(Name = "Telemovel")]
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{10,15}$", ErrorMessage = "Por favor digite um numero valido!")]
+        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{9,15}$", ErrorMessage = "Por favor digite um numero valido!")]
         public string? PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
@@ -84,29 +85,38 @@ namespace Projetos_App1.ViewModels
             return whistleblowing;
         }
 
-        public AttachedFile UploadImg(IList<IFormFile> arquivosVM)
+        public List<AttachedFile> UploadImg(IList<IFormFile> attachedFileVM)
         {
-            IFormFile imagemCarregada = (arquivosVM.FirstOrDefault());
+            List<AttachedFile> listFiles = new List<AttachedFile>();
 
-           
-            MemoryStream ms = new MemoryStream();
-            imagemCarregada.OpenReadStream().CopyTo(ms);
-
-            AttachedFile arqui = new AttachedFile()
+            foreach (var file in attachedFileVM)
             {
-                FilesName = imagemCarregada.FileName,
-                ImgSize = imagemCarregada.Length,
-                Image = ms.ToArray(),
-                FileType = imagemCarregada.ContentType,
-                SubmissionDate = DateTime.Now
+                // para copiar o conteúdo do arquivo
+                using (var ms = new MemoryStream())
+                {
+                    file.OpenReadStream().CopyTo(ms);
 
-            };
-            return arqui;
+                    AttachedFile attachedFile = new AttachedFile()
+                    {
+                        FilesName = file.FileName,
+                        ImgSize = file.Length,
+                        Image = ms.ToArray(),
+                        FileType = file.ContentType,
+                        SubmissionDate = DateTime.Now
+                    };
 
-
-
-
+                    listFiles.Add(attachedFile);
+                }
+            }
+          
+            return listFiles;
         }
+
+
+
+
+
+
 
 
     }

@@ -40,7 +40,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("Data Source=PC-INTERN004\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=DESCONTEL\\jmatos;Integrated Security=True;Encrypt=False");
+        => optionsBuilder.UseSqlServer("Data Source=WENDEL-PC\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=geova;Integrated Security=True;Encrypt=False");
     //Data Source=PC-INTERN004\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=DESCONTEL\\jmatos;Integrated Security=True;Encrypt=False"
     //"Data Source=WENDEL-PC\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=geova;Integrated Security=True;Encrypt=False"
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -176,7 +176,7 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("Complaint_Subject");
-            entity.Property(e => e.ComplaintType).HasColumnName("Complaint_Type");
+            entity.Property(e => e.Complaint_privacy_type).HasColumnName("Complaint_privacy_type");
             entity.Property(e => e.CurrentResponsibleId).HasColumnName("Current_ResponsibleID");
             entity.Property(e => e.PassWord)
                 .HasMaxLength(50)

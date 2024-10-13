@@ -50,18 +50,27 @@ namespace Projetos_App1.Controllers
 
         [HttpPost]
         public IActionResult CreateComplaint(ComplaintViewModel complaintVm)
-        {    
+        {
+
+            // Verifica se o modelo é válido
+            if (!ModelState.IsValid)
+            {
+                Console.WriteLine("Modelo inválido. Verifique os campos obrigatórios.");
+                return View(complaintVm); // Retorna à view com mensagens de validação
+            }
+
+
             Complaint complaint = complaintVm.ChangeTocomplaint(complaintVm);
 
             Random randNum = new Random();
-            var id2 = randNum.Next(1000) ;
+            var id2 = randNum.Next(1000);
             var password = "12osdhuichsuiodhchUIO3456";
             var id = Convert.ToString(id2);
 
             complaint.ComplaintId = id;
             complaint.PassWord = password;
             complaint.ShippingMethodsId = 1;
-            complaint.ComplaintType = true;
+            complaint.Complaint_privacy_type = true;
             complaint.ComplaintStartDate = DateTime.Now;
             complaint.CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintVm.companyid, complaintVm.categoryid);
             complaint.ComplaintStatusId = 1;
@@ -76,12 +85,17 @@ namespace Projetos_App1.Controllers
                 _whistleblowingRepository.SaveWhistleblowing(whistleblowing);
             }
 
-            if (complaintVm._files != null)
-            {
-                AttachedFile newAttachedFile = complaintVm.UploadImg(complaintVm._files);
-                newAttachedFile.ComplaintId = id;
-                _attachedFileRepository.AddAttachedFiles(newAttachedFile);
 
+            if (complaintVm._files != null && complaintVm._files.Count > 0)
+            {
+                // devolve uma lista de AttachedFile
+                var attachedFiles = complaintVm.UploadImg(complaintVm._files);
+          
+                foreach (var newAttachedFile in attachedFiles)
+                {
+                    newAttachedFile.ComplaintId = id;
+                    _attachedFileRepository.AddAttachedFiles(newAttachedFile);
+                }
             }
 
             return RedirectToAction("List", "Complaint");
