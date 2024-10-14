@@ -56,20 +56,7 @@ namespace Projetos_App1.ViewModels
         
 
 
-        public Complaint ChangeTocomplaint(ComplaintViewModel complaintViewModel)
-        {
-            Complaint complaint = new Complaint()
-            {
-                ComplaintSubject = complaintViewModel.ComplaintSubject,
-                ComplaintDescription = complaintViewModel.ComplaintDescription,
-                CompanyRelationId = complaintViewModel.CompanyRelationId
-
-
-            };
-
-            return complaint;
-
-        }
+   
 
         public Whistleblowing ChangeToWhistleblowing(ComplaintViewModel complaintViewModel)
         {

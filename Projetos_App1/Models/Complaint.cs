@@ -54,18 +54,18 @@ public partial class Complaint
 
     public virtual Whistleblowing? Whistleblowing { get; set; }
 
-  
+
     public Guid CreateId()
     {
-       Guid complaintId = Guid.NewGuid();
+        Guid complaintId = Guid.NewGuid();
 
-       return ComplaintId;
+        return ComplaintId;
 
-    } 
+    }
     public string CreatePassWord()
     {
         string passWord = Guid.NewGuid().ToString().Replace("-", "");
-       
+
         return passWord;
     }
 }

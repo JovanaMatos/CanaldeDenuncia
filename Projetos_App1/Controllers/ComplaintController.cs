@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Projetos_App1.Models;
 using Projetos_App1.Models.Repositories.Interfaces;
+using Projetos_App1.Models.Services.Interfaces;
 using Projetos_App1.ViewModels;
 
 namespace Projetos_App1.Controllers
@@ -11,37 +13,40 @@ namespace Projetos_App1.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICompanyRelationRepository _companyRelationRepository;
         private readonly ICompanyRepository _companyRepository;
-        private readonly ICompaniesCategoryRepository _companiesCategoryRepository;
         private readonly IWhistleblowingRepository _whistleblowingRepository;
         private readonly IAttachedFileRepository _attachedFileRepository;
-
+        private readonly IComplaintService _complaintService;
         public ComplaintController(IComplaintRepository complaintRepository,
                                    ICategoryRepository categoryRepository, ICompanyRelationRepository companyRelation,
-                                   ICompanyRepository companyRepository, ICompaniesCategoryRepository companiesCategoryRepository,
-                                   IWhistleblowingRepository whistleblowingRepository, IAttachedFileRepository attachedFile)
+                                   ICompanyRepository companyRepository, IWhistleblowingRepository whistleblowingRepository, IAttachedFileRepository attachedFile, IComplaintService complaintService)
         {
             _complaintRepository = complaintRepository;
             _categoryRepository = categoryRepository;
             _companyRelationRepository = companyRelation;
             _companyRepository = companyRepository;
-            _companiesCategoryRepository = companiesCategoryRepository;
             _whistleblowingRepository = whistleblowingRepository;
             _attachedFileRepository = attachedFile;
+            _complaintService = complaintService;
+
         }
 
         [HttpGet]
         public IActionResult CreateComplaint()
         {
             var listcompanies = _companyRepository.companies.ToList();
-            var listcategories = _categoryRepository.GetCategory();
+            var listcategories = _categoryRepository.GetCategory().ToList();
             var listrelationship = _companyRelationRepository.companyRelations.ToList();
 
-            var complainVm = new ComplaintViewModel() {
+            var complainVm = new ComplaintViewModel()
+            {
                 listCategory = listcategories,
                 listRelation = listrelationship,
-                listCompany = listcompanies}
+                listCompany = listcompanies
+            }
             ;
 
+            //ViewBag.listCompany = new SelectList(listcompanies, "CompaniesId", "Name");
+            //ViewBag.listCategory = new SelectList(listcategories, "CategoryId", "Categories");
 
             return View(complainVm);
         }
@@ -55,24 +60,17 @@ namespace Projetos_App1.Controllers
             // Verifica se o modelo é válido
             if (!ModelState.IsValid)
             {
-                Console.WriteLine("Modelo inválido. Verifique os campos obrigatórios.");
+                
                 return View(complaintVm); //Retorna à view com mensagens de validação
             }
 
-            //função para converter tipo model em complaint
-            Complaint complaint = complaintVm.ChangeTocomplaint(complaintVm);
+            Guid complaintID = _complaintService.Savecomplaint(complaintVm);
 
-            complaint.ComplaintId = complaint.CreateId();//criando id
-
-            // buscandoa relação de Compny e Category
-            complaint.CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintVm.companyid, complaintVm.categoryid);
-
-            _complaintRepository.SaveNewComplaint(complaint);
 
             if (complaintVm.Name != null)
             {
                 Whistleblowing whistleblowing = complaintVm.ChangeToWhistleblowing(complaintVm);
-                whistleblowing.ComplaintId = complaint.ComplaintId;
+                whistleblowing.ComplaintId = complaintID;
                 _whistleblowingRepository.SaveWhistleblowing(whistleblowing);
             }
 
@@ -83,7 +81,7 @@ namespace Projetos_App1.Controllers
 
                 foreach (var newAttachedFile in attachedFiles)
                 {
-                    newAttachedFile.ComplaintId = complaint.ComplaintId;
+                    newAttachedFile.ComplaintId = complaintID;
                     _attachedFileRepository.AddAttachedFiles(newAttachedFile);
                 }
             }

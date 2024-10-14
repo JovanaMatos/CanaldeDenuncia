@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Projetos_App1.Models;
 using Projetos_App1.Models.Repositories;
 using Projetos_App1.Models.Repositories.Interfaces;
+using Projetos_App1.Models.Services;
+using Projetos_App1.Models.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +19,7 @@ builder.Services.AddTransient<ICompanyRelationRepository, CompanyRelationReposit
 builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IWhistleblowingRepository, WhistleblowingRepository>();
 builder.Services.AddTransient<IAttachedFileRepository, AttachedFileRepository>();
+builder.Services.AddTransient<IComplaintService, ComplaintService >();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -19,11 +19,7 @@ namespace Projetos_App1.Models.Repositories
         public void SaveNewComplaint(Complaint complaint)
         {
            
-            complaint.PassWord = complaint.CreatePassWord();
-            complaint.ShippingMethodsId = 1;
-            complaint.Complaint_privacy_type = true;
-            complaint.ComplaintStartDate = DateTime.Now;
-            complaint.ComplaintStatusId = 1;
+           
 
             _context.Complaints.Add(complaint); // salvando denuncia em bd
             _context.SaveChanges();

@@ -43,6 +43,11 @@
 
         }
     </select>
+    @*
+    <div >
+    @Html.DropDownListFor(model => model.listCompany, (SelectList)ViewBag.listCompany)
+    </div>
+    *@
 
 
     <br />
@@ -54,6 +59,8 @@
         {
             <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
         }
+
+
     </select>
     <br />
 
