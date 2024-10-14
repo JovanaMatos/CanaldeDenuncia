@@ -32,16 +32,16 @@ namespace Projetos_App1.Controllers
         [HttpGet]
         public IActionResult CreateComplaint()
         {
-            var companies = _companyRepository.companies;
-            var categories = _categoryRepository.GetCategory();
-            var relationship = _companyRelationRepository.companyRelations;
+            var listcompanies = _companyRepository.companies.ToList();
+            var listcategories = _categoryRepository.GetCategory();
+            var listrelationship = _companyRelationRepository.companyRelations.ToList();
 
-            var complainVm = new ComplaintViewModel
-            {
-                listCategory = categories,
-                listRelation = relationship,
-                listCompany = companies
-            };
+            var complainVm = new ComplaintViewModel() {
+                listCategory = listcategories,
+                listRelation = listrelationship,
+                listCompany = listcompanies}
+            ;
+
 
             return View(complainVm);
         }
@@ -56,44 +56,34 @@ namespace Projetos_App1.Controllers
             if (!ModelState.IsValid)
             {
                 Console.WriteLine("Modelo inválido. Verifique os campos obrigatórios.");
-                return View(complaintVm); // Retorna à view com mensagens de validação
+                return View(complaintVm); //Retorna à view com mensagens de validação
             }
 
-
+            //função para converter tipo model em complaint
             Complaint complaint = complaintVm.ChangeTocomplaint(complaintVm);
 
-            Random randNum = new Random();
-            var id2 = randNum.Next(1000);
-            var password = "12osdhuichsuiodhchUIO3456";
-            var id = Convert.ToString(id2);
+            complaint.ComplaintId = complaint.CreateId();//criando id
 
-            complaint.ComplaintId = id;
-            complaint.PassWord = password;
-            complaint.ShippingMethodsId = 1;
-            complaint.Complaint_privacy_type = true;
-            complaint.ComplaintStartDate = DateTime.Now;
+            // buscandoa relação de Compny e Category
             complaint.CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintVm.companyid, complaintVm.categoryid);
-            complaint.ComplaintStatusId = 1;
 
-            _complaintRepository.SaveComplaint(complaint);
+            _complaintRepository.SaveNewComplaint(complaint);
 
             if (complaintVm.Name != null)
             {
                 Whistleblowing whistleblowing = complaintVm.ChangeToWhistleblowing(complaintVm);
-                whistleblowing.ComplaintId = id;
-
+                whistleblowing.ComplaintId = complaint.ComplaintId;
                 _whistleblowingRepository.SaveWhistleblowing(whistleblowing);
             }
-
 
             if (complaintVm._files != null && complaintVm._files.Count > 0)
             {
                 // devolve uma lista de AttachedFile
                 var attachedFiles = complaintVm.UploadImg(complaintVm._files);
-          
+
                 foreach (var newAttachedFile in attachedFiles)
                 {
-                    newAttachedFile.ComplaintId = id;
+                    newAttachedFile.ComplaintId = complaint.ComplaintId;
                     _attachedFileRepository.AddAttachedFiles(newAttachedFile);
                 }
             }
@@ -115,3 +105,12 @@ namespace Projetos_App1.Controllers
         }
     }
 }
+
+
+
+
+
+//Random randNum = new Random();
+//var id = randNum.Next(1000).ToString();
+
+//complaint.ComplaintId = id;

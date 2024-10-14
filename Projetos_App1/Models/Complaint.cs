@@ -6,7 +6,7 @@ namespace Projetos_App1.Models;
 
 public partial class Complaint
 {
-    public string ComplaintId { get; set; } = null!;
+    public Guid ComplaintId { get; set; } 
 
     public string PassWord { get; set; } = null!;
 
@@ -53,4 +53,19 @@ public partial class Complaint
     public virtual ShippingMethod ShippingMethods { get; set; } = null!;
 
     public virtual Whistleblowing? Whistleblowing { get; set; }
+
+  
+    public Guid CreateId()
+    {
+       Guid complaintId = Guid.NewGuid();
+
+       return ComplaintId;
+
+    } 
+    public string CreatePassWord()
+    {
+        string passWord = Guid.NewGuid().ToString().Replace("-", "");
+       
+        return passWord;
+    }
 }

@@ -47,14 +47,13 @@ namespace Projetos_App1.ViewModels
         public int? companyRelationid { get; set; }
 
 
-        public IEnumerable<Category> listCategory { get; set; }
+        public List<Category> listCategory { get; set; } = new List<Category> ();
 
-        public IEnumerable<Company> listCompany { get; set; }
+        public List<Company> listCompany { get; set; } = new List<Company> ();
 
-        public IEnumerable<CompanyRelation> listRelation { get; set; }
+        public List<CompanyRelation> listRelation { get; set; } = new List<CompanyRelation>();
 
-        public IEnumerable<AttachedFile> attachedFiles { get; set; }
-
+        
 
 
         public Complaint ChangeTocomplaint(ComplaintViewModel complaintViewModel)
@@ -64,6 +63,7 @@ namespace Projetos_App1.ViewModels
                 ComplaintSubject = complaintViewModel.ComplaintSubject,
                 ComplaintDescription = complaintViewModel.ComplaintDescription,
                 CompanyRelationId = complaintViewModel.CompanyRelationId
+
 
             };
 

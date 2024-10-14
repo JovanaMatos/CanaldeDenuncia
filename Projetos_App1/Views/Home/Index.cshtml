@@ -9,20 +9,21 @@
     <h1>Canal De Denúncias</h1>
 </div>
 
-<div hidden class="homeContainer">
+<div  class="homeContainer">
 
     <div>
         <img class="clientLogo" src="~/images/logo.png" alt="img aqui" />
     </div>
 
     <div style="align-items: center; align-content:center;">
-        <button class="bnt-home1">REGISTAR DENÚNCIA</button> <br />
+      <a asp-controller="Complaint" asp-action="CreateComplaint">  <button  class="bnt-home1">REGISTAR DENÚNCIA</button> </a>
+          <br />
         <button class="bnt-home1 bnt-home2">CONSULTAR DENÚNCIA</button>
     </div>
 
 </div>
 
-
+@* 
 <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="CreateComplaint">Criar Denúncia </a>
@@ -30,7 +31,20 @@
     <div class="container-fluid">
         <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="ListCat">Teste</a>
     </div>
-</nav>
+</nav> *@
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @* 
 <form asp-action="Create" method="post">

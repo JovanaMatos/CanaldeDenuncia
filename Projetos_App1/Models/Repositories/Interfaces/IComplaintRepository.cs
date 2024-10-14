@@ -4,8 +4,8 @@
     {
         IEnumerable<Complaint> Complaints { get; }
 
-        void SaveComplaint(Complaint complaint);
-        Complaint GetComplaintById(string id);
+        void SaveNewComplaint(Complaint complaint);
+        Complaint GetComplaintById(Guid id);
 
     }
 }

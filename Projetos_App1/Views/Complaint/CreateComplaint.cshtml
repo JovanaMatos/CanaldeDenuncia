@@ -21,17 +21,7 @@
     </div>
 
 </div>
-@*
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="List">List </a>
-    </div>
-    <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="ListCat">Teste</a>
-    </div>
-</nav>
- *@
 
 <form asp-controller="Complaint" asp-action="CreateComplaint" method="post" class="form-horizontal" enctype="multipart/form-data">
 
@@ -56,6 +46,7 @@
 
 
     <br />
+
 
     <select asp-for="@Model.companyRelationid" class="form-select">
         <option selected>Relação com empresa</option>
@@ -140,3 +131,19 @@
     }
 }
 
+
+
+
+
+
+@*
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="List">List </a>
+    </div>
+    <div class="container-fluid">
+        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="ListCat">Teste</a>
+    </div>
+</nav>
+ *@

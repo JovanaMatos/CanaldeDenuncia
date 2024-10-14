@@ -17,7 +17,7 @@ public partial class AttachedFile
 
     public DateTime SubmissionDate { get; set; }
 
-    public string ComplaintId { get; set; } = null!;
+    public Guid ComplaintId { get; set; }
 
     public virtual Complaint Complaint { get; set; } = null!;
 

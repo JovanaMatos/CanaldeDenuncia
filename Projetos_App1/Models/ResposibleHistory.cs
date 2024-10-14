@@ -11,7 +11,7 @@ public partial class ResposibleHistory
 
     public DateTime? DataOu { get; set; }
 
-    public string ComplaintId { get; set; } = null!;
+    public Guid ComplaintId { get; set; }
 
     public int ResponsiblesId { get; set; }
 
