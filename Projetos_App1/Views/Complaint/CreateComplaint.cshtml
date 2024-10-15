@@ -52,11 +52,12 @@
 
 
         <div class="col">
-            <select asp-for="@Model.companyRelationid" class="form-select">
-                <option selected>Relação com empresa</option>
+            <select asp-for="@Model.CompanyRelationId" class="form-select">
+                <option value="" selected>Relação com empresa</option>
                 @foreach (var item in Model.listRelation)
                 {
                     <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
+                    Console.WriteLine(item.CompanyRelationId + "e " + item.CompanyRelationship);
                 }
 
 
@@ -88,14 +89,19 @@
 
 
 
-    <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
-        <option value="" selected>Empresa</option>
+  @*   <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
+        <option value="" selected>Categorias</option>
 
     </select>
-
-
-
-
+ *@
+@*  <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
+    <option value="1">Categoria 1</option>
+    <option value="2">Categoria 2</option>
+</select>
+ *@
+    <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
+        <option value="" selected>Selecione uma Categoria</option>
+    </select>
 
 
     <br /><br />
@@ -160,11 +166,12 @@
                         type: 'GET',
                         data: { companyId: companyId }, // Parâmetro passado para o servidor
                         success: function (data) {
-                            $('#categoryid').empty(); // Limpa o dropdown de categorias
-                            $('#categoryid').append('<option selected>Categorias</option>');
+                            console.log("TESTE" + data); // Verifique a estrutura dos dados retornados
+                            $('#categoryid').empty();
+                            $('#categoryid').append('<option value="" selected>Selecione uma Categoria</option>'); // Placeholder
                             $.each(data, function (index, item) {
-
-                                $('#categoryid').append('<option value="' + item.categoryid + '">' + item.categories + '</option>');
+                                console.log('Item:', item); // Veja o que cada item contém
+                                $('#categoryid').append('<option value="' + item.categoryId + '">' + item.categories + '</option>');
                             });
                         },
                         error: function () {
@@ -176,6 +183,11 @@
                     $('#categoryid').append('<option selected>Categorias</option>');
                 }
             }
+
+
+            $('form').on('submit', function () {
+                console.log('Category ID:', $('#categoryid').val()); // Exibe o valor do categoryid
+            });
         </script>
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -198,7 +210,6 @@
     </div>
 </nav>
  *@
-
 
 
 
