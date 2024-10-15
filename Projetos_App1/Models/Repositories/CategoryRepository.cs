@@ -18,9 +18,9 @@ namespace Projetos_App1.Models.Repositories
         public IEnumerable<Category> Categories { get => _context.Categories; }
 
 
-        public List<Category> GetCategory()
+        public List<Category> GetCategoryByID(int companyID)
         {
-            int companyId = 1;
+            //int companyId = 1;
             var companiesCategories = _context.CompaniesCategories;
 
 
@@ -29,7 +29,7 @@ namespace Projetos_App1.Models.Repositories
             var queryCategory = _context.Categories.Join(companiesCategories,
                                                      category => category.CategoryId, compCategory => compCategory.CategoryId,
                                                      (category, compCategory) => new { category, compCategory })//guardando var e finalizando join
-                                                     .Where(x => x.compCategory.CompaniesId == companyId)
+                                                     .Where(x => x.compCategory.CompaniesId == companyID)
                                                      .Select(x => x.category)
                                                      .ToList();
 

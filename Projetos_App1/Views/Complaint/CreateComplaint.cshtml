@@ -23,6 +23,8 @@
 </div>
 
 
+
+
 <form asp-controller="Complaint" asp-action="CreateComplaint" method="post" class="form-horizontal" enctype="multipart/form-data">
 
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -33,35 +35,36 @@
         <span asp-validation-for="@Model.ComplaintSubject" class="text-danger"></span>
     </div>
 
-    <select asp-for="@Model.companyid" id="companyListId" class="form-select">
-        <option value="" selected>Empresa</option>
 
-        @foreach (var item in Model.listCompany)
-        {
-            <option value="@item.CompaniesId">@item.Name</option>
+    <div class="row">
+        <div class="col">
+            <select asp-for="@Model.companyid" id="companyId" class="form-select">
+                <option value="" selected>Empresa</option>
+
+                @foreach (var item in Model.listCompany)
+                {
+                    <option value="@item.CompaniesId">@item.Name</option>
 
 
-        }
-    </select>
-    @*
-    <div >
-    @Html.DropDownListFor(model => model.listCompany, (SelectList)ViewBag.listCompany)
+                }
+            </select>
+        </div>
+
+
+        <div class="col">
+            <select asp-for="@Model.companyRelationid" class="form-select">
+                <option selected>Relação com empresa</option>
+                @foreach (var item in Model.listRelation)
+                {
+                    <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
+                }
+
+
+            </select>
+
+        </div>
     </div>
-    *@
 
-
-    <br />
-
-
-    <select asp-for="@Model.companyRelationid" class="form-select">
-        <option selected>Relação com empresa</option>
-        @foreach (var item in Model.listRelation)
-        {
-            <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
-        }
-
-
-    </select>
     <br />
 
     <div class="mb-3">
@@ -82,17 +85,18 @@
     </div>
     <br />
 
-    <select asp-for="@Model.categoryid" class="form-select">
 
-        <option value="" selected>Categoria</option>
 
-        @foreach (var item in Model.listCategory)
-        {
-            <option value="@item.CategoryId">@item.Categories</option>
 
-        }
+    <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
+        <option value="" selected>Empresa</option>
 
     </select>
+
+
+
+
+
 
     <br /><br />
 
@@ -132,8 +136,48 @@
     <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>
 </section>
 
+
+
 @section Scripts {
     @{
+        <script>
+            $(document).ready(function () {
+
+                getCategoryByCompanyId();
+            });
+
+            // Evento ao mudar o dropdown de empresa
+            $("#companyId").change(function () {
+                getCategoryByCompanyId();
+            });
+
+            // Função para buscar categorias com base no companyId
+            function getCategoryByCompanyId() {
+                var companyId = $('#companyId').val();
+                if (companyId) {
+                    $.ajax({
+                        url: '@Url.Action("GetCategoryByID", "Complaint")',
+                        type: 'GET',
+                        data: { companyId: companyId }, // Parâmetro passado para o servidor
+                        success: function (data) {
+                            $('#categoryid').empty(); // Limpa o dropdown de categorias
+                            $('#categoryid').append('<option selected>Categorias</option>');
+                            $.each(data, function (index, item) {
+
+                                $('#categoryid').append('<option value="' + item.categoryid + '">' + item.categories + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert('Erro ao carregar as categorias.');
+                        }
+                    });
+                } else {
+                    $('#categoryid').empty();
+                    $('#categoryid').append('<option selected>Categorias</option>');
+                }
+            }
+        </script>
+
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
@@ -154,3 +198,9 @@
     </div>
 </nav>
  *@
+
+
+
+
+
+

@@ -4,6 +4,6 @@
     {
         IEnumerable<Category> Categories { get; }
 
-        List<Category> GetCategory();
+        List<Category> GetCategoryByID(int companyID);
     }
 }

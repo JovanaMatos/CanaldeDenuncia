@@ -1,7 +1,9 @@
-﻿namespace Projetos_App1.Models.Services.Interfaces
+﻿using Projetos_App1.Models;
+
+namespace Projetos_App1.ViewModels
 {
     public interface IWhistleblowingService
     {
-       void SaveWhistleblowing();
+       Whistleblowing SaveWhistleblowing(ComplaintViewModel complantViewModel, Guid complaintID);
     }
 }

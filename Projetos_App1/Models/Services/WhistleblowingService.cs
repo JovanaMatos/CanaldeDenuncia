@@ -1,5 +1,6 @@
 ﻿using Projetos_App1.Models.Repositories.Interfaces;
-using Projetos_App1.Models.Services.Interfaces;
+using Projetos_App1.ViewModels;
+
 
 namespace Projetos_App1.Models.Services
 {
@@ -12,9 +13,25 @@ namespace Projetos_App1.Models.Services
             _repository = repository;
         }
 
-        public void SaveWhistleblowing()
+        public Whistleblowing SaveWhistleblowing(ComplaintViewModel complantViewModel, Guid ComplaintID)
         {
-            throw new NotImplementedException();
+
+            Whistleblowing whistleblowing = new Whistleblowing()
+            {
+
+                Name = complantViewModel.Name,
+                Email = complantViewModel.Email,
+                PhoneNumber = complantViewModel.PhoneNumber,
+                ComplaintId = ComplaintID
+
+
+            };
+
+            _repository.SaveWhistleblowing(whistleblowing);
+
+
+            return whistleblowing;
+           
         }
     }
 }

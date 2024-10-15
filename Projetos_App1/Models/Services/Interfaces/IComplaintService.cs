@@ -4,6 +4,7 @@ namespace Projetos_App1.Models.Services.Interfaces
 {
     public interface IComplaintService
     {
-        Guid Savecomplaint( ComplaintViewModel complaintViewModel);
+        Guid SaveComplaint( ComplaintViewModel complaintViewModel);
+
     }
 }

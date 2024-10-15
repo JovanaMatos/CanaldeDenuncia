@@ -176,7 +176,7 @@ public partial class AppDbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false)
                 .HasColumnName("Complaint_Subject");
-            entity.Property(e => e.Complaint_privacy_type).HasColumnName("Complaint_privacy_type");
+            entity.Property(e => e.Complaint_Is_Confidential).HasColumnName("Complaint_Is_Confidential");
             entity.Property(e => e.CurrentResponsibleId).HasColumnName("Current_ResponsibleID");
             entity.Property(e => e.PassWord)
                 .HasMaxLength(50)

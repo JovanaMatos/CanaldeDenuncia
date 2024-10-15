@@ -4,6 +4,7 @@ using Projetos_App1.Models.Repositories;
 using Projetos_App1.Models.Repositories.Interfaces;
 using Projetos_App1.Models.Services;
 using Projetos_App1.Models.Services.Interfaces;
+using Projetos_App1.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,8 @@ builder.Services.AddTransient<ICompanyRepository, CompanyRepository>();
 builder.Services.AddTransient<IWhistleblowingRepository, WhistleblowingRepository>();
 builder.Services.AddTransient<IAttachedFileRepository, AttachedFileRepository>();
 builder.Services.AddTransient<IComplaintService, ComplaintService >();
+builder.Services.AddTransient<IWhistleblowingService, WhistleblowingService >();
+builder.Services.AddTransient<IAttachedFileService, AttachedFileService >();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -43,6 +46,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Complaint}/{action=CreateComplaint}/{id?}");
 
 app.Run();

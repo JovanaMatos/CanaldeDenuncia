@@ -16,7 +16,7 @@ namespace Projetos_App1.Models.Services
             _companiesCategoryRepository = companiesCategoryRepository;
         }
 
-        public Guid Savecomplaint(ComplaintViewModel complaintViewModel)
+        public Guid SaveComplaint(ComplaintViewModel complaintViewModel)
         {
             Complaint complaint = new Complaint()
             {
@@ -25,7 +25,7 @@ namespace Projetos_App1.Models.Services
                 CompanyRelationId = complaintViewModel.CompanyRelationId,
                 CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintViewModel.companyid, complaintViewModel.categoryid),
                 ShippingMethodsId = 1,
-                Complaint_privacy_type = true,// validar verificar
+                Complaint_Is_Confidential = true,// validar verificar
                 ComplaintStartDate = DateTime.Now,
                 ComplaintStatusId = 1 //id recebida
 
@@ -37,10 +37,13 @@ namespace Projetos_App1.Models.Services
 
             _complaintRepository.SaveNewComplaint(complaint);
 
+       
+
             return complaint.ComplaintId;
 
         }
 
+  
     
     }
 }

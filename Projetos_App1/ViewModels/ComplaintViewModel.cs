@@ -46,6 +46,8 @@ namespace Projetos_App1.ViewModels
         public int companyid { get; set; }
         public int? companyRelationid { get; set; }
 
+        public string Categories {  get; set; } 
+
 
         public List<Category> listCategory { get; set; } = new List<Category> ();
 
@@ -58,46 +60,32 @@ namespace Projetos_App1.ViewModels
 
    
 
-        public Whistleblowing ChangeToWhistleblowing(ComplaintViewModel complaintViewModel)
-        {
-            Whistleblowing whistleblowing = new Whistleblowing()
-            {
+        //public List<AttachedFile> UploadImg(IList<IFormFile> attachedFileVM)
+        //{
+        //    List<AttachedFile> listFiles = new List<AttachedFile>();
 
-                Name = complaintViewModel.Name,
-                Email = complaintViewModel.Email,
-                PhoneNumber = complaintViewModel.PhoneNumber
+        //    foreach (var file in attachedFileVM)
+        //    {
+        //        // para copiar o conteúdo do arquivo
+        //        using (var ms = new MemoryStream())
+        //        {
+        //            file.OpenReadStream().CopyTo(ms);
 
-            };
+        //            AttachedFile attachedFile = new AttachedFile()
+        //            {
+        //                FilesName = file.FileName,
+        //                ImgSize = file.Length,
+        //                Image = ms.ToArray(),
+        //                FileType = file.ContentType,
+        //                SubmissionDate = DateTime.Now
+        //            };
 
-            return whistleblowing;
-        }
-
-        public List<AttachedFile> UploadImg(IList<IFormFile> attachedFileVM)
-        {
-            List<AttachedFile> listFiles = new List<AttachedFile>();
-
-            foreach (var file in attachedFileVM)
-            {
-                // para copiar o conteúdo do arquivo
-                using (var ms = new MemoryStream())
-                {
-                    file.OpenReadStream().CopyTo(ms);
-
-                    AttachedFile attachedFile = new AttachedFile()
-                    {
-                        FilesName = file.FileName,
-                        ImgSize = file.Length,
-                        Image = ms.ToArray(),
-                        FileType = file.ContentType,
-                        SubmissionDate = DateTime.Now
-                    };
-
-                    listFiles.Add(attachedFile);
-                }
-            }
+        //            listFiles.Add(attachedFile);
+        //        }
+        //    }
           
-            return listFiles;
-        }
+        //    return listFiles;
+        //}
 
 
 
