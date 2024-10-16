@@ -1,0 +1,59 @@
+﻿@model Projetos_App1.Models.Complaint
+
+
+<div class="text-center" id="homeTitle">
+    <h1>A Sua Denúncia foi Submetida</h1>
+</div>
+<br />
+
+<div class="text-center text-">
+    <strong>
+        <p class="text-danger" style="display:inline;">Importante: <p style="display:inline;" class="text-dark inline">Guarde a password e o código apresentados abaixo. Precisará destes <br /> para acompanhar o estado e situação da sua denúncia.</p></p>
+
+    </strong>
+</div>
+
+<form>
+    <div class="form-group"> 
+        <label for="exampleInputEmail1">Código:</label>
+        <p>@Model.ComplaintId </p>
+  @* <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> *@
+        <hr />
+    </div>
+
+    <br />
+    <div class="form-group">
+        <label for="exampleInputPassword1">Password</label>
+        @* <input type="password" class="form-control" id="PasswordId"> *@
+        <p>@Model.PassWord</p>
+        <hr />
+    </div>
+    <br />
+
+    <div class="d-grid gap-2 col-5 mx-auto">
+        <a asp-controller="Complaint" asp-action="ShowPDF"> 
+        <button class="btn bnt-home1" type="button">GUARDAR COMO PDF</button>
+         </a>
+    </div>
+
+
+
+    <br />
+    <div class="mb-4">
+        <input type="email" style="outline:none;border: 0 none;" id="" placeholder="Email (opcional)">
+    </div>
+
+    <br />
+
+    <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Já Guardei o meu código e password da denúncia.</label>
+    </div>
+    <br />
+
+    <div class="d-grid gap-2">
+        <button type="button" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
+    </div>
+
+</form>
+<br /><br />

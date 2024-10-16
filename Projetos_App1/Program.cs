@@ -5,6 +5,7 @@ using Projetos_App1.Models.Repositories.Interfaces;
 using Projetos_App1.Models.Services;
 using Projetos_App1.Models.Services.Interfaces;
 using Projetos_App1.ViewModels;
+using Rotativa.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,12 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Complaint}/{action=CreateComplaint}/{id?}");
+
+
+string wwwroot = app.Environment.WebRootPath;
+RotativaConfiguration.Setup(builder.Environment.WebRootPath, "Rotativa");
+
+
 
 app.Run();

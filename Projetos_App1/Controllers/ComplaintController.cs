@@ -5,6 +5,7 @@ using Projetos_App1.Models.Repositories;
 using Projetos_App1.Models.Repositories.Interfaces;
 using Projetos_App1.Models.Services.Interfaces;
 using Projetos_App1.ViewModels;
+using Rotativa.AspNetCore;
 
 
 namespace Projetos_App1.Controllers
@@ -30,7 +31,6 @@ namespace Projetos_App1.Controllers
             _categoryRepository = categoryRepository;
             _companyRelationRepository = companyRelation;
             _companyRepository = companyRepository;
-
             _attachedFileRepository = attachedFile;
             _complaintService = complaintService;
             _whistleblowingService = whistleblowingService;
@@ -47,21 +47,10 @@ namespace Projetos_App1.Controllers
 
             var complainVm = new ComplaintViewModel()
             {
-                //listCategory = listcategories,
                 listRelation = listrelationship,
                 listCompany = listcompanies
             }
             ;
-
-
-            //complainVm.listCategory.Add(new Category()
-            //{
-            //    CategoryId = 0,
-            //    Categories = "Categorias"
-            //});
-
-            // ViewBag.listCompany = new SelectList(listcompanies, "CompaniesId", "Name");
-            //ViewBag.listCategory = new SelectList(listcategories, "CategoryId", "Categories");
 
             return View(complainVm);
         }
@@ -83,59 +72,46 @@ namespace Projetos_App1.Controllers
         public IActionResult CreateComplaint(ComplaintViewModel complaintVm)
         {
 
-            //// Verifica se o modelo é válido
-            //if (!ModelState.IsValid)
-            //{
-            //    Console.WriteLine($"Category ID: {complaintVm.categoryid}"); 
-            //    return View(complaintVm);
-            //}
-
+            // Verifica se o modelo é válido
             if (!ModelState.IsValid)
             {
-                // Aqui você pode logar os erros
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage); // Log dos erros
-                }
-                // Retornar a view com os dados já preenchidos
-
-                Console.WriteLine("valor "+ complaintVm.CompanyRelationId);
+                
                 return View(complaintVm);
             }
 
 
 
-            Guid complaintID = _complaintService.SaveComplaint(complaintVm);//Retorna para pode add em outras tabelas
+            Complaint complaint = _complaintService.SaveComplaint(complaintVm);//Retorna para pode add em outras tabelas
 
 
-            if (complaintVm.Name != null)
+            if (complaintVm.Name != null)//verifca se é confidencial
             {
-                _whistleblowingService.SaveWhistleblowing(complaintVm, complaintID);
+                _whistleblowingService.SaveWhistleblowing(complaintVm, complaint.ComplaintId);
             }
 
-            if (complaintVm._files != null && complaintVm._files.Count > 0)
+            if (complaintVm._files != null && complaintVm._files.Count > 0)//verifica se existe arquivo para verificar
             {
                 List<AttachedFile> attachedFiles = _attacheFileService.UploadImg(complaintVm._files);
-                _attacheFileService.SaveAttachedFile(attachedFiles, complaintID);
+                _attacheFileService.SaveAttachedFile(attachedFiles, complaint.ComplaintId);
             }
 
 
 
-            return RedirectToAction("List", "Complaint");
+            return View("Views/Complaint/ShowLogin.cshtml", complaint );
         }
-
-        public IActionResult List()
+       
+         public IActionResult ShowLogin()
         {
-            var complaint = _complaintRepository.Complaints;
-
-            return View(complaint);
+          
+            return View();
         }
-        public IActionResult ListCat()
+
+        public IActionResult ShowPDF()
         {
-            var category = _categoryRepository.Categories;
-
-            return View(category);
+            return new ViewAsPdf("ShowPDF");
         }
+
+
     }
 }
 
@@ -144,7 +120,3 @@ namespace Projetos_App1.Controllers
 
 
 
-//Random randNum = new Random();
-//var id = randNum.Next(1000).ToString();
-
-//complaint.ComplaintId = id;

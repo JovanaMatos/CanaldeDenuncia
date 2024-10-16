@@ -79,8 +79,8 @@ h1{
 }
 
 .bnt-home1:hover {
-    background: #180f4a;
-
+    /*background: #180f4a; IMPLEMENTAR DEPOIS */
+    color: #fff;
 }
 
 

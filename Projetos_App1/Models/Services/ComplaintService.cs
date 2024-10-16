@@ -16,7 +16,7 @@ namespace Projetos_App1.Models.Services
             _companiesCategoryRepository = companiesCategoryRepository;
         }
 
-        public Guid SaveComplaint(ComplaintViewModel complaintViewModel)
+        public Complaint SaveComplaint(ComplaintViewModel complaintViewModel)
         {
             Complaint complaint = new Complaint()
             {
@@ -39,7 +39,7 @@ namespace Projetos_App1.Models.Services
 
        
 
-            return complaint.ComplaintId;
+            return complaint;
 
         }
 
