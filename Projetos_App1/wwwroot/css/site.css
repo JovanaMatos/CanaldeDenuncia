@@ -37,7 +37,7 @@ header {
    
 }
 
-.homeTitle {
+#homeTitle {
     margin-top: 50px;
     color: rgba(26,51,94,255);
     text-align:center;

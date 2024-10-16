@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="homeTitle">
+<div class="text-center"  id="homeTitle">
     <h1>Canal De Denúncias</h1>
 </div>
 
@@ -164,7 +164,7 @@
                     $.ajax({
                         url: '@Url.Action("GetCategoryByID", "Complaint")',
                         type: 'GET',
-                        data: { companyId: companyId }, // Parâmetro passado para o servidor
+                        data: { companyId: companyId }, 
                         success: function (data) {
                             console.log("TESTE" + data); // Verifique a estrutura dos dados retornados
                             $('#categoryid').empty();
