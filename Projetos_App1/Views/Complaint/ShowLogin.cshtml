@@ -1,5 +1,9 @@
 ﻿@model Projetos_App1.Models.Complaint
 
+<style>
+
+
+</style>
 
 <div class="text-center" id="homeTitle">
     <h1>A Sua Denúncia foi Submetida</h1>
@@ -14,29 +18,39 @@
 </div>
 
 <form>
-    <div class="form-group"> 
-        <label for="exampleInputEmail1">Código:</label>
-        <p>@Model.ComplaintId </p>
-  @* <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"> *@
-        <hr />
-    </div>
-
-    <br />
     <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        @* <input type="password" class="form-control" id="PasswordId"> *@
-        <p>@Model.PassWord</p>
+
+        <div>
+            <label>Código:</label>
+            <br />
+            <input style="outline:none;border: 0 none; width:94%;" type="text" id="identityId" value="@Model.ComplaintId" />
+            <i style="padding-left: 20px;" id="copyId" class="fa-regular fa-copy"></i>
+        </div>
         <hr />
+
+        <br />
+
+        <div class="password-container">
+            <label>PassWord:</label>
+            <br />
+            <input  style="outline:none;border: 0 none; width:92%;" type="password" id="passwordId" value="@Model.PassWord" />
+            <i id="togglePassword" class="fas fa-eye"></i>
+            <i style="padding-left: 20px;" id="copyPass" class="fa-regular fa-copy"></i>
+        </div>
     </div>
+
+    @* <p>@Model.PassWord</p> *@
+    <hr />
+
     <br />
-
+    
     <div class="d-grid gap-2 col-5 mx-auto">
-        <a asp-route-id="@Model.ComplaintId"  asp-controller="Complaint" asp-action="ShowPDF">
-            <button class="btn bnt-home1" type="button">GUARDAR COMO PDF</button>
-         </a>
+    <a asp-route-id="@Model.ComplaintId"  asp-controller="Complaint" asp-action="ShowPDF">
+    <button class="btn bnt-home1" type="button">GUARDAR COMO PDF</button>
+    </a>
     </div>
 
-   
+
 
 
     <br />
@@ -47,15 +61,83 @@
     <br />
 
     <div class="form-group form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+        <input type="checkbox" class="form-check-input" id="checkboxId">
         <label class="form-check-label" for="exampleCheck1">Já Guardei o meu código e password da denúncia.</label>
     </div>
 
     <br />
 
     <div class="d-grid gap-2">
-        <button type="button" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
+        <button id="buttonId" type="button" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
     </div>
 
 </form>
-<br /><br />
+<br />
+<br />
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+
+<script>
+    const togglePassword = document.querySelector("#togglePassword");//evento copiar id
+    const password = document.querySelector("#passwordId");
+    const identityId = document.querySelector("#identityId");
+    var copyTextId = document.querySelector('#copyId');
+    const copyPass = document.querySelector("#copyPass");
+
+    // password.disabled = true;
+    // identityId.disabled = true;
+
+    copyTextId.addEventListener('click', function () {
+        var copyTextId = document.querySelector('#identityId');
+        copyTextId.select();
+        document.execCommand('copy');
+
+
+    });
+
+    copyPass.addEventListener('click', function () {//evento copiar passWord
+        var copyPass = document.querySelector('#passwordId');
+        copyPass.select();
+
+        document.execCommand('copy');
+
+    });
+
+
+
+    togglePassword.addEventListener("click", function () { // ocultar passWord
+        const type = password.type === "password" ? "text" : "password";
+
+        password.type = type;
+
+
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+    });
+
+
+
+    // document.getElementById("#buttonId").disabled = true;
+
+    // document.getElementById("checkboxId").addEventListener("#checkboxId", function (event) {
+
+    //     //busca conteúdo do input
+    //     var conteudo = document.getElementById("checkboxId").value;
+
+    //     //valida conteudo do input
+    //     if (conteudo !== null && conteudo !== '') {
+    //         //habilita o botão
+    //         document.getElementById("buttonId").disabled = false;
+    //     } else {
+    //         //desabilita o botão se o conteúdo do input ficar em branco
+    //         document.getElementById("buttonId").disabled = true;
+    //     }
+    // });
+
+
+
+
+
+</script>

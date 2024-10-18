@@ -149,6 +149,7 @@
             });
 
             // Função para buscar categorias com base no companyId
+
             function getCategoryByCompanyId() {
                 var companyId = $('#companyId').val();
                 if (companyId) {
@@ -159,7 +160,8 @@
                         success: function (data) {
 
                             $('#categoryid').empty();
-                            $('#categoryid').append('<option value="" selected>Selecione uma Categoria</option>'); // Placeholder
+
+                            $('#categoryid').append('<option value="" selected>Selecione uma Categoria</option>'); 
                             $.each(data, function (index, item) {
 
                                 $('#categoryid').append('<option value="' + item.categoryId + '">' + item.categories + '</option>');
