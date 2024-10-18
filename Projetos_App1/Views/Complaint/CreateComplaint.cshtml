@@ -5,7 +5,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center"  id="homeTitle">
+<div class="text-center" id="homeTitle">
     <h1>Canal De Denúncias</h1>
 </div>
 
@@ -89,16 +89,6 @@
 
 
 
-  @*   <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
-        <option value="" selected>Categorias</option>
-
-    </select>
- *@
-@*  <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
-    <option value="1">Categoria 1</option>
-    <option value="2">Categoria 2</option>
-</select>
- *@
     <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
         <option value="" selected>Selecione uma Categoria</option>
     </select>
@@ -119,8 +109,6 @@
         <label class="input-group-text" for="file">Upload</label>
         <span asp-validation-for="_files" class="text-danger"></span>
 
-        //testar
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
 
 
@@ -167,13 +155,13 @@
                     $.ajax({
                         url: '@Url.Action("GetCategoryByID", "Complaint")',
                         type: 'GET',
-                        data: { companyId: companyId }, 
+                        data: { companyId: companyId },
                         success: function (data) {
-                            console.log("TESTE" + data); // Verifique a estrutura dos dados retornados
+
                             $('#categoryid').empty();
                             $('#categoryid').append('<option value="" selected>Selecione uma Categoria</option>'); // Placeholder
                             $.each(data, function (index, item) {
-                                console.log('Item:', item); // Veja o que cada item contém
+
                                 $('#categoryid').append('<option value="' + item.categoryId + '">' + item.categories + '</option>');
                             });
                         },
@@ -188,9 +176,7 @@
             }
 
 
-            $('form').on('submit', function () {
-                console.log('Category ID:', $('#categoryid').val()); // Exibe o valor do categoryid
-            });
+
         </script>
 
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -201,18 +187,6 @@
 
 
 
-
-@*
-
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light  border-bottom box-shadow mb-3">
-    <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="List">List </a>
-    </div>
-    <div class="container-fluid">
-        <a class="navbar-brand" asp-area="" asp-controller="Complaint" asp-action="ListCat">Teste</a>
-    </div>
-</nav>
- *@
 
 
 

@@ -7,5 +7,7 @@
         void SaveNewComplaint(Complaint complaint);
         Complaint GetComplaintById(Guid id);
 
+        string GetComplaintPassWord(Guid id);
+
     }
 }

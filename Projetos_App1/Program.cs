@@ -50,9 +50,11 @@ app.MapControllerRoute(
     pattern: "{controller=Complaint}/{action=CreateComplaint}/{id?}");
 
 
-string wwwroot = app.Environment.WebRootPath;
-RotativaConfiguration.Setup(builder.Environment.WebRootPath, "Rotativa");
 
+RotativaConfiguration.Setup(app.Environment.WebRootPath); app.UseRotativa();
 
+app.UseStaticFiles();
+app.UseRouting();
 
+app.MapControllers();
 app.Run();

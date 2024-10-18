@@ -37,5 +37,13 @@ namespace Projetos_App1.Models.Repositories
                                       .FirstOrDefault(x => x.ComplaintId == id);
 
         }
+
+        public string GetComplaintPassWord(Guid id)
+        {
+
+            var pass = _context.Complaints.Where(x => x.ComplaintId == id)
+                                      .Select(p => p.PassWord).FirstOrDefault();
+            return pass;
+        }
     }
 }
