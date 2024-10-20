@@ -6,7 +6,7 @@
 
         void SaveNewComplaint(Complaint complaint);
         Complaint GetComplaintById(Guid id);
-
+        Guid FindComplaintId(Guid id);
         string GetComplaintPassWord(Guid id);
 
     }

@@ -106,26 +106,24 @@ namespace Projetos_App1.Controllers
             return View();
         }
 
-        //public IActionResult ShowPDF()
-        //{
-        //    return new ViewAsPdf("ShowPDF");
-        //}
 
         
         public ActionResult ShowPDF(Guid id)
         {
+       
 
-
-            Complaint complaint = new Complaint()
+            Complaint complaint = new Complaint
             {
                 ComplaintId = id,
-                PassWord =  _complaintRepository.GetComplaintPassWord(id),
+                PassWord = _complaintRepository.GetComplaintPassWord(id)
             };
-            Console.WriteLine("aqui pass", complaint.PassWord);
 
-            return new Rotativa.AspNetCore.ViewAsPdf("~/Views/Complaint/ShowPDF.cshtml" , complaint)
+
+
+
+            return new ViewAsPdf("~/Views/Complaint/ShowPDF.cshtml" , complaint)
             {
-                FileName = "MyFile" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf",
+                FileName = id.ToString() + "|" + DateTime.Now.ToString("ddMMyyyy") + ".pdf",
                 PageSize = Rotativa.AspNetCore.Options.Size.A4,
                 PageOrientation = Rotativa.AspNetCore.Options.Orientation.Portrait,
                 PageMargins = { Left = 15, Right = 15, Top = 15 },

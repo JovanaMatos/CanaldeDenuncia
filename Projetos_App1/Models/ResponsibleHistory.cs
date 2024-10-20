@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Projetos_App1.Models;
 
-public partial class ResposibleHistory
+public partial class ResponsibleHistory
 {
-    public int ResposibleHistory1 { get; set; }
+    public int ResposibleHistoryID { get; set; }
 
     public DateTime DataIn { get; set; }
 

@@ -6,7 +6,7 @@ namespace Projetos_App1.Models.Repositories
     public class ComplaintRepository : IComplaintRepository
     {
         private readonly AppDbContext _context;
-        
+
 
         public ComplaintRepository(AppDbContext context)
         {
@@ -18,8 +18,8 @@ namespace Projetos_App1.Models.Repositories
 
         public void SaveNewComplaint(Complaint complaint)
         {
-           
-           
+
+
 
             _context.Complaints.Add(complaint); // salvando denuncia em bd
             _context.SaveChanges();
@@ -37,11 +37,16 @@ namespace Projetos_App1.Models.Repositories
                                       .FirstOrDefault(x => x.ComplaintId == id);
 
         }
+        public Guid FindComplaintId(Guid id)
+        {
+
+            return _context.Complaints.Where(x => x.ComplaintId == id).Select(x => x.ComplaintId).FirstOrDefault();
+        }
 
         public string GetComplaintPassWord(Guid id)
         {
 
-            var pass = _context.Complaints.Where(x => x.ComplaintId == id) 
+            var pass = _context.Complaints.Where(x => x.ComplaintId == id)
                                       .Select(p => p.PassWord).FirstOrDefault();
             return pass;
         }

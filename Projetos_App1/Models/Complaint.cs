@@ -48,7 +48,7 @@ public partial class Complaint
 
     public virtual Responsible? CurrentResponsible { get; set; }
 
-    public virtual ICollection<ResposibleHistory> ResposibleHistories { get; set; } = new List<ResposibleHistory>();
+    public virtual ICollection<ResponsibleHistory> ResposibleHistories { get; set; } = new List<ResponsibleHistory>();
 
     public virtual ShippingMethod ShippingMethods { get; set; } = null!;
 

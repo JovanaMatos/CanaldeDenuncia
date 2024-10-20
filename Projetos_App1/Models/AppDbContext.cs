@@ -32,7 +32,7 @@ public partial class AppDbContext : DbContext
 
     public virtual DbSet<Responsible> Responsibles { get; set; }
 
-    public virtual DbSet<ResposibleHistory> ResposibleHistories { get; set; }
+    public virtual DbSet<ResponsibleHistory> ResposibleHistories { get; set; }
 
     public virtual DbSet<ShippingMethod> ShippingMethods { get; set; }
 
@@ -40,7 +40,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("Data Source=PC-INTERN004\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=DESCONTEL\\jmatos;Integrated Security=True;Encrypt=False");
+        => optionsBuilder.UseSqlServer("Data Source=WENDEL-PC\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=geova;Integrated Security=True;Encrypt=False");
     //"Data Source=PC-INTERN004\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=DESCONTEL\\jmatos;Integrated Security=True;Encrypt=False"
     //"Data Source=WENDEL-PC\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=geova;Integrated Security=True;Encrypt=False"
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -154,7 +154,6 @@ public partial class AppDbContext : DbContext
             entity.ToTable("Complaint");
 
             entity.Property(e => e.ComplaintId)
-                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("ComplaintID");
             entity.Property(e => e.CompaniesCategoryId).HasColumnName("Companies_CategoryID");
@@ -241,13 +240,13 @@ public partial class AppDbContext : DbContext
                 .HasColumnName("Responsible_Name");
         });
 
-        modelBuilder.Entity<ResposibleHistory>(entity =>
+        modelBuilder.Entity<ResponsibleHistory>(entity =>
         {
-            entity.HasKey(e => e.ResposibleHistory1).HasName("PK__Resposib__F0F4465873B7CDF3");
+            entity.HasKey(e => e.ResposibleHistoryID).HasName("PK__Resposib__F0F4465873B7CDF3");
 
-            entity.ToTable("Resposible_History");
+            entity.ToTable("Responsible_History");
 
-            entity.Property(e => e.ResposibleHistory1).HasColumnName("Resposible_History");
+            entity.Property(e => e.ResposibleHistoryID).HasColumnName("Responsible_History");
             entity.Property(e => e.ComplaintId)
                 .HasMaxLength(50)
                 .IsUnicode(false)

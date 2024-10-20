@@ -1,30 +1,27 @@
 ﻿@model Projetos_App1.Models.Complaint
 
-<style>
-
-
-</style>
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
 <div class="text-center" id="homeTitle">
     <h1>A Sua Denúncia foi Submetida</h1>
 </div>
 <br />
 
-<div class="text-center text-">
+<div class="text-center">
     <strong>
-        <p class="text-danger" style="display:inline;">Importante: <p style="display:inline;" class="text-dark inline">Guarde a password e o código apresentados abaixo. Precisará destes <br /> para acompanhar o estado e situação da sua denúncia.</p></p>
-
+        <p class="text-danger" style="display:inline;">Importante: </p>
+        <p style="display:inline;" class="text-dark inline">Guarde a password e o código apresentados abaixo. Precisará destes <br /> para acompanhar o estado e situação da sua denúncia.</p>
     </strong>
 </div>
 
 <form>
     <div class="form-group">
-
         <div>
             <label>Código:</label>
             <br />
-            <input style="outline:none;border: 0 none; width:94%;" type="text" id="identityId" value="@Model.ComplaintId" />
-            <i style="padding-left: 20px;" id="copyId" class="fa-regular fa-copy"></i>
+            <input style="outline:none;border: 0 none; width:94%;" type="text" id="identityId" value="@Model.ComplaintId" readonly />
+            <i style="padding-left: 20px; cursor:pointer;" id="copyId" class="fa-regular fa-copy"></i>
         </div>
         <hr />
 
@@ -33,21 +30,19 @@
         <div class="password-container">
             <label>PassWord:</label>
             <br />
-            <input  style="outline:none;border: 0 none; width:92%;" type="password" id="passwordId" value="@Model.PassWord" />
-            <i id="togglePassword" class="fas fa-eye"></i>
-            <i style="padding-left: 20px;" id="copyPass" class="fa-regular fa-copy"></i>
+            <input style="outline:none;border: 0 none; width:92%;" type="password" id="passwordId" value="@Model.PassWord" readonly />
+            <i style="cursor:pointer;" id="togglePassword" class="fas fa-eye"></i>
+            <i style="padding-left: 20px; cursor:pointer;" id="copyPass" class="fa-regular fa-copy"></i>
         </div>
     </div>
 
-    @* <p>@Model.PassWord</p> *@
     <hr />
-
     <br />
-    
+
     <div class="d-grid gap-2 col-5 mx-auto">
-    <a asp-route-id="@Model.ComplaintId"  asp-controller="Complaint" asp-action="ShowPDF">
-    <button class="btn bnt-home1" type="button">GUARDAR COMO PDF</button>
-    </a>
+        <a asp-route-id="@Model.ComplaintId" asp-controller="Complaint" asp-action="ShowPDF" class="btn bnt-home1">
+            <i class="fas fa-file-pdf"></i> GUARDAR COMO PDF
+        </a>
     </div>
 
 
@@ -55,89 +50,60 @@
 
     <br />
     <div class="mb-4">
-        <input type="email" style="outline:none;border: 0 none;" id="" placeholder="Email (opcional)">
+        <input type="email" style="outline:none;border: 0 none;" placeholder="Email (opcional)">
     </div>
 
     <br />
 
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="checkboxId">
-        <label class="form-check-label" for="exampleCheck1">Já Guardei o meu código e password da denúncia.</label>
+        <label class="form-check-label" for="checkboxId">Já Guardei o meu código e password da denúncia.</label>
     </div>
 
     <br />
 
     <div class="d-grid gap-2">
-        <button id="buttonId" type="button" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
+        <button id="buttonId" type="button" class="btn btn-secondary btn-lg btn-block align-content-center" disabled>FINALIZAR</button>
     </div>
-
 </form>
 <br />
 <br />
 
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
 
 <script>
-    const togglePassword = document.querySelector("#togglePassword");//evento copiar id
+    const togglePassword = document.querySelector("#togglePassword");
     const password = document.querySelector("#passwordId");
     const identityId = document.querySelector("#identityId");
-    var copyTextId = document.querySelector('#copyId');
+    const copyTextId = document.querySelector('#copyId');
     const copyPass = document.querySelector("#copyPass");
+    const checkbox = document.getElementById("checkboxId");
+    const finalButton = document.getElementById("buttonId");
 
-    // password.disabled = true;
-    // identityId.disabled = true;
+    finalButton.disabled = true;//desativava inicialmente
 
     copyTextId.addEventListener('click', function () {
-        var copyTextId = document.querySelector('#identityId');
-        copyTextId.select();
+        identityId.select();
         document.execCommand('copy');
-
-
+        alert('Código copiado: ' + identityId.value);
     });
 
-    copyPass.addEventListener('click', function () {//evento copiar passWord
-        var copyPass = document.querySelector('#passwordId');
-        copyPass.select();
-
+    copyPass.addEventListener('click', function () {
+        password.type = 'text'; // Temporariamente mostra a senha
+        password.select();
         document.execCommand('copy');
-
+        password.type = 'password'; // Oculta a senha novamente
+        alert('Senha copiada!');
     });
 
-
-
-    togglePassword.addEventListener("click", function () { // ocultar passWord
+    togglePassword.addEventListener("click", function () {
         const type = password.type === "password" ? "text" : "password";
-
         password.type = type;
-
-
         this.classList.toggle("fa-eye");
         this.classList.toggle("fa-eye-slash");
     });
 
-
-
-    // document.getElementById("#buttonId").disabled = true;
-
-    // document.getElementById("checkboxId").addEventListener("#checkboxId", function (event) {
-
-    //     //busca conteúdo do input
-    //     var conteudo = document.getElementById("checkboxId").value;
-
-    //     //valida conteudo do input
-    //     if (conteudo !== null && conteudo !== '') {
-    //         //habilita o botão
-    //         document.getElementById("buttonId").disabled = false;
-    //     } else {
-    //         //desabilita o botão se o conteúdo do input ficar em branco
-    //         document.getElementById("buttonId").disabled = true;
-    //     }
-    // });
-
-
-
-
-
+    checkbox.addEventListener('change', function () {
+        finalButton.disabled = !this.checked; // Habilita ou desabilita o botão com base no estado do checkbox
+    });
 </script>

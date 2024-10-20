@@ -15,5 +15,5 @@ public partial class Responsible
 
     public virtual ICollection<Complaint> Complaints { get; set; } = new List<Complaint>();
 
-    public virtual ICollection<ResposibleHistory> ResposibleHistories { get; set; } = new List<ResposibleHistory>();
+    public virtual ICollection<ResponsibleHistory> ResposibleHistories { get; set; } = new List<ResponsibleHistory>();
 }
