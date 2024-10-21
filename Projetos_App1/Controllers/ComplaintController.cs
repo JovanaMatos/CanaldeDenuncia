@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Projetos_App1.Helper;
 using Projetos_App1.Models;
 using Projetos_App1.Models.Repositories;
 using Projetos_App1.Models.Repositories.Interfaces;
@@ -16,16 +17,16 @@ namespace Projetos_App1.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICompanyRelationRepository _companyRelationRepository;
         private readonly ICompanyRepository _companyRepository;
-
         private readonly IAttachedFileRepository _attachedFileRepository;
         private readonly IComplaintService _complaintService;
         private readonly IWhistleblowingService _whistleblowingService;
         private readonly IAttachedFileService _attacheFileService;
+        private readonly IEmail _email;
 
         public ComplaintController(IComplaintRepository complaintRepository,
                                    ICategoryRepository categoryRepository, ICompanyRelationRepository companyRelation,
                                    ICompanyRepository companyRepository, IAttachedFileRepository attachedFile, IComplaintService complaintService,
-                                   IWhistleblowingService whistleblowingService, IAttachedFileService attachedFileService)
+                                   IWhistleblowingService whistleblowingService, IAttachedFileService attachedFileService, IEmail email)
         {
             _complaintRepository = complaintRepository;
             _categoryRepository = categoryRepository;
@@ -35,6 +36,7 @@ namespace Projetos_App1.Controllers
             _complaintService = complaintService;
             _whistleblowingService = whistleblowingService;
             _attacheFileService = attachedFileService;
+            _email = email;
 
         }
 
@@ -55,7 +57,7 @@ namespace Projetos_App1.Controllers
             return View(complainVm);
         }
 
-        public JsonResult GetCategoryByID(int companyId)
+        public JsonResult GetCategoryByID(int companyId)// para dropdown 
         {
             var categories = _categoryRepository.GetCategoryByID(companyId)
                 .Select(c => new
@@ -66,7 +68,7 @@ namespace Projetos_App1.Controllers
             return Json(categories);
         }
 
-        //tratar id
+      
 
         [HttpPost]
         public IActionResult CreateComplaint(ComplaintViewModel complaintVm)
@@ -106,8 +108,22 @@ namespace Projetos_App1.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ShowLogin(Complaint complaint , string email)
+        {
 
-        
+            var teste = $"Seu login {complaint.ComplaintId} e sua senha senha  {complaint.ComplaintId}";
+            _email.SendEmail(email, "Sistema de Denúncias", teste);
+
+            //if (sendEmail) { 
+            //}
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
         public ActionResult ShowPDF(Guid id)
         {
        

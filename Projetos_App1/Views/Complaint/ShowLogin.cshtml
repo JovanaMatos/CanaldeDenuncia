@@ -1,6 +1,6 @@
 ﻿@model Projetos_App1.Models.Complaint
 
-<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/css/site.css"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
 <div class="text-center" id="homeTitle">
@@ -15,14 +15,15 @@
     </strong>
 </div>
 
-<form>
+<form asp-action="ShowLogin" asp-controller="Complaint" method="post">
     <div class="form-group">
         <div>
             <label>Código:</label>
             <br />
-            <input style="outline:none;border: 0 none; width:94%;" type="text" id="identityId" value="@Model.ComplaintId" readonly />
+            <input style="outline:none;border: 0 none; width:94%;" type="text" id="identityId" name="ComplaintId" value="@Model.ComplaintId" readonly />
             <i style="padding-left: 20px; cursor:pointer;" id="copyId" class="fa-regular fa-copy"></i>
         </div>
+
         <hr />
 
         <br />
@@ -30,7 +31,7 @@
         <div class="password-container">
             <label>PassWord:</label>
             <br />
-            <input style="outline:none;border: 0 none; width:92%;" type="password" id="passwordId" value="@Model.PassWord" readonly />
+            <input style="outline:none;border: 0 none; width:92%;" type="password" id="passwordId" name="PassWord" value="@Model.PassWord" readonly />
             <i style="cursor:pointer;" id="togglePassword" class="fas fa-eye"></i>
             <i style="padding-left: 20px; cursor:pointer;" id="copyPass" class="fa-regular fa-copy"></i>
         </div>
@@ -50,7 +51,7 @@
 
     <br />
     <div class="mb-4">
-        <input type="email" style="outline:none;border: 0 none;" placeholder="Email (opcional)">
+        <input name="Email" id="emailInput" type="email" style="outline:none;border: 0 none;" placeholder="Email (opcional)">
     </div>
 
     <br />
@@ -63,7 +64,7 @@
     <br />
 
     <div class="d-grid gap-2">
-        <button id="buttonId" type="button" class="btn btn-secondary btn-lg btn-block align-content-center" disabled>FINALIZAR</button>
+        <button id="buttonId" type="submit" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
     </div>
 </form>
 <br />
