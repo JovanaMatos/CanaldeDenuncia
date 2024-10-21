@@ -109,20 +109,33 @@ namespace Projetos_App1.Controllers
         }
 
         [HttpPost]
-        public IActionResult ShowLogin(Complaint complaint , string email)
+        public IActionResult ShowLogin(Complaint complaint, string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
 
-            var teste = $"Seu login {complaint.ComplaintId} e sua senha senha  {complaint.ComplaintId}";
-            _email.SendEmail(email, "Sistema de Denúncias", teste);
+                return RedirectToAction("Index", "Home");
+            }
 
-            //if (sendEmail) { 
-            //}
+            // Formata o corpo do e-mail com as informações da reclamação
+            var message = $"Seu login é {complaint.ComplaintId} e sua senha é {complaint.PassWord}"; // Ajuste a senha conforme sua lógica de segurança
+            try
+            {
+                // Envia o e-mail
+                _email.SendEmail(email, "Sistema de Denúncias", message);
+            }
+            catch (Exception ex)
+            {
+                // Log de erro e retorno de uma mensagem adequada
+                ModelState.AddModelError(string.Empty, "Falha ao enviar o e-mail.");
+                // Log do erro (se um sistema de log estiver configurado)
+                Console.WriteLine(ex.Message); // ou use um sistema de logging apropriado
+                return View(); // retorna para a visualização com mensagem de erro
+            }
 
+            // Redireciona para a página inicial após o envio do e-mail
             return RedirectToAction("Index", "Home");
         }
-
-
-
 
         public ActionResult ShowPDF(Guid id)
         {

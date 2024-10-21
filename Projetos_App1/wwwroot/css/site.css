@@ -50,6 +50,7 @@ h1{
 }
 
 .homeContainer{
+    margin: 150px ;
     display: flex;
     justify-content: center;
     text-align: center;
