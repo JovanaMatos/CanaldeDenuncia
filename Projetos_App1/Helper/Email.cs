@@ -19,14 +19,14 @@ public class Email : IEmail
 
         try
         {
-            string toEmail = email;
+        
 
             MailMessage mail = new MailMessage()
             {
                 From = new MailAddress(userName, name) 
             };
 
-            mail.To.Add(new MailAddress(toEmail));
+            mail.To.Add(new MailAddress(email));
             mail.CC.Add(new MailAddress(_configuration.GetValue<string>("EmailSettings:CcEmail")));
 
             mail.Subject = subject;
