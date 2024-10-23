@@ -308,7 +308,7 @@ public partial class AppDbContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("Name_");
             entity.Property(e => e.PhoneNumber)
-                .HasMaxLength(12)
+                .HasMaxLength(14)
                 .IsUnicode(false);
 
             entity.HasOne(d => d.Complaint).WithOne(p => p.Whistleblowing)

@@ -13,8 +13,8 @@ namespace Projetos_App1.ViewModels
 
 
         [Display(Name = "Nome")]
-        [Required(ErrorMessage = "Campo obrigatório")]
-        public string Name { get; set; } = null!;
+        [StringLength(50, ErrorMessage = "O nome não pode exceder 50 caracteres.")]
+        public string? Name { get; set; }
 
         public IList<IFormFile> _files { get; set; } = new List<IFormFile>();
 
@@ -24,9 +24,10 @@ namespace Projetos_App1.ViewModels
         [Display(Name = "Email")]
         public string? Email { get; set; }
 
-        [Phone]
+        [Phone ( ErrorMessage = "Digite o código do país seguido dos números.")]
         [Display(Name = "Telemovel")]
-        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{9,15}$", ErrorMessage = "Por favor digite um numero valido!")]
+        [StringLength(14, ErrorMessage = "Digite o código do país seguido dos números.")]
+        // [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{9,15}$", ErrorMessage = "Por favor digite um numero valido!")]
         public string? PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]

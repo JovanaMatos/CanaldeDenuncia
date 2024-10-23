@@ -83,18 +83,23 @@ namespace Projetos_App1.Controllers
                 return View(complaintVm);
             }
 
+            Console.WriteLine(complaintVm.PhoneNumber.ToString());
+            Console.WriteLine(complaintVm.PhoneNumber.Length);
 
 
             Complaint complaint = _complaintService.SaveComplaint(complaintVm);//Retorna para pode add em outras tabelas
 
+          
 
             if (complaintVm.Name != null)//verifca se é confidencial
             {
                 _whistleblowingService.SaveWhistleblowing(complaintVm, complaint.ComplaintId);
+
             }
 
             if (complaintVm._files != null && complaintVm._files.Count > 0)//verifica se existe arquivo para verificar
             {
+
                 List<AttachedFile> attachedFiles = _attacheFileService.UploadImg(complaintVm._files);
                 _attacheFileService.SaveAttachedFile(attachedFiles, complaint.ComplaintId);
             }

@@ -5,6 +5,50 @@
     ViewData["Title"] = "Home Page";
 }
 
+
+<style>
+    .file-upload {
+        display: inline-flex;
+        align-items: center;
+        font-size: 15px;
+    }
+
+    .file-upload__input {
+        display: none;
+    }
+
+    .file-upload__button {
+        -webkit-appearance: none;
+        background: #009879;
+        border: 2px solid #00745d;
+        border-radius: 4px;
+        outline: none;
+        padding: 0.5em 0.8em;
+        margin-right: 15px;
+        color: #ffffff;
+        font-size: 1em;
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .file-upload__button:active {
+            background: #00745d;
+        }
+
+    .file-upload__label {
+        max-width: 250px;
+        font-size: 0.95em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        font-family: Arial, sans-serif;
+        border:dashed 2px;
+        color: red;
+    }
+
+</style>
+
 <div class="text-center" id="homeTitle">
     <h1>Canal De Denúncias</h1>
 </div>
@@ -31,15 +75,15 @@
 
 
     @* aparecer o nome e sumir e um houver com msg *@
-  <select required id="typeComplaint" name="typeComplaint" class="form-select" aria-label="Default select example" onclick="FuncRadio01()">
+    <select required id="typeComplaint" name="typeComplaint" class="form-select" aria-label="Default select example" onclick="FuncChangeTypeComplaint()">
 
-  <option value="" selected>Tipo de Denúncia</option>
-  <option value="1">Confindencial</option>
-  <option value="0">Anónima</option>
- 
-  </select>
+        <option value="" selected>Tipo de Denúncia</option>
+        <option value="1">Confindencial</option>
+        <option value="0">Anónima</option>
 
-  <br />
+    </select>
+
+    <br />
 
     <div class="mb-3">
 
@@ -68,7 +112,7 @@
                 @foreach (var item in Model.listRelation)
                 {
                     <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
-                   
+
                 }
 
 
@@ -76,27 +120,30 @@
 
         </div>
     </div>
-
     <br />
 
-    <div class="mb-3">
-        <input asp-for="@Model.Name" type="text" id="inputName" class="form-control" placeholder="Nome">
-        <span asp-validation-for="@Model.Name" class="text-danger"></span>
-    </div>
 
-    @* formatar input number *@
-    <div class="row">
-        <div class="col">
-            <input asp-for="@Model.PhoneNumber" type="tel" id="inputNumber" class="form-control" placeholder="Telemovel(Opcional)">
-            <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+    <div id="inputConfidential">
+
+        <div class="mb-3">
+            <input asp-for="@Model.Name" type="text" id="inputName" required title="Para este tipo de denúncia este campo é obrigatório" class="form-control" placeholder="Nome">
+            <span asp-validation-for="@Model.Name" class="text-danger"></span>
         </div>
 
-        <div class="col">
-            <input asp-for="@Model.Email" type="email" id="inputEmail" class="form-control" placeholder="Email(Opcional)">
-            <span asp-validation-for="@Model.Email" class="text-danger"></span>
+        @* formatar input number *@
+        <div class="row">
+            <div class="col">
+                <input asp-for="@Model.PhoneNumber" type="tel" id="inputNumber" class="form-control" placeholder="Telemovel(Opcional)">
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="col">
+                <input asp-for="@Model.Email" type="email" id="inputEmail" class="form-control" placeholder="Email(Opcional)">
+                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+            </div>
         </div>
+        <br />
     </div>
-    <br />
 
     <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
         <option value="" selected>Selecione uma Categoria</option>
@@ -105,28 +152,38 @@
 
     <br /><br />
 
+
     <div class="form-group">
 
-        <textarea asp-for="@Model.ComplaintDescription" class="form-control" placeholder="Descrição" id="textInput" rows=" 10" required></textarea>
+        <textarea asp-for="@Model.ComplaintDescription" class="form-control" title="Campo obrigatório" placeholder="Descrição" id="textInput" rows=" 10" required></textarea>
         <span asp-validation-for="@Model.ComplaintDescription" class="text-danger"></span>
     </div>
 
     <br />
 
 
+    @*     <div class="input-group mb-3">
+    <input name="aaaa" title="Escolha um arquivo" placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple onchange="checkExtension(this)" />
+    </div>
+    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span> *@
+
     <div class="input-group mb-3">
 
-        <input placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple  onchange="verificaExtensao(this)" />
-
+        <input placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple onchange="checkExtension(this)" />
         <label class="input-group-text" for="file">Escolher Arquivo</label>
-       
-       
     </div>
-     <span id="eroorFile" asp-validation-for="_files" class="text-danger"></span>
+    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
+
+    <br />
+    <div class="file-upload">
+        <input class="file-upload__input" type="file" name="myFile[]" id="myFile" multiple onchange="checkExtension(this)">
+        <button class="file-upload__button" type="button">Escoha um Arquivo</button>
+        <span class="file-upload__label"></span>
+    </div>
 
 
 
-    <br /> <br /> 
+    <br /> <br />
 
     <div class="form-group text-center">
         <button type="submit" value="CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
@@ -134,11 +191,12 @@
     <br />
 </form>
 
-<br /><br />
+<br />
+<br />
 
 
 <section class="text-center">
-     <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>        
+    <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>
 </section>
 
 
@@ -149,7 +207,19 @@
 @section Scripts {
     @{
         <script>
-        //função para manipular DropDown
+            //função para formata input
+            $('#inputNumber').inputmask({
+                mask: '+999 999999999', // Formato para números brasileiros com +55
+                //placeholder: '((___) _________', // Placeholder para mostrar o formato
+                showMaskOnHover: false,
+                showMaskOnFocus: true,
+                //clearIncomplete: true,
+                onBeforePaste: function (pastedValue) {
+                    return pastedValue.replace(/\D/g, ''); // Permite colar apenas números
+                }
+            });
+
+            //função para manipular DropDown
             $(document).ready(function () {
 
                 getCategoryByCompanyId();
@@ -173,7 +243,7 @@
 
                             $('#categoryid').empty();
 
-                            $('#categoryid').append('<option value="" selected>Selecione uma Categoria</option>'); 
+                            $('#categoryid').append('<option value="" selected>Selecione uma Categoria</option>');
                             $.each(data, function (index, item) {
 
                                 $('#categoryid').append('<option value="' + item.categoryId + '">' + item.categories + '</option>');
@@ -191,69 +261,96 @@
 
             //função para verificar input
 
-              const fileId = document.querySelector("#file");
+            const fileId = document.querySelector("#file");
 
-            //     $j(function () {
 
-            //     $j("#arquivo").change(function () {//ou Id do input
-            //         var fileInput = $j(this);
-            //         var extPermitidas = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
-            //         console.log(fileInput.get(0).files[0].size);
+            function checkExtension($input) {
+                var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
+                var files = $input.files; // pegando os arquivos
+                var error = false; // flag para verificar se há erros
 
-            //         //aqui a sua função normal
-            //         if (fileInput.get(0).files.length) {
-            //              if(typeof extPermitidas.find(function(ext){ return fileInput.val().split('.').pop() == ext; }) == 'undefined') {
-            //                 $j('#resultado').text('Extensão inválida');
-            //                 $j('#validate').attr('disabled', 'disabled');
-                            
-                             
-            //             } 
-            //         }
-            //     });
-            // });
-            //verifica em array
-                        function verificaExtensao($input) {
-              var extPermitidas = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
-              var extArquivo = $input.value.split('.').pop();
+                // Limpa a mensagem de erro antes de começar a verificação
+                $("#errorFile").html('');
 
-              if(typeof extPermitidas.find(function(ext){ return extArquivo == ext; }) == 'undefined') {
-                 $('input').val("");
-                
-                 $("#eroorFile").html('Extensão "' + extArquivo + '" não permitida! ');
-              } else {
-                 $("#eroorFile").html('');
-              }
+                // Loop para verificar extensões de arquivos
+                for (var i = 0; i < files.length; i++) {
+                    var fileName = files[i].name;
+                    console.log(fileName); // Para debug
+                    var fileExtension = fileName.split('.').pop().toLowerCase(); // pegando a extensão e convertendo para minúsculas
+
+                    // Verifica se a extensão não está na lista de permitidas
+                    if (typeof allowedExtensions.find(function (ext) { return fileExtension == ext; }) == 'undefined') {
+                        error = true; // Marca erro
+                        $("#errorFile").html(
+                            'Extensão "' + fileExtension + '" não permitida!<br>' +
+                            'Apenas extensões permitidas: [jpg, png, gif, pdf, txt, doc, docx].'
+                        );
+                        break; // Interrompe o loop se encontrar uma extensão inválida
+                    }
+                }
+
+                // Se houver erro, limpa o campo input
+                if (error) {
+                    $('input').val(""); // Reseta o campo input
+                }
             }
+
+
 
 
 
             // função para tipos de denúncias
 
-             // var inputName = document.getElementsById("inputName");
-             // var inputEmail = document.getElementsById("inputEmail");
-             // var inputNumber = document.getElementsById("inputNumber");
-            
 
-             //pegrando o tipo  escolhideo de denuncia
-            var typeComplaint   = document.getElementById("typeComplaint"); 
+            //pegando o tipo  escolhido de denuncia
+            var typeComplaint = document.getElementById("typeComplaint");
             var typeComplaintValue = '';
 
-            typeComplaint.onchange = function(){
+            typeComplaint.onchange = function () {
                 typeComplaintValue = this.value;
                 console.log(typeComplaintValue);
-            }   ;
+            };
 
-            function FuncRadio01() {               
-                if(typeComplaintValue === '0') {
-                    inputNumber.style.display = 'none';
-                    inputEmail.style.display = 'none';
-                    inputName.style.display = 'none';
+            function FuncChangeTypeComplaint() {
+                if (typeComplaintValue === '0') {
+                    inputConfidential.style.display = 'none';
                 } else {
-                    inputNumber.style.display = '';
-                    inputEmail.style.display = '';
-                    inputName.style.display = '';
+
+                    inputConfidential.style.display = '';
                 }
             }
+
+
+            Array.prototype.forEach.call(
+                document.querySelectorAll(".file-upload__button"),
+                function (button) {
+                    const hiddenInput = button.parentElement.querySelector(
+                        ".file-upload__input"
+                    );
+                    const label = button.parentElement.querySelector(".file-upload__label");
+                    const defaultLabelText = "Nenhum arquivo selecionado";
+
+                    // Set default text for label
+                    label.textContent = defaultLabelText;
+                    label.title = defaultLabelText;
+
+                    button.addEventListener("click", function () {
+                        hiddenInput.click();
+                    });
+
+                    hiddenInput.addEventListener("change", function () {
+                        const filenameList = Array.prototype.map.call(hiddenInput.files, function (
+                            file
+                        ) {
+                            return file.name;
+                        });
+
+                        label.textContent = filenameList.join(", ") || defaultLabelText;
+                        label.title = filenameList.length();
+                        label.title = label.textContent;
+                    });
+                }
+            );
 
 
 
@@ -264,10 +361,20 @@
 }
 
 
+@*
+falar sobre o produto
+aprensar
+pode interroper quando falar
 
 
+verficação campos de texto
+arquivos e email
+preciso fazer um ciclo de verificação
 
 
+quro que le varios
+
+ *@
 
 
 
