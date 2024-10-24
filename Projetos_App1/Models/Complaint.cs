@@ -1,4 +1,4 @@
-﻿using Microsoft.Build.Framework;
+﻿
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,8 +6,10 @@ namespace Projetos_App1.Models;
 
 public partial class Complaint
 {
-    public Guid ComplaintId { get; set; } 
+    [Required(ErrorMessage = "Campo obrigatório")]
+    public Guid ComplaintId { get; set; }
 
+    [Required(ErrorMessage = "Campo obrigatório")]
     public string PassWord { get; set; } = null!;
 
     public bool Complaint_Is_Confidential { get; set; }

@@ -14,7 +14,7 @@ public partial class Whistleblowing
 
     public string? Adress { get; set; }
 
-    [EmailAddress]
+    [EmailAddress(ErrorMessage = "Fomato de email, invalido!")]
     [Display(Name = "Email")]
     public string? Email { get; set; }
 

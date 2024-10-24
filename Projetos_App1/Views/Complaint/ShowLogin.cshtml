@@ -31,7 +31,7 @@
         <div class="password-container">
             <label>PassWord:</label>
             <br />
-            <input style="outline:none;border: 0 none; width:92%;" type="password" id="passwordId" name="PassWord" value="@Model.PassWord" readonly />
+            <input style="outline:none;border: 0 none; width:92%; font: large;" type="password" id="passwordId" name="PassWord" value="@Model.PassWord" readonly />
             <i style="cursor:pointer;" id="togglePassword" class="fas fa-eye"></i>
             <i style="padding-left: 20px; cursor:pointer;" id="copyPass" class="fa-regular fa-copy"></i>
         </div>
@@ -39,6 +39,21 @@
 
     <hr />
     <br />
+
+  
+
+    <div class="mb-4">
+        <label for="InputEmail" class="form-label">Deseja enviar por email?</label>
+        <br />
+        <input name="Email" id="emailInput" type="email" style="outline:none; border: none;width:92%;" placeholder="Email (opcional)">
+        <hr />
+        <span id="error" asp-validation-for="@Model.Whistleblowing.Email" class="text-danger"></span>
+        
+    </div>
+
+
+    <br />
+
 
     <div class="d-grid gap-2 col-5 mx-auto">
         <a asp-route-id="@Model.ComplaintId" asp-controller="Complaint" asp-action="ShowPDF" class="btn bnt-home1">
@@ -48,11 +63,6 @@
 
 
 
-
-    <br />
-    <div class="mb-4">
-        <input name="Email" id="emailInput" type="email" style="outline:none;border: 0 none;" class="form-control" placeholder="Email (opcional)">
-    </div>
 
     <br />
 
@@ -75,6 +85,8 @@
 </section>
 
 <script>
+
+    // função para copiar campos
     const togglePassword = document.querySelector("#togglePassword");
     const password = document.querySelector("#passwordId");
     const identityId = document.querySelector("#identityId");
@@ -99,6 +111,7 @@
         alert('Senha copiada!');
     });
 
+    //função para mostrar e ocultar password
     togglePassword.addEventListener("click", function () {
         const type = password.type === "password" ? "text" : "password";
         password.type = type;
@@ -109,4 +122,20 @@
     checkbox.addEventListener('change', function () {
         finalButton.disabled = !this.checked; // Habilita ou desabilita o botão com base no estado do checkbox
     });
+
+    //função para validar email
+    document.querySelector('input[type=email]').oninvalid = function () {
+
+        // remove mensagens de erro antigas
+        $("#error").html('');
+
+        // reexecuta validação
+        if (!this.validity.valid) {
+
+            $("#error").html(
+                'Fomato de email, inválido!'
+            );
+           
+        }
+    };
 </script>

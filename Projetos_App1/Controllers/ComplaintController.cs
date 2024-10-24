@@ -83,9 +83,7 @@ namespace Projetos_App1.Controllers
                 return View(complaintVm);
             }
 
-            Console.WriteLine(complaintVm.PhoneNumber.ToString());
-            Console.WriteLine(complaintVm.PhoneNumber.Length);
-
+           
 
             Complaint complaint = _complaintService.SaveComplaint(complaintVm);//Retorna para pode add em outras tabelas
 

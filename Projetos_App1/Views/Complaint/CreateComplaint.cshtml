@@ -7,45 +7,34 @@
 
 
 <style>
-    .file-upload {
-        display: inline-flex;
-        align-items: center;
-        font-size: 15px;
-    }
+ 
 
     .file-upload__input {
         display: none;
     }
 
     .file-upload__button {
-        -webkit-appearance: none;
-        background: #009879;
-        border: 2px solid #00745d;
-        border-radius: 4px;
-        outline: none;
-        padding: 0.5em 0.8em;
-        margin-right: 15px;
-        color: #ffffff;
-        font-size: 1em;
-        font-family: Arial, sans-serif;
-        font-weight: bold;
-        cursor: pointer;
-    }
+    border: 2px solid #191970; 
+    border-right: none; 
+    border-radius: 8px 8px 8px 8px;
+    padding: 0.5em 0.8em;
+    color: #ffffff;
+    cursor: pointer;
+    margin-right: 0; 
+    background-color: #191970;
+}
 
-        .file-upload__button:active {
-            background: #00745d;
-        }
+.file-upload__label {
+    display: inline-block;
+    padding: 0.5em 0.8em; 
+    border: 2px solid #e9ecef; 
+    border-left: none; 
+    border-radius: 0 8px 8px 0; 
+    color: #565656;
+    width: 1120px;
+}
 
-    .file-upload__label {
-        max-width: 250px;
-        font-size: 0.95em;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        white-space: nowrap;
-        font-family: Arial, sans-serif;
-        border:dashed 2px;
-        color: red;
-    }
+
 
 </style>
 
@@ -162,30 +151,18 @@
     <br />
 
 
-    @*     <div class="input-group mb-3">
-    <input name="aaaa" title="Escolha um arquivo" placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple onchange="checkExtension(this)" />
-    </div>
-    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span> *@
-
-    <div class="input-group mb-3">
-
-        <input placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple onchange="checkExtension(this)" />
-        <label class="input-group-text" for="file">Escolher Arquivo</label>
-    </div>
-    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
-
-    <br />
-    <div class="file-upload">
-        <input class="file-upload__input" type="file" name="myFile[]" id="myFile" multiple onchange="checkExtension(this)">
-        <button class="file-upload__button" type="button">Escoha um Arquivo</button>
+    <div id="file-upload" class="input-group mb-3">
+        <input  class="file-upload__input" type="file" name="myFile[]" id="myFile" title="Selecionar Ficheiros" multiple onchange="checkExtension(this)">
+        <button class=" file-upload__button" type="button">Selecionar Ficheiros</button>
         <span class="file-upload__label"></span>
     </div>
+    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
 
 
 
     <br /> <br />
 
-    <div class="form-group text-center">
+    <div class="d-grid gap-2 col-6 mx-auto text-center">
         <button type="submit" value="CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
     </div>
     <br />
@@ -261,45 +238,13 @@
 
             //função para verificar input
 
-            const fileId = document.querySelector("#file");
+            const fileId = document.querySelector(".file-upload__input");
 
 
-            function checkExtension($input) {
-                var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
-                var files = $input.files; // pegando os arquivos
-                var error = false; // flag para verificar se há erros
-
-                // Limpa a mensagem de erro antes de começar a verificação
-                $("#errorFile").html('');
-
-                // Loop para verificar extensões de arquivos
-                for (var i = 0; i < files.length; i++) {
-                    var fileName = files[i].name;
-                    console.log(fileName); // Para debug
-                    var fileExtension = fileName.split('.').pop().toLowerCase(); // pegando a extensão e convertendo para minúsculas
-
-                    // Verifica se a extensão não está na lista de permitidas
-                    if (typeof allowedExtensions.find(function (ext) { return fileExtension == ext; }) == 'undefined') {
-                        error = true; // Marca erro
-                        $("#errorFile").html(
-                            'Extensão "' + fileExtension + '" não permitida!<br>' +
-                            'Apenas extensões permitidas: [jpg, png, gif, pdf, txt, doc, docx].'
-                        );
-                        break; // Interrompe o loop se encontrar uma extensão inválida
-                    }
-                }
-
-                // Se houver erro, limpa o campo input
-                if (error) {
-                    $('input').val(""); // Reseta o campo input
-                }
-            }
+           
 
 
-
-
-
-            // função para tipos de denúncias
+            // função selecionar o tipo de denúncias
 
 
             //pegando o tipo  escolhido de denuncia
@@ -320,7 +265,43 @@
                 }
             }
 
+            function checkExtension($input) {
+                var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
+                var files = $input.files; // pegando os arquivos
+                var error = false; // flag para verificar se há erros
+                var inputFiles = document.getElementById("myFile");
 
+                // Limpando msg erro
+                $("#errorFile").html('');
+
+                // Loop para verificar extensões de arquivos
+                for (var i = 0; i < files.length; i++) {
+                    var fileName = files[i].name;
+                    var fileExtension = fileName.split('.').pop().toLowerCase(); // pegando a extensão e convertendo para minúsculas
+
+                    // Verifica se a extensão não está na lista de permitidas
+                    if (typeof allowedExtensions.find(function (ext) { return fileExtension == ext; }) == 'undefined') {
+                        error = true; // Marca erro
+                        $("#errorFile").html(
+                            'Extensão "' + fileExtension + '" não permitida!<br>' +
+                            'Apenas extensões permitidas: [jpg, png, gif, pdf, txt, doc, docx].'
+                        );
+                        break; // Interrompe o loop se encontrar uma extensão inválida
+                    }
+                }
+
+                // Se houver erro, limpa o campo input
+                if (error) {
+
+                    inputFiles.value = "";
+
+                }
+            }
+
+
+
+
+            //função para o arquivo
             Array.prototype.forEach.call(
                 document.querySelectorAll(".file-upload__button"),
                 function (button) {
@@ -339,16 +320,11 @@
                     });
 
                     hiddenInput.addEventListener("change", function () {
-                        const filenameList = Array.prototype.map.call(hiddenInput.files, function (
-                            file
-                        ) {
-                            return file.name;
-                        });
-
-                        label.textContent = filenameList.join(", ") || defaultLabelText;
-                        label.title = filenameList.length();
-                        label.title = label.textContent;
+                        const fileCount = hiddenInput.files.length; // Conta a quantidade de arquivos
+                        label.textContent = fileCount > 1 ? fileCount + " arquivos selecionados" : fileCount + " arquivo selecionado";
+                        label.title = fileCount + " arquivo(s)";
                     });
+
                 }
             );
 
