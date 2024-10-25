@@ -18,7 +18,7 @@ namespace Projetos_App1.Controllers
         private readonly ICategoryRepository _categoryRepository;
         private readonly ICompanyRelationRepository _companyRelationRepository;
         private readonly ICompanyRepository _companyRepository;
-        private readonly IAttachedFileRepository _attachedFileRepository;
+      
         private readonly IComplaintService _complaintService;
         private readonly IWhistleblowingService _whistleblowingService;
         private readonly IAttachedFileService _attacheFileService;
@@ -26,14 +26,14 @@ namespace Projetos_App1.Controllers
 
         public ComplaintController(IComplaintRepository complaintRepository,
                                    ICategoryRepository categoryRepository, ICompanyRelationRepository companyRelation,
-                                   ICompanyRepository companyRepository, IAttachedFileRepository attachedFile, IComplaintService complaintService,
+                                   ICompanyRepository companyRepository,  IComplaintService complaintService,
                                    IWhistleblowingService whistleblowingService, IAttachedFileService attachedFileService, IEmail email)
         {
             _complaintRepository = complaintRepository;
             _categoryRepository = categoryRepository;
             _companyRelationRepository = companyRelation;
             _companyRepository = companyRepository;
-            _attachedFileRepository = attachedFile;
+           
             _complaintService = complaintService;
             _whistleblowingService = whistleblowingService;
             _attacheFileService = attachedFileService;
@@ -45,7 +45,7 @@ namespace Projetos_App1.Controllers
         public IActionResult CreateComplaint()
         {
             var listcompanies = _companyRepository.companies.ToList();
-            var listcategories = _categoryRepository.Categories.ToList();
+           
             var listrelationship = _companyRelationRepository.companyRelations.ToList();
 
             var complainVm = new ComplaintViewModel()

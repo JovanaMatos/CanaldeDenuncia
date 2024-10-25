@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.EntityFrameworkCore;
 using Projetos_App1.Helper;
 using Projetos_App1.Models;
@@ -9,7 +11,17 @@ using Projetos_App1.ViewModels;
 using Rotativa.AspNetCore;
 using System.Configuration;
 
+
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = new PathString("/Home/Index/"); //401 - Unauthorized
+        options.AccessDeniedPath = new PathString("/Home/Index/"); //403 - Forbidden
+    });
 
 
 
@@ -27,6 +39,7 @@ builder.Services.AddTransient<IComplaintService, ComplaintService >();
 builder.Services.AddTransient<IWhistleblowingService, WhistleblowingService >();
 builder.Services.AddTransient<IAttachedFileService, AttachedFileService >();
 builder.Services.AddTransient<IEmail, Email >();
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -46,15 +59,24 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Complaint}/{action=CreateComplaint}/{id?}");
+    pattern: "{controller=LoginComplaint}/{action=Login}/{id?}");
 
 
 
 RotativaConfiguration.Setup(app.Environment.WebRootPath); app.UseRotativa();
+
+
+app.UseCookiePolicy(new CookiePolicyOptions
+{
+    MinimumSameSitePolicy = SameSiteMode.Strict,
+    HttpOnly = HttpOnlyPolicy.Always
+});
 
 app.UseStaticFiles();
 app.UseRouting();

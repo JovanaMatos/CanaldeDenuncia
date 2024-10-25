@@ -58,16 +58,6 @@ namespace Projetos_App1.ViewModels
         
 
 
-   
-
-
-
-
-
-
-
-
-
     }
 }
 

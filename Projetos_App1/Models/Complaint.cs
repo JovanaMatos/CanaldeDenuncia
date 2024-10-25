@@ -67,7 +67,20 @@ public partial class Complaint
     public string CreatePassWord()
     {
         string passWord = Guid.NewGuid().ToString().Replace("-", "");
-
+       // var passwordHash = HashPassword(passWord);
         return passWord;
     }
-}
+
+    //por decidir incriptar ou não
+
+    //public string HashPassword(string password)
+    //{
+    //    return BCrypt.Net.BCrypt.HashPassword(password, workFactor: 10);
+    //}
+
+    //// Método para verificar se a senha informada corresponde ao hash
+    //public bool VerifyPassword(string password, string passwordHash)
+    //{
+    //    return BCrypt.Net.BCrypt.Verify(password, passwordHash);
+    }
+
