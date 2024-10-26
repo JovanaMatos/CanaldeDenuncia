@@ -27,7 +27,7 @@ namespace Projetos_App1.ViewModels
         [Phone ( ErrorMessage = "Digite o código do país seguido dos números.")]
         [Display(Name = "Telemovel")]
         [StringLength(14, ErrorMessage = "Digite o código do país seguido dos números.")]
-        // [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{9,15}$", ErrorMessage = "Por favor digite um numero valido!")]
+        [RegularExpression("^(?!0+$)(\\+\\d{1,3}[- ]?)?(?!0+$)\\d{9,14}$", ErrorMessage = "Por favor digite um numero valido!")]
         public string? PhoneNumber { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
@@ -46,7 +46,11 @@ namespace Projetos_App1.ViewModels
         [Required(ErrorMessage = "Campo obrigatório")]
         public int companyid { get; set; }
 
- 
+        [Required(ErrorMessage = "Campo obrigatório")]
+        public int Complaint_Is_Confidential { get; set; }
+
+
+
 
 
         public List<Category> listCategory { get; set; } = new List<Category> ();

@@ -4,6 +4,8 @@
     {
         IEnumerable<CompanyRelation> companyRelations { get; }
 
+        Task<string> CompanyRelation (int companyRelationId);
+
 
 
     }

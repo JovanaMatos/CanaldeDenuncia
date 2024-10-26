@@ -63,14 +63,14 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
+
     @* aparecer o nome e sumir e um houver com msg *@
-    <select required id="typeComplaint" name="typeComplaint" class="form-select" aria-label="Default select example" onclick="FuncChangeTypeComplaint()">
-
-        <option value="" selected>Tipo de Denúncia</option>
-        <option value="1">Confindencial</option>
-        <option value="0">Anónima</option>
-
+    <select asp-for="@Model.Complaint_Is_Confidential" required id="typeComplaint" class="form-select" aria-label="Default select example" onchange="FuncChangeTypeComplaint()">
+        <option value="" disabled selected>Tipo de Denúncia</option>
+        <option value="1">Confidencial</option>
+        <option value="2">Anónima</option>
     </select>
+    <span asp-validation-for="@Model.Complaint_Is_Confidential" class="text-danger"></span>
 
     <br />
 
@@ -92,6 +92,8 @@
 
                 }
             </select>
+            <span asp-validation-for="@Model.companyid" class="text-danger"></span>
+
         </div>
 
 
@@ -106,6 +108,7 @@
 
 
             </select>
+           
 
         </div>
     </div>
@@ -123,7 +126,7 @@
         <div class="row">
             <div class="col">
                 <input asp-for="@Model.PhoneNumber" type="tel" id="inputNumber" class="form-control" placeholder="Telemovel(Opcional)">
-                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                <span id="error-message" asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
             </div>
 
             <div class="col">
@@ -137,6 +140,7 @@
     <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
         <option value="" selected>Selecione uma Categoria</option>
     </select>
+    <span asp-validation-for="@Model.categoryid" class="text-danger"></span>
 
 
     <br /><br />
@@ -196,6 +200,9 @@
                 }
             });
 
+
+
+
             //função para manipular DropDown
             $(document).ready(function () {
 
@@ -247,21 +254,16 @@
             // função selecionar o tipo de denúncias
 
 
-            //pegando o tipo  escolhido de denuncia
-            var typeComplaint = document.getElementById("typeComplaint");
-            var typeComplaintValue = '';
-
-            typeComplaint.onchange = function () {
-                typeComplaintValue = this.value;
-                console.log(typeComplaintValue);
-            };
-
             function FuncChangeTypeComplaint() {
-                if (typeComplaintValue === '0') {
-                    inputConfidential.style.display = 'none';
+                var typeComplaint = document.getElementById("typeComplaint").value; // Get selected value
+                console.log("Tipo de denúncia selecionado: " + typeComplaint); // Adicione este log
+                if (typeComplaint === "2") {
+                    document.getElementById("inputConfidential").style.display = 'none';
+                    document.getElementById("inputName").value = "";
+                    document.getElementById("inputNumber").value = "";
+                    document.getElementById("inputEmail").value = "";
                 } else {
-
-                    inputConfidential.style.display = '';
+                    document.getElementById("inputConfidential").style.display = '';
                 }
             }
 

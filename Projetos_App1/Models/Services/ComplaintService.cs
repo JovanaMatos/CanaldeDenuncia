@@ -28,18 +28,28 @@ namespace Projetos_App1.Models.Services
                 ComplaintSubject = complaintViewModel.ComplaintSubject,
                 ComplaintDescription = complaintViewModel.ComplaintDescription,
                 CompanyRelationId = complaintViewModel.CompanyRelationId,
-                CompaniesCategoryId = _companiesCategoryRepository.GetCompaniesCategoryById(complaintViewModel.companyid, complaintViewModel.categoryid),
-                ShippingMethodsId = 1,
-                Complaint_Is_Confidential = true,// validar verificar
+                CompaniesCategoryId = _companiesCategoryRepository.GetCategoryIdByIdCompaniesCategory(complaintViewModel.companyid, complaintViewModel.categoryid),
+                ShippingMethodsId = 1,//metodo de envio 
+               
                 ComplaintStartDate = DateTime.Now,
                 ComplaintStatusId = 1 //id recebida
 
             };
+            
+            if (complaintViewModel.Complaint_Is_Confidential == 1)
+            {
+                Console.WriteLine(complaintViewModel.Complaint_Is_Confidential);
+                complaint.Complaint_Is_Confidential = true;
+            }
+            else
+            {
+                complaint.Complaint_Is_Confidential = false;
+            }
 
             complaint.ComplaintId = complaint.CreateId();
             complaint.PassWord = complaint.CreatePassWord();
 
-
+            Console.WriteLine(complaintViewModel.Complaint_Is_Confidential);
             _complaintRepository.SaveNewComplaint(complaint);
 
 

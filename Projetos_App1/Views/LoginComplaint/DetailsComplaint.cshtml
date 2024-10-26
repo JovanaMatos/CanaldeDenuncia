@@ -1,0 +1,67 @@
+﻿@model Projetos_App1.ViewModels.AccessComplaintViewModel
+@{
+    ViewData["Title"] = "DetailsComplaint";
+}
+
+<h1>DetailsComplaint</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintSubject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Company)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ComplaintStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyRelation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.ComplaintSubject) <!-- Corrigido -->
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Company) <!-- Corrigido -->
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.Category) <!-- Corrigido -->
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ComplaintDescription) <!-- Corrigido -->
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.ComplaintStatus) <!-- Corrigido -->
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.CompanyRelation) <!-- Corrigido -->
+            </td>
+            <td>
+
+
+
+             @*    @Html.ActionLink("Edit", "Edit", new { id = model.ComplaintId }) | <!-- ID adicionado -->
+                @Html.ActionLink("Details", "Details", new { id = model.ComplaintId }) | <!-- ID adicionado -->
+                @Html.ActionLink("Delete", "Delete", new { id = model.ComplaintId }) <!-- ID adicionado --> *@
+            </td>
+        </tr>
+
+        @Html.ActionLink("Sair", "Logoff", "LoginComplaint");
+    </tbody>
+</table>

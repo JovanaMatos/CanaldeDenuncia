@@ -4,6 +4,7 @@
     {
    
 
-        int GetCompaniesCategoryById(int companyId, int categoryId);
+        int GetCategoryIdByIdCompaniesCategory(int companyId, int categoryId);
+        Task<List<CompaniesCategory>> SearchCompanyCategoryByID(int CompaniesCategoryiD);
     }
 }

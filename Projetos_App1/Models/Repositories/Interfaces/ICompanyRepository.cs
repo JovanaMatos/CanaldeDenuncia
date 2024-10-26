@@ -3,5 +3,6 @@
     public interface ICompanyRepository
     {
         IEnumerable<Company> companies { get; }
+        Task<string> GetCompanyByIdCompaniesCategory(int companyCategoryId);
     }
 }

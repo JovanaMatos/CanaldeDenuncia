@@ -4,8 +4,8 @@
 <br />
 <br />
 <br />
-<form asp-action="AccessComplaint" asp-controller="LoginComplaint" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+@* <form asp-action="AccessComplaint" asp-controller="LoginComplaint" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
    @*  <div class="form-group"> *@
      @*    <div>
             <label asp-for="@Model.ComplaintId">Código:</label>
@@ -18,15 +18,44 @@
 @*         <hr /> *@
 
 
-        <div class="mb-3">
-            <input asp-for="@Model.ComplaintId" type="text"    class="form-control" placeholder="codigo">
-            <span asp-validation-for="@Model.ComplaintId" class="text-danger"></span>
-        </div>
-           <div class="mb-3">
-            <input asp-for="@Model.PassWord" type="password"   class="form-control" placeholder="senha">
-            <span asp-validation-for="@Model.PassWord" class="text-danger"></span>
-        </div>
 
+
+<table class="table">
+    <tr>
+      <td>
+            <div class="row">
+            <div class="col-10 col-md-10 col-lg-10">
+                
+                    <h4>Login</h4>
+                <form asp-controller="LoginComplaint" asp-action="Login" method="post" class="form-horizontal" role="form">
+                        <hr />
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                  
+                        <div class="form-group">
+                            <label asp-for="@Model.ComplaintId" class="col-md-2 control-label"></label>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.ComplaintId" class="form-control" />
+                                <span asp-validation-for="@Model.ComplaintId" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.PassWord" class="col-md-2 control-label"></label>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.PassWord" class="form-control" />
+                                <span asp-validation-for="@Model.PassWord" class="text-danger"></span>
+                            </div>
+                            <br />
+                        </div>
+
+                        <div class="d-grid gap-2 col-6 mx-auto text-center">
+                            <button type="submit" class="btn btn-secondary btn-lg">SUBMETER</button>
+                        </div> 
+                    </form>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
        
 @* 
         <br />
@@ -40,13 +69,15 @@
     <hr />
    
     <br /> *@
-    <div class="d-grid gap-2 col-6 mx-auto text-center">
+@*     <div class="d-grid gap-2 col-6 mx-auto text-center">
         <button type="submit" class="btn btn-secondary btn-lg">SUBMETER</button>
-    </div>
-</form>
+    </div> *@
+@* </form>
+ *@
 
+<h4 class="text-danger">@ViewData["LoginError"]</h4>
+<h1 class="text-danger">@TempData["LoginError"]</h1>
 
-<h4>@ViewData["LoginError"]</h4>
 
 
 
@@ -61,7 +92,9 @@
 
 
 @section Scripts {
-    <script>
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    </script>
+    <partial name="_ValidationScriptsPartial" />
 }
+
+
+
+

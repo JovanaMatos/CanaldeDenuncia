@@ -75,6 +75,8 @@ namespace Projetos_App1.Controllers
         //criar uma denúncia
         public IActionResult CreateComplaint(ComplaintViewModel complaintVm)
         {
+            Console.WriteLine("aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+ complaintVm.Complaint_Is_Confidential);
+            Console.WriteLine(complaintVm.Name);
 
             // Verifica se o modelo é válido
             if (!ModelState.IsValid)
@@ -116,6 +118,12 @@ namespace Projetos_App1.Controllers
         [HttpPost]
         public IActionResult ShowLogin(Complaint complaint, string email)
         {
+            if (ModelState.IsValid)
+            {
+                // Aqui você pode verificar o valor de model.Complaint_Is_Confidential
+                // Se necessário, coloque um ponto de interrupção ou um log para verificar o valor
+                Console.WriteLine("outrooooooooooooo" + complaint.Complaint_Is_Confidential);
+            }
             //verifica se esta vazio se sim, ja redireciona para view
             if (string.IsNullOrWhiteSpace(email))
             {

@@ -1,4 +1,5 @@
-﻿using Projetos_App1.Models.Repositories.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using Projetos_App1.Models.Repositories.Interfaces;
 
 namespace Projetos_App1.Models.Repositories
 {
@@ -12,5 +13,11 @@ namespace Projetos_App1.Models.Repositories
         }
 
         public IEnumerable<CompanyRelation> companyRelations => _context.CompanyRelations;
+
+       public async Task<string> CompanyRelation(int companyRelationId)
+        {
+            var relation = await _context.CompanyRelations.Where(r => r.CompanyRelationId == companyRelationId).Select(x => x.CompanyRelationship).FirstOrDefaultAsync();
+            return relation;
+        }
     }
 }

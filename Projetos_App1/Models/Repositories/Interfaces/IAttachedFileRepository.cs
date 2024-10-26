@@ -6,5 +6,7 @@
 
         void AddAttachedFiles(AttachedFile attachedFiles);
 
+        Task<List<string>> ListAttachedFile(Guid IdComplaint);
+
     }
 }
