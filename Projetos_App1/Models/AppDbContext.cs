@@ -40,7 +40,7 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 
-        => optionsBuilder.UseSqlServer("Data Source=PC-INTERN004\\SQLEXPRESS;Initial Catalog=Complaint_Database2;User Id=DESCONTEL\\jmatos;Integrated Security=True;Encrypt=False");
+        => optionsBuilder.UseSqlServer("Data Source=WENDEL-PC\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=geova;Integrated Security=True;Encrypt=False");
     //"Data Source=PC-INTERN004\\SQLEXPRESS;Initial Catalog=Complaint_Database2;User Id=DESCONTEL\\jmatos;Integrated Security=True;Encrypt=False"
     //"Data Source=WENDEL-PC\\SQLEXPRESS;Initial Catalog=Complaint_Database;User Id=geova;Integrated Security=True;Encrypt=False"
     protected override void OnModelCreating(ModelBuilder modelBuilder)

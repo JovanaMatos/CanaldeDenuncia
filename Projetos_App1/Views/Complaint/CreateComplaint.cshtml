@@ -144,17 +144,16 @@
 
     <br />
 
-@*     <div id="file-upload" class="input-group mb-3">
-        <!-- Input de arquivos oculto -->
+    <div id="file-upload" class="input-group mb-3">
+    
         <input asp-for="_files" class="file-upload__input" type="file" name="myFiles" id="myFiles" multiple style="display: none; " onchange="checkExtension(this)">
 
-        <!-- Botão de seleção de arquivos -->
         <button class="file-upload__button" type="button">Selecionar Arquivos</button>
 
-        <!-- Rótulo para mostrar a quantidade de arquivos selecionados -->
+    
         <span class="file-upload__label">Nenhum arquivo selecionado</span>
     </div>
-    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span> *@
+    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
 
 
     <div class="input-group mb-3">
@@ -302,33 +301,37 @@
                 }
             };
 
-            // document.addEventListener("DOMContentLoaded", function () {
-            //     const button = document.querySelector(".file-upload__button");
-            //     const hiddenInput = document.getElementById("myFiles");
-            //     const label = document.querySelector(".file-upload__label");
-            //     const defaultLabelText = "Nenhum arquivo selecionado";
 
-            //     // Define o texto padrão do rótulo
-            //     label.textContent = defaultLabelText;
-            //     label.title = defaultLabelText;
+            // Script para controlar o clique e exibir a quantidade de arquivos
+            document.addEventListener("DOMContentLoaded", function () {
+                const button = document.querySelector(".file-upload__button");
+                const hiddenInput = document.getElementById("myFiles");
+                const label = document.querySelector(".file-upload__label");
+                const defaultLabelText = "Nenhum arquivo selecionado";
 
-            //     // Clique no botão de seleção dispara o clique no input
-            //     button.addEventListener("click", function () {
-            //         hiddenInput.click(); // Simula o clique no input
-            //     });
+                // Define o texto padrão do rótulo
+                label.textContent = defaultLabelText;
+                label.title = defaultLabelText;
 
-            //     // Evento de mudança no input para atualizar o rótulo
-            //     hiddenInput.addEventListener("change", function () {
-            //         const fileCount = hiddenInput.files.length; // Conta os arquivos
-            //         if (fileCount > 0) {
-            //             label.textContent = `${fileCount} ${fileCount > 1 ? "arquivos" : "arquivo"} selecionados`;
-            //             label.title = label.textContent;
-            //         } else {
-            //             label.textContent = defaultLabelText;
-            //             label.title = defaultLabelText;
-            //         }
-            //     });
-            // });
+                // Clique no botão de seleção dispara o clique no input
+                button.addEventListener("click", function () {
+                    hiddenInput.click(); // Simula o clique no input de arquivos
+                });
+
+                // Evento de mudança no input para atualizar o rótulo
+                hiddenInput.addEventListener("change", function () {
+                    const fileCount = hiddenInput.files.length;
+                    if (fileCount > 0) {
+                        label.textContent = `${fileCount} ${fileCount > 1 ? "arquivos" : "arquivo"} selecionados`;
+                        label.title = label.textContent;
+                    } else {
+                        label.textContent = defaultLabelText;
+                        label.title = defaultLabelText;
+                    }
+                });
+            });
+
+
 
 
 
@@ -350,8 +353,7 @@ pode interroper quando falar
 
 
 
-- mostrar ficheiros (arrumar interFACE) - falta barra de progresso e pular linha em txt
-- pesquisa de status
+- mostrar ficheiros (arrumar interFACE) - falta barra de progresso 
 - criar denuncia - falta input files
 - fazer uma página para denúncia especificada
 - tirar ferramenta de tradução, apenas se der tempo
@@ -375,90 +377,33 @@ pode interroper quando falar
 
 
 
-// <div id="file-upload" class="input-group mb-3">
-//     <input class="file-upload__input" type="file" name="myFile" id="myFile" title="Selecionar Ficheiros" multiple onchange="checkExtension(this)">
-//     <button class=" file-upload__button" type="button">Selecionar Ficheiros</button>
-//     <span class="file-upload__label"></span>
-// </div>
-// <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
-//  function checkExtension($input) {
-//     // const fileId = document.querySelector(".file-upload__input");
-//      var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
-//      var files = $input.files; // pegando os arquivos
-//      var error = false; // flag para verificar se há erros
-//      var inputFiles = document.getElementById("myFile");
 
-//      // Limpando msg erro
-//      $("#errorFile").html('');
+@* 
+            // Script para controlar o clique e exibir a quantidade de arquivos
+            document.addEventListener("DOMContentLoaded", function () {
+                const button = document.querySelector(".file-upload__button");
+                const hiddenInput = document.getElementById("myFiles");
+                const label = document.querySelector(".file-upload__label");
+                const defaultLabelText = "Nenhum arquivo selecionado";
 
-//      // Loop para verificar extensões de arquivos
-//      for (var i = 0; i < files.length; i++) {
-//          var fileName = files[i].name;
-//          var fileExtension = fileName.split('.').pop().toLowerCase(); // pegando a extensão e convertendo para minúsculas
+                // Define o texto padrão do rótulo
+                label.textContent = defaultLabelText;
+                label.title = defaultLabelText;
 
-//          // Verifica se a extensão não está na lista de permitidas
-//          if (typeof allowedExtensions.find(function (ext) { return fileExtension == ext; }) == 'undefined') {
-//              error = true; // Marca erro
-//              $("#errorFile").html(
-//                  'Extensão "' + fileExtension + '" não permitida!
-// <br>' +
-//                  'Apenas extensões permitidas: [jpg, png, gif, pdf, txt, doc, docx].'
-//              );
-//              break; // Interrompe o loop se encontrar uma extensão inválida
-//          }
-//      }
+                // Clique no botão de seleção dispara o clique no input
+                button.addEventListener("click", function () {
+                    hiddenInput.click(); // Simula o clique no input de arquivos
+                });
 
-//      // Se houver erro, limpa o campo input
-//      if (error) {
-//          inputFiles.value = "";
-
-//      }
-//  }
-
-//  //função para o arquivo
-//  Array.prototype.forEach.call(
-//      document.querySelectorAll(".file-upload__button"),
-//      function (button) {
-//          const hiddenInput = button.parentElement.querySelector(
-//              ".file-upload__input"
-//          );
-//          const label = button.parentElement.querySelector(".file-upload__label");
-//          const defaultLabelText = "Nenhum arquivo selecionado";
-
-//          // Set default text for label
-//          label.textContent = defaultLabelText;
-//          label.title = defaultLabelText;
-
-//          button.addEventListener("click", function () {
-//              hiddenInput.click();
-//          });
-
-//          hiddenInput.addEventListener("change", function () {
-//              const fileCount = hiddenInput.files.length; // Conta a quantidade de arquivos
-//              label.textContent = fileCount > 1 ? fileCount + " arquivos selecionados" : fileCount + " arquivo selecionado";
-//              label.title = fileCount + " arquivo(s)";
-//          });
-
-//      }
-//  );
-
-
-
-
-// <div class="input-group mb-3">
-//     <input asp-for="_files" type="file" class="form-control" id="file" multiple />
-//     <label class="input-group-text" for="file">Upload</label>
-//     <span asp-validation-for="_files" class="text-danger"></span>
-
-// </div>
-// <input placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple onchange="verificaExtensao(this)" />
-
-// <label class="input-group-text" for="file">Escolher Arquivo</label>
-
-
-
-
-
-
-
-
+                // Evento de mudança no input para atualizar o rótulo
+                hiddenInput.addEventListener("change", function () {
+                    const fileCount = hiddenInput.files.length;
+                    if (fileCount > 0) {
+                        label.textContent = `${fileCount} ${fileCount > 1 ? "arquivos" : "arquivo"} selecionados`;
+                        label.title = label.textContent;
+                    } else {
+                        label.textContent = defaultLabelText;
+                        label.title = defaultLabelText;
+                    }
+                });
+            }); *@
