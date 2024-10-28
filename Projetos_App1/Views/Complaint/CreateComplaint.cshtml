@@ -38,22 +38,12 @@
 
 </style>
 
+
+
 <div class="text-center" id="homeTitle">
-    <h1>Canal De Denúncias</h1>
+    <h1>Registar Denúncia</h1>
 </div>
 
-<div hidden class="homeContainer">
-
-    <div>
-        <img class="clientLogo" src="~/images/logo.png" alt="img aqui" />
-    </div>
-
-    <div style="align-items: center; align-content:center;">
-        <button class="bnt-home1">REGISTAR DENÚNCIA</button> <br />
-        <button class="bnt-home1 bnt-home2">CONSULTAR DENÚNCIA</button>
-    </div>
-
-</div>
 
 
 <br />
@@ -84,7 +74,7 @@
     <div class="row">
         <div class="col">
             <select asp-for="@Model.companyid" id="companyId" name="companyId" class="form-select">
-                <option value="" selected>Empresa</option>
+                <option value="" disabled selected>Empresa</option>
 
                 @foreach (var item in Model.listCompany)
                 {
@@ -99,7 +89,7 @@
 
         <div class="col">
             <select asp-for="@Model.CompanyRelationId" name="CompanyRelationId" class="form-select">
-                <option value="" selected>Relação com empresa</option>
+                <option value="" disabled selected>Relação com empresa</option>
                 @foreach (var item in Model.listRelation)
                 {
                     <option value="@item.CompanyRelationId">@item.CompanyRelationship</option>
@@ -138,7 +128,7 @@
     </div>
 
     <select asp-for="@Model.categoryid" class="form-select" id="categoryid">
-        <option value="" selected>Selecione uma Categoria</option>
+        <option value="" disabled selected>Selecione uma Categoria</option>
     </select>
     <span asp-validation-for="@Model.categoryid" class="text-danger"></span>
 
@@ -148,19 +138,33 @@
 
     <div class="form-group">
 
-        <textarea asp-for="@Model.ComplaintDescription" class="form-control" title="Campo obrigatório" placeholder="Descrição" id="textInput" rows=" 10" required></textarea>
+        <textarea asp-for="@Model.ComplaintDescription" class="form-control" title="Descreva com maior detalhe possivel sua denúncia." placeholder="Descrição" id="textInput" rows=" 10" required></textarea>
         <span asp-validation-for="@Model.ComplaintDescription" class="text-danger"></span>
     </div>
 
     <br />
 
+@*     <div id="file-upload" class="input-group mb-3">
+        <!-- Input de arquivos oculto -->
+        <input asp-for="_files" class="file-upload__input" type="file" name="myFiles" id="myFiles" multiple style="display: none; " onchange="checkExtension(this)">
 
-    <div id="file-upload" class="input-group mb-3">
-        <input  class="file-upload__input" type="file" name="myFile[]" id="myFile" title="Selecionar Ficheiros" multiple onchange="checkExtension(this)">
-        <button class=" file-upload__button" type="button">Selecionar Ficheiros</button>
-        <span class="file-upload__label"></span>
+        <!-- Botão de seleção de arquivos -->
+        <button class="file-upload__button" type="button">Selecionar Arquivos</button>
+
+        <!-- Rótulo para mostrar a quantidade de arquivos selecionados -->
+        <span class="file-upload__label">Nenhum arquivo selecionado</span>
+    </div>
+    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span> *@
+
+
+    <div class="input-group mb-3">
+        <input asp-for="_files" type="file" class="form-control" id="myFiles" multiple title="Selecionar Ficheiros" onchange="checkExtension(this)" lang="pt-BR" />
+        <label class="input-group-text" for="file">Upload</label>
+        <span asp-validation-for="_files" class="text-danger"></span>
+
     </div>
     <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
+
 
 
 
@@ -184,10 +188,13 @@
 
 
 
-
 @section Scripts {
     @{
         <script>
+
+         
+
+
             //função para formata input
             $('#inputNumber').inputmask({
                 mask: '+999 999999999', // Formato para números brasileiros com +55
@@ -245,14 +252,9 @@
 
             //função para verificar input
 
-            const fileId = document.querySelector(".file-upload__input");
-
-
            
 
-
             // função selecionar o tipo de denúncias
-
 
             function FuncChangeTypeComplaint() {
                 var typeComplaint = document.getElementById("typeComplaint").value; // Get selected value
@@ -268,17 +270,18 @@
             }
 
             function checkExtension($input) {
-                var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
+              
+                var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx']; //definindo extenção
                 var files = $input.files; // pegando os arquivos
                 var error = false; // flag para verificar se há erros
-                var inputFiles = document.getElementById("myFile");
+                var inputFiles = document.getElementById("myFiles");
 
                 // Limpando msg erro
                 $("#errorFile").html('');
 
                 // Loop para verificar extensões de arquivos
                 for (var i = 0; i < files.length; i++) {
-                    var fileName = files[i].name;
+                    var fileName = files[i].name;//pegando o nome
                     var fileExtension = fileName.split('.').pop().toLowerCase(); // pegando a extensão e convertendo para minúsculas
 
                     // Verifica se a extensão não está na lista de permitidas
@@ -294,41 +297,41 @@
 
                 // Se houver erro, limpa o campo input
                 if (error) {
-
                     inputFiles.value = "";
 
                 }
-            }
+            };
+
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     const button = document.querySelector(".file-upload__button");
+            //     const hiddenInput = document.getElementById("myFiles");
+            //     const label = document.querySelector(".file-upload__label");
+            //     const defaultLabelText = "Nenhum arquivo selecionado";
+
+            //     // Define o texto padrão do rótulo
+            //     label.textContent = defaultLabelText;
+            //     label.title = defaultLabelText;
+
+            //     // Clique no botão de seleção dispara o clique no input
+            //     button.addEventListener("click", function () {
+            //         hiddenInput.click(); // Simula o clique no input
+            //     });
+
+            //     // Evento de mudança no input para atualizar o rótulo
+            //     hiddenInput.addEventListener("change", function () {
+            //         const fileCount = hiddenInput.files.length; // Conta os arquivos
+            //         if (fileCount > 0) {
+            //             label.textContent = `${fileCount} ${fileCount > 1 ? "arquivos" : "arquivo"} selecionados`;
+            //             label.title = label.textContent;
+            //         } else {
+            //             label.textContent = defaultLabelText;
+            //             label.title = defaultLabelText;
+            //         }
+            //     });
+            // });
 
 
 
-
-            //função para o arquivo
-            Array.prototype.forEach.call(
-                document.querySelectorAll(".file-upload__button"),
-                function (button) {
-                    const hiddenInput = button.parentElement.querySelector(
-                        ".file-upload__input"
-                    );
-                    const label = button.parentElement.querySelector(".file-upload__label");
-                    const defaultLabelText = "Nenhum arquivo selecionado";
-
-                    // Set default text for label
-                    label.textContent = defaultLabelText;
-                    label.title = defaultLabelText;
-
-                    button.addEventListener("click", function () {
-                        hiddenInput.click();
-                    });
-
-                    hiddenInput.addEventListener("change", function () {
-                        const fileCount = hiddenInput.files.length; // Conta a quantidade de arquivos
-                        label.textContent = fileCount > 1 ? fileCount + " arquivos selecionados" : fileCount + " arquivo selecionado";
-                        label.title = fileCount + " arquivo(s)";
-                    });
-
-                }
-            );
 
 
 
@@ -345,14 +348,116 @@ aprensar
 pode interroper quando falar
 
 
-verficação campos de texto
-arquivos e email
-preciso fazer um ciclo de verificação
 
 
-quro que le varios
+- mostrar ficheiros (arrumar interFACE) - falta barra de progresso e pular linha em txt
+- pesquisa de status
+- criar denuncia - falta input files
+- fazer uma página para denúncia especificada
+- tirar ferramenta de tradução, apenas se der tempo
+
+
+
 
  *@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// <div id="file-upload" class="input-group mb-3">
+//     <input class="file-upload__input" type="file" name="myFile" id="myFile" title="Selecionar Ficheiros" multiple onchange="checkExtension(this)">
+//     <button class=" file-upload__button" type="button">Selecionar Ficheiros</button>
+//     <span class="file-upload__label"></span>
+// </div>
+// <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
+//  function checkExtension($input) {
+//     // const fileId = document.querySelector(".file-upload__input");
+//      var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx'];
+//      var files = $input.files; // pegando os arquivos
+//      var error = false; // flag para verificar se há erros
+//      var inputFiles = document.getElementById("myFile");
+
+//      // Limpando msg erro
+//      $("#errorFile").html('');
+
+//      // Loop para verificar extensões de arquivos
+//      for (var i = 0; i < files.length; i++) {
+//          var fileName = files[i].name;
+//          var fileExtension = fileName.split('.').pop().toLowerCase(); // pegando a extensão e convertendo para minúsculas
+
+//          // Verifica se a extensão não está na lista de permitidas
+//          if (typeof allowedExtensions.find(function (ext) { return fileExtension == ext; }) == 'undefined') {
+//              error = true; // Marca erro
+//              $("#errorFile").html(
+//                  'Extensão "' + fileExtension + '" não permitida!
+// <br>' +
+//                  'Apenas extensões permitidas: [jpg, png, gif, pdf, txt, doc, docx].'
+//              );
+//              break; // Interrompe o loop se encontrar uma extensão inválida
+//          }
+//      }
+
+//      // Se houver erro, limpa o campo input
+//      if (error) {
+//          inputFiles.value = "";
+
+//      }
+//  }
+
+//  //função para o arquivo
+//  Array.prototype.forEach.call(
+//      document.querySelectorAll(".file-upload__button"),
+//      function (button) {
+//          const hiddenInput = button.parentElement.querySelector(
+//              ".file-upload__input"
+//          );
+//          const label = button.parentElement.querySelector(".file-upload__label");
+//          const defaultLabelText = "Nenhum arquivo selecionado";
+
+//          // Set default text for label
+//          label.textContent = defaultLabelText;
+//          label.title = defaultLabelText;
+
+//          button.addEventListener("click", function () {
+//              hiddenInput.click();
+//          });
+
+//          hiddenInput.addEventListener("change", function () {
+//              const fileCount = hiddenInput.files.length; // Conta a quantidade de arquivos
+//              label.textContent = fileCount > 1 ? fileCount + " arquivos selecionados" : fileCount + " arquivo selecionado";
+//              label.title = fileCount + " arquivo(s)";
+//          });
+
+//      }
+//  );
+
+
+
+
+// <div class="input-group mb-3">
+//     <input asp-for="_files" type="file" class="form-control" id="file" multiple />
+//     <label class="input-group-text" for="file">Upload</label>
+//     <span asp-validation-for="_files" class="text-danger"></span>
+
+// </div>
+// <input placeholder="Escolha um arquivo" asp-for="_files" type="file" class="form-control" id="file" multiple onchange="verificaExtensao(this)" />
+
+// <label class="input-group-text" for="file">Escolher Arquivo</label>
+
+
+
+
 
 
 

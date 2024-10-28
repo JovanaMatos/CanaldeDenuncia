@@ -3,65 +3,98 @@
     ViewData["Title"] = "DetailsComplaint";
 }
 
-<h1>DetailsComplaint</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintSubject)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Company)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintDescription)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplaintStatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyRelation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                @Html.DisplayFor(model => model.ComplaintSubject) <!-- Corrigido -->
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Company) <!-- Corrigido -->
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.Category) <!-- Corrigido -->
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.ComplaintDescription) <!-- Corrigido -->
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.ComplaintStatus) <!-- Corrigido -->
-            </td>
-            <td>
-                @Html.DisplayFor(model => model.CompanyRelation) <!-- Corrigido -->
-            </td>
-            <td>
+<style>
+    .new-font{
+        font-family: Roboto, sans-serif;
+    }
+</style>
+
+<div class="text-center" id="homeTitle">
+    <h1>Consultar Denúncia</h1>
+</div>
 
 
 
-             @*    @Html.ActionLink("Edit", "Edit", new { id = model.ComplaintId }) | <!-- ID adicionado -->
-                @Html.ActionLink("Details", "Details", new { id = model.ComplaintId }) | <!-- ID adicionado -->
-                @Html.ActionLink("Delete", "Delete", new { id = model.ComplaintId }) <!-- ID adicionado --> *@
-            </td>
-        </tr>
+<br />
 
-        @Html.ActionLink("Sair", "Logoff", "LoginComplaint");
-    </tbody>
-</table>
+
+
+<form >
+    <fieldset disabled>
+        <div class="mb-3">
+            <label class="new-font" for="ComplaintSubject">Assunto </label>
+            <input  disabled value="@Model.ComplaintSubject" type="text" class="form-control">
+        </div>
+
+
+        <div class="row">
+            <div class="col">
+                <label  class="new-font" >Empresa</label>
+                <select  value="@Model.Company" id="companyId" name="companyId" class="form-select">
+                    <option value="@Model.Company" selected>@Model.Company</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="col">
+                <label class="new-font">Relação com a Empresa</label>
+                <select  name="CompanyRelationId" class="form-select">
+                    <option value="@Model.CompanyRelation" selected>@Model.CompanyRelation</option>
+
+                </select>
+
+
+            </div>
+        </div>
+        <br />
+        <label class="new-font">Categoria</label>
+        <select  class="form-select" id="categoryid">
+            <option value="@Model.Category" selected>@Model.Category</option>
+        </select>
+
+        <br />
+
+
+        <div class="form-group">
+            <label class="new-font">Descrição</label>
+            <textarea  class="form-control" title="Campo obrigatório" placeholder="Descrição" id="textInput" rows="20" required>@Model.ComplaintDescription</textarea>
+        </div>
+
+        <br />
+
+        <div class="form-group">
+            <label for="inputFile" class="new-font">Arquivos adicionados</label>
+            <textarea  class="form-control" id="inputFile" rows="5">
+                @foreach (var nameFile in Model._filesName)
+                {
+                    
+                    @string.Join(" /n ", nameFile);//nao pula linha
+                  
+                }
+     </textarea>
+        </div>
+    </fieldset>
+</form>
+
+<br />
+<br />
+
+
+<div class="d-grid gap-2 col-6 mx-auto text-center">
+<a class="btn btn-secondary btn-lg" asp-controller="LoginComplaint" asp-action="Logoff">Sair</a> 
+</div>
+<br />
+<br />
+
+
+
+<section class="text-center">
+    <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>
+</section>
+
+
+
+

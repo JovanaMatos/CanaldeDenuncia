@@ -48,10 +48,6 @@ namespace Projetos_App1.Controllers
             }
 
 
-            //if (!ModelState.IsValid)
-            //{
-            //    return RedirectToAction("Login", complaintVm);
-            //}
        
             Guid.TryParse(complaintVm.ComplaintId, out Guid id);
 
@@ -79,7 +75,9 @@ namespace Projetos_App1.Controllers
             {
                 await _complaintService.Login(complaintVm);
 
-                return RedirectToAction("DetailsComplaint", "LoginComplaint", complantNew);
+                //return RedirectToAction("DetailsComplaint", "LoginComplaint", id);
+                return RedirectToAction("DetailsComplaint", new { complaintId = id });
+
             }
 
         }
@@ -93,33 +91,45 @@ namespace Projetos_App1.Controllers
 
 
         [Authorize]
-        public async Task <ActionResult> DetailsComplaint(Complaint complant)
+        public async Task <ActionResult> DetailsComplaint(Guid complaintId)
         {
-            AccessComplaintViewModel accessComplaint = new AccessComplaintViewModel()
+
+            var complaint = await _complaintRepository.GetComplaintByIdAsync(complaintId);
+            if (complaint == null)
             {
-                ComplaintSubject = complant.ComplaintSubject,
-                ComplaintDescription = complant.ComplaintDescription,
-                Company = await _companyRepository.GetCompanyByIdCompaniesCategory(complant.CompaniesCategoryId),
-                Category = await _categoryRepository.GetCategoryByIdCompaniesCategory(complant.CompaniesCategoryId),
-                ComplaintStatus = "Recebida"//fazer pequisa
-                
-
-
-            };
-            if (complant.CompanyRelationId != null)
-            {
-                accessComplaint.CompanyRelation = await _companyRelationRepository.CompanyRelation(complant.CompanyRelationId.Value);
+               
+                return NotFound();
             }
-
-            if (complant.AttachedFiles != null) {
-
-               accessComplaint._filesName.AddRange(await _attachedFileRepository.ListAttachedFile(complant.ComplaintId));
-
-            }
-          
-
            
 
+    
+
+            AccessComplaintViewModel accessComplaint = new AccessComplaintViewModel()
+                {
+                    ComplaintSubject = complaint.ComplaintSubject,
+                    ComplaintDescription = complaint.ComplaintDescription,
+                    Company = await _companyRepository.GetCompanyByIdCompaniesCategory(complaint.CompaniesCategoryId),
+                    Category = await _categoryRepository.GetCategoryByIdCompaniesCategory(complaint.CompaniesCategoryId),
+                    ComplaintStatus = "Recebida"//fazer pequisa
+
+
+
+                };
+                if (complaint.CompanyRelationId != null)
+                {
+                    accessComplaint.CompanyRelation = await _companyRelationRepository.CompanyRelation(complaint.CompanyRelationId.Value);
+                }
+
+                if (complaint.AttachedFiles != null)
+                {
+
+                    accessComplaint._filesName.AddRange(await _attachedFileRepository.ListAttachedFile(complaint.ComplaintId));
+
+                }
+               
+
+
+           
             return View(accessComplaint);
         }
 

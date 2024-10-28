@@ -30,6 +30,12 @@ namespace Projetos_App1.Models.Repositories
         {
             var listAttachedFile = await _context.AttachedFiles.Where(at => at.ComplaintId.Equals(IdComplaint)).Select(f => f.FilesName).ToListAsync();
 
+            Console.WriteLine("testeteste  ");
+
+            foreach(var i in listAttachedFile)
+            {
+                Console.WriteLine(i);
+            }
             return listAttachedFile;
         }
     }

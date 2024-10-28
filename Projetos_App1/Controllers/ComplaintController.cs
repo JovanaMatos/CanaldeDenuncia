@@ -75,8 +75,7 @@ namespace Projetos_App1.Controllers
         //criar uma denúncia
         public IActionResult CreateComplaint(ComplaintViewModel complaintVm)
         {
-            Console.WriteLine("aquiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+ complaintVm.Complaint_Is_Confidential);
-            Console.WriteLine(complaintVm.Name);
+        
 
             // Verifica se o modelo é válido
             if (!ModelState.IsValid)
@@ -96,7 +95,7 @@ namespace Projetos_App1.Controllers
                 _whistleblowingService.SaveWhistleblowing(complaintVm, complaint.ComplaintId);
 
             }
-
+            Console.WriteLine("teste files " + complaintVm._files.Count);
             if (complaintVm._files != null && complaintVm._files.Count > 0)//verifica se existe arquivo para verificar
             {
 
