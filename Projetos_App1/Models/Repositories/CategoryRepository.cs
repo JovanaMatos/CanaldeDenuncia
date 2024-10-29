@@ -21,14 +21,14 @@ namespace Projetos_App1.Models.Repositories
         public IEnumerable<Category> Categories { get => _context.Categories; }
 
 
+        //busca as categorias da empresa especifica
         public List<Category> GetCategoryByID(int companyID)
         {
-            //int companyId = 1;
+            //busca todas as CompaniesCategorias
             var companiesCategories = _context.CompaniesCategories;
 
-
-            //ele faz um join onde existe as categorias no companyCategories e depois com a condição de mostrar
-            //apenas onde campanies.id seja igual ao id que vem
+           // um join na categorias que existe na companyCategoria
+           // e onde company id == companyCatehory
             var queryCategory = _context.Categories.Join(companiesCategories,
                                                      category => category.CategoryId, compCategory => compCategory.CategoryId,
                                                      (category, compCategory) => new { category, compCategory })//guardando var e finalizando join
@@ -39,27 +39,17 @@ namespace Projetos_App1.Models.Repositories
             return queryCategory;
         }
 
-
+        // função q encontra o nome da categoria relaciona a empresa
         public async Task<string> GetCategoryByIdCompaniesCategory(int companyCategoryId)
         {
-            //var companiesCategories = await _companiesCategoryRepository.SearchCompanyCategoryByID(companyCategoryId);
-
-
-            //var categoryName = await _context.Categories
-            //                        .Join(companiesCategories,
-            //                                category => category.CategoryId,
-            //                                compCategory => compCategory.CompaniesId,
-            //                                (category, compCategory) => category.Categories)
-            //                        .FirstOrDefaultAsync();
-
-            //return categoryName;
-            // Primeiro, busque as categorias relacionadas a esse ID
+  
+            // // busca a empresa e categoria baseado id 
             var companiesCategories = await _companiesCategoryRepository.SearchCompanyCategoryByID(companyCategoryId);
 
-            // Agora, faça o Join
+            // busca a  o nome da categoria onde categoriaid de companycategory é igual
             var categoryName = await _context.Categories
                 .Where(category => companiesCategories.Select(cc => cc.CategoryId).Contains(category.CategoryId)) // Filtra as categorias diretamente
-                .Select(category => category.Categories) // Projeta o nome da categoria
+                .Select(category => category.Categories) //nome da categoria
                 .FirstOrDefaultAsync(); // Obtém o primeiro nome da categoria ou nulo
 
             return categoryName;

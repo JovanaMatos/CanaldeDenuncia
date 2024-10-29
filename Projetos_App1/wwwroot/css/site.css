@@ -38,7 +38,7 @@ header {
 }
 
 #homeTitle {
-    margin-top: 50px;
+    margin-top: 40px;
     color: rgba(26,51,94,255);
     text-align:center;
 }
@@ -50,12 +50,12 @@ h1{
 }
 
 .homeContainer{
-    margin: 150px ;
+    margin: 130px ;
     display: flex;
     justify-content: center;
     text-align: center;
     align-content: center;
-    padding-top:10px
+    padding-top:5px
    
 }
 

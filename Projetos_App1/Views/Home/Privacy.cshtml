@@ -1,232 +1,143 @@
-﻿@* <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap" rel="stylesheet" />
-
+﻿<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap" rel="stylesheet" />
 <style>
-    /* Cor de fundo do container principal */
-    #container-Principal {
-        background-color: #40bd6b;
-    }
-
-    /* Fundo semitransparente sem afetar o texto */
-    .bg-transparent {
-        background-color: rgba(255, 255, 255, 0.3); /* Fundo transparente */
-    }
-
-    /* Define a cor e estilo do texto para manter opaco */
-    #container-Principal h5,
-    #container-Principal p {
-        color: black; /* Cor do texto */
-        font-family: 'Roboto', sans-serif; /* Fonte Roboto */
-        font-weight: 400; /* Peso da fonte */
-    }
-</style>
-
-<div class="text-center" id="homeTitle">
-    <h1>Tipos de Denúncia</h1>
-</div>
-
-<br />
-<br />
-
-<div id="container-Principal" class="container overflow-hidden text-center">
-    <div class="row gx-5">
-        <div class="col">
-            <div id="type-complaint" class="p-3 container-xxl bg-transparent">
-                <h5>Confidencial</h5>
-                <div id="div-text class=" p-3 bg-light" ">
-
-                        Se selecionar a reportar de forma confidencial, <br />
-                        a sua identificação apenas será conhecida <br />
-                        pela entidade que fará o tratamento da denúncia de forma confidencial, <br />
-                        e a sua identidade aparecerá sempre como anónima e confidencial a <br />
-                        todos os outros intervenientes em caso de requisitos adicionais.
-
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div id="type-complaint" class="p-3 container-xxl bg-transparent">
-                <h5>Anónima</h5>
-                <div id="div-text" class="p-3 bg-light">
-
-                        Se selecionar reportar <br />
-                        anonimamente ninguém durante todo <br />
-                        o processo conhecerá a sua identificação. <br /><br />
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-        <br> *@
-
-
-
-<br>
-<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap" rel="stylesheet" />
-
-
-<style>
-    .row {
-        display: flex; /* Ativa o Flexbox */
-      
-        background-color: #40bd6b;
-    }
-
-    .card {
-        flex: 1;
-        margin: 10px; 
-        height: 200px;
-       max-width: 100%;
-        opacity: 0.7;
-        
-       
-       
-    }
-
-    h5 {
-        color: black; 
-        font-family: 'Roboto', sans-serif; 
-        
-    }
-    p{
-        font-size: 16px;
-        color: black;
-        font-family: 'Roboto', sans-serif;
-       padding-top: 16px;
-       
+    :root {/* bola selacionada */
+        --primary-color: #40bd6b;
     }
  
-</style>
+    /* Progressbar */
+    .progressbar {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        counter-reset: step;
+        margin: 2rem 0 4rem;
+        font-family: "Roboto", sans-serif;
+        color: red;
+    }
 
-<div class="text-center" id="homeTitle">
-    <h1>Tipos de Denúncia</h1>
-</div>
-<br />
-<br />
-<br />
-<br />
+        .progressbar::before,
+        .progress {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 4px;
+            width: 100%;
+            background-color: rgba(26,51,94,255); /* linhada progresso */
+            z-index: -1;
+        }
 
+    .progress {
+        background-color: var(--primary-color);
+        width: 0%;
+        transition: 0.3s;
+       
+    }
 
-<div class="container text-center">
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card-body border-0 " >
-                <h5 class="card-title">CONFIDENCIAL</h5>
-                <div class="card bg-light">
-                    
-                    <p  class="card-text" >
-                        Se selecionar a opção de reportar de forma confidencial, <br /> sua identificação apenas será conhecida <br /> pela entidade que fará o tratamento da denúncia de forma confidencial.
-                        <br /> Além disso, sua identidade aparecerá sempre como anônima e confidencial para todos os outros intervenientes, em caso de requisitos adicionais.
-                    </p>
+    .progress-step {
+        width: 2.1875rem;
+        height: 2.1875rem;
+        background-color: rgba(26,51,94,255);
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: "Roboto", sans-serif;
+       
+    }
 
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6">
-            <div class="card-body border-0 ">
-            <h5 class="card-title">ANÓNIMA</h5>
-            <div class="card bg-light">
-                
-                  
-                    <p class="card-text">Se você selecionar a opção de reportar <br /> anonimamente, ninguém conhecerá sua identificação <br /> durante todo o processo.</p>
+        .progress-step::before {
+            counter-increment: step;
+            content: counter(step);
+        }
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+        .progress-step::after {
+            content: attr(data-title);
+            position: absolute;
+            top: calc(100% + 0.5rem);
+            font-size: 0.85rem;
+            color: rgba(26,51,94,255); /*  cor da letra do stp */
+            font-family: "Roboto", sans-serif;
+            font-weight: bold;
+        }
 
+    .progress-step-active {
+        background-color: var(--primary-color);
+        color: white;
+        font-family: "Roboto", sans-serif;
+    }
 
-
-<br />
-
-<br />
-<br />
-<br />
-
-<div class="d-grid gap-2 col-6 mx-auto">
-    <button id="buttonId" style="background-color:rgba(26,51,94,255);" class="btn btn-secondary" type="button">Continuar</button>
     
+
+ </style>
+
+
+
+
+
+<div class="progressbar">
+    <div class="progress" id="progress"></div>
+
+    <div class="progress-step progress-step-active"
+         data-title="Recebida"></div>
+    <div class="progress-step" data-title="Em Análise"></div>
+    <div class="progress-step" data-title="Em Tratamento"></div>
+    <div class="progress-step" data-title="Em Finalização"></div>
+    <div style="font-family:Arial;" class="progress-step" data-title="Concluída"></div>
 </div>
 
-
-
-
+<!-- Steps -->
 
 @* 
 
 
-@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<link href="import url(https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
-" rel="stylesheet" />
-<style>
-    /*   background-color: #40bd6b;
-     */
-    #container-Principal {
-        background-color: #40bd6b;
-        display: flex;
-        
+<script>
+    const prevBtns = document.querySelectorAll(".btn-prev");
+    const nextBtns = document.querySelectorAll(".btn-next");
+    const progress = document.getElementById("progress");
+    const formSteps = document.querySelectorAll(".form-step");
+    const progressSteps = document.querySelectorAll(".progress-step");
+
+    let formStepsNum = 0;
+
+    nextBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            formStepsNum++;
+            updateFormSteps();
+            updateProgressbar();
+        });
+    });
+
+    prevBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            formStepsNum--;
+            updateFormSteps();
+            updateProgressbar();
+        });
+    });
+
+    function updateFormSteps() {
+        formSteps.forEach((formStep) => {
+            formStep.classList.contains("form-step-active") &&
+                formStep.classList.remove("form-step-active");
+        });
+
+        formSteps[formStepsNum].classList.add("form-step-active");
     }
 
-    #type-complain {
-        flex: 1;
-        height: 1000px;
+    function updateProgressbar() {
+        progressSteps.forEach((progressStep, idx) => {
+            if (idx < formStepsNum + 1) {
+                progressStep.classList.add("progress-step-active");
+            } else {
+                progressStep.classList.remove("progress-step-active");
+            }
+        });
+
+        const progressActive = document.querySelectorAll(".progress-step-active");
+
+        progress.style.width =
+            ((progressActive.length - 1) / (progressSteps.length - 1)) * 100 + "%";
     }
-
-</style>
-
-
-
-<div class="text-center" id="homeTitle">
-    <h1>Tipos de Denúncia</h1>
-</div>
-
-<br />
-<br />
-
-<div id="container-Principal" class="container overflow-hidden  text-center ">
-    <div class="row gx-5">
-        <div class="col-6 ">
-            <div class="p-3  container-xxl">
-                <h5>Confidencial</h5>
-                <div id="type-complaint" class=" p-3 bg-light ">
-                    <p>
-                        Se selecionar a reportar de forma confidencial, <br />
-                        a sua identificação apenas será conhecida <br />
-                        pela entidade que fará o tratamento da denúncia de forma confidencial, <br />
-                        e a sua identidade aparecerá sempre como anónima e confidencial a <br />
-                        todos os outros intervenientes em caso de requisitos adicionais.
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="col-6">
-            <div  class="p-3  container-xxl">
-                <h5>Anónima</h5>
-                <div style="height:max-content" id="type-complaint" class="p-3 bg-light">
-
-                    <p>
-                        Se selecionar reportar <br />
-                        anonimamente ninguém durante todo <br />
-                        o processo conhecerá a sua identificação. <br /> <br />
-
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
-<br />
-<br />
-<br />
-<br />
-
- *@
-
-
-
+</script> *@

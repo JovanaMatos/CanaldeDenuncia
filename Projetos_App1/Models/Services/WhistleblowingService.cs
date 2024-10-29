@@ -13,6 +13,7 @@ namespace Projetos_App1.Models.Services
             _repository = repository;
         }
 
+        // salvando Whistleblowing
         public Whistleblowing SaveWhistleblowing(ComplaintViewModel complantViewModel, Guid ComplaintID)
         {
 

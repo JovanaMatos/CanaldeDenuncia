@@ -1,6 +1,14 @@
 ﻿@model Projetos_App1.ViewModels.LoginComplaintViewModel
 
 
+<style>
+    label {
+        font-family: Roboto, sans-serif;
+        font-weight: bold;
+        color: rgba(26,51,94,255);
+    }
+</style>
+
 <br />
 
 
@@ -15,8 +23,8 @@
     <div class="form-group">
         <div>
             <label asp-for="@Model.ComplaintId">Código:</label> <br />
-            <input asp-for="@Model.ComplaintId" style="outline:none;border: 0 none; width:94%;" type="text" id="identityId" name="ComplaintId" />
-         
+            <input asp-for="@Model.ComplaintId" style="outline:none;border: 0 none; width:92%;" type="text" id="identityId" name="ComplaintId" />
+
         </div>
         <hr />
         <span asp-validation-for="@Model.ComplaintId" class="text-danger"></span>
@@ -26,8 +34,8 @@
 
         <div class="password-container">
             <label asp-for="@Model.PassWord">Senha:</label><br />
-            <input asp-for="@Model.PassWord" style="outline:none;border: 0 none; width:92%; font: large; " type="password" id="passwordId" name="PassWord" />
-           
+            <input asp-for="@Model.PassWord" style="outline:none;border: 0 none; width:92%; font:large; " type="password" id="passwordId" name="PassWord" />
+
         </div>
         <hr />
         <span asp-validation-for="@Model.PassWord" class="text-danger"></span>
@@ -35,10 +43,27 @@
         <span class="text-danger">@ViewData["LoginError"]</span>
         <br />
         <div class="d-grid gap-2 col-6 mx-auto text-center">
-            <button type="submit" class="btn btn-secondary btn-lg">ACEDER</button>
+            <button style="background-color:rgba(26,51,94,255);" type="submit" class="btn btn-secondary btn-lg">ACEDER</button>
         </div>
     </div>
 </form>
+
+
+
+
+<br />
+<br />
+<br />
+<br />
+<br />
+
+
+
+<section style="margin-bottom:0;" class="text-center">
+    <p>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</p>
+</section>
+
+
 
 
 

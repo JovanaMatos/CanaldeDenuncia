@@ -8,17 +8,13 @@ namespace Projetos_App1.ViewModels
 {
     public class ComplaintViewModel
     {
-
+        //para criar denuncia
 
 
 
         [Display(Name = "Nome")]
         [StringLength(50, ErrorMessage = "O nome não pode exceder 50 caracteres.")]
         public string? Name { get; set; }
-
-        public IList<IFormFile> _files { get; set; } = new List<IFormFile>();
-
-
 
         [EmailAddress(ErrorMessage = "Fomato de email, invalido!")]
         [Display(Name = "Email")]
@@ -37,7 +33,6 @@ namespace Projetos_App1.ViewModels
         [Required(ErrorMessage = "Campo obrigatório")]
         [MinLength(20, ErrorMessage = "Descrição deve ter no minimo {1} caracteres")]
         public string ComplaintDescription { get; set; } = null!;
-
         public int? CompanyRelationId { get; set; }
 
         [Required(ErrorMessage = "Campo obrigatório")]
@@ -50,9 +45,7 @@ namespace Projetos_App1.ViewModels
         public int Complaint_Is_Confidential { get; set; }
 
 
-
-
-
+        public IList<IFormFile> _files { get; set; } = new List<IFormFile>();
         public List<Category> listCategory { get; set; } = new List<Category> ();
 
         public List<Company> listCompany { get; set; } = new List<Company> ();

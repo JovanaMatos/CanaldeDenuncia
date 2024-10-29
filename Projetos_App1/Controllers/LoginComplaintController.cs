@@ -30,10 +30,10 @@ namespace Projetos_App1.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Login()
+        public ActionResult Login() // logar
         {
 
-        
+
             return View();
         }
 
@@ -43,27 +43,25 @@ namespace Projetos_App1.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewData["LoginError"] = "Por favor, corrija os erros.";
-                return View(complaintVm); // Altere para retornar a View em vez de RedirectToAction
+
+                return View(complaintVm);
             }
 
 
-       
-            Guid.TryParse(complaintVm.ComplaintId, out Guid id);
 
-            var IdcomplaintExists = await _complaintRepository.GetComplaintByIdAsync(id);
+            Guid.TryParse(complaintVm.ComplaintId, out Guid id); // convertendo input string para Guid
+
+            var IdcomplaintExists = await _complaintRepository.GetComplaintByIdAsync(id); // busca pelo id, se existir retorna um complant
 
             // verifica se id existe e senha
-            if (IdcomplaintExists == null || !await _complaintRepository.PasswordExists(complaintVm.PassWord))
+            if (IdcomplaintExists == null || !await _complaintRepository.PasswordExists(complaintVm.PassWord)) // verifica senha existe
             {
                 ViewData["LoginError"] = "Credenciais inválidas.";
-                return View(complaintVm);
-                
-                //mandar erro
+                return View(complaintVm); //se não retorna erro
+
             }
 
             // se sim busca complaint de id senha igual
-
             var complantNew = await _complaintRepository.UserExists(id, complaintVm.PassWord);
 
             if (complantNew == null)
@@ -75,65 +73,60 @@ namespace Projetos_App1.Controllers
             {
                 await _complaintService.Login(complaintVm);
 
-                //return RedirectToAction("DetailsComplaint", "LoginComplaint", id);
-                return RedirectToAction("DetailsComplaint", new { complaintId = id });
+                return RedirectToAction("DetailsComplaint", new { complaintId = id });//vai para view para mostrar detalhes da denuncia, passando id
 
             }
 
         }
 
         [Authorize]
-        public async Task<ActionResult> Logoff()
+        public async Task<ActionResult> Logoff()//
         {
-            await _complaintService.Logoff();
+            await _complaintService.Logoff(); //fecha sessão
             return RedirectToAction("Index", "Home");
         }
 
 
         [Authorize]
-        public async Task <ActionResult> DetailsComplaint(Guid complaintId)
+        public async Task<ActionResult> DetailsComplaint(Guid complaintId)
         {
 
             var complaint = await _complaintRepository.GetComplaintByIdAsync(complaintId);
             if (complaint == null)
             {
-               
+
                 return NotFound();
             }
-           
 
-    
-
-            AccessComplaintViewModel accessComplaint = new AccessComplaintViewModel()
-                {
-                    ComplaintSubject = complaint.ComplaintSubject,
-                    ComplaintDescription = complaint.ComplaintDescription,
-                    Company = await _companyRepository.GetCompanyByIdCompaniesCategory(complaint.CompaniesCategoryId),
-                    Category = await _categoryRepository.GetCategoryByIdCompaniesCategory(complaint.CompaniesCategoryId),
-                    ComplaintStatus = "Recebida"//fazer pequisa
+            AccessComplaintViewModel accessComplaint = new AccessComplaintViewModel()//passando para view model
+            {
+                ComplaintSubject = complaint.ComplaintSubject,
+                ComplaintDescription = complaint.ComplaintDescription,
+                Company = await _companyRepository.GetCompanyByIdCompaniesCategory(complaint.CompaniesCategoryId),//função que busca nome da empresa
+                Category = await _categoryRepository.GetCategoryByIdCompaniesCategory(complaint.CompaniesCategoryId),//busca nome da categoria
+                ComplaintStatus = "Recebida"//fazer pequisa quando implementar gestão
 
 
+            };
 
-                };
-                if (complaint.CompanyRelationId != null)
-                {
-                    accessComplaint.CompanyRelation = await _companyRelationRepository.CompanyRelation(complaint.CompanyRelationId.Value);
-                }
+            if (complaint.CompanyRelationId != null)// verifica se é nulo pois é opcional
+            {
+                //se não, busca relação
+                accessComplaint.CompanyRelation = await _companyRelationRepository.CompanyRelation(complaint.CompanyRelationId.Value);
+            }
 
-                if (complaint.AttachedFiles != null)
-                {
+            if (complaint.AttachedFiles != null)// verifica se é nulo pois é opcional
+            {
+                //se não, busca arquivos
+                accessComplaint._filesName.AddRange(await _attachedFileRepository.ListAttachedFile(complaint.ComplaintId));
 
-                    accessComplaint._filesName.AddRange(await _attachedFileRepository.ListAttachedFile(complaint.ComplaintId));
-
-                }
-               
+            }
 
 
-           
-            return View(accessComplaint);
+            return View(accessComplaint);//retorna dados para view
         }
 
-      
+
 
     }
 }

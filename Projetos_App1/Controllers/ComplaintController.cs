@@ -41,14 +41,14 @@ namespace Projetos_App1.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet] //criando denuncia
         public IActionResult CreateComplaint()
         {
-            var listcompanies = _companyRepository.companies.ToList();
+            var listcompanies = _companyRepository.companies.ToList(); // buscando lista de empresa existentes
            
-            var listrelationship = _companyRelationRepository.companyRelations.ToList();
+            var listrelationship = _companyRelationRepository.companyRelations.ToList(); //lista de relações
 
-            var complainVm = new ComplaintViewModel()
+            var complainVm = new ComplaintViewModel() //criando um obj View Model
             {
                 listRelation = listrelationship,
                 listCompany = listcompanies
@@ -60,8 +60,8 @@ namespace Projetos_App1.Controllers
 
         public JsonResult GetCategoryByID(int companyId)// para dropdown 
         {
-            var categories = _categoryRepository.GetCategoryByID(companyId)
-                .Select(c => new
+            var categories = _categoryRepository.GetCategoryByID(companyId) //basiado no no id da empresa escolhida,
+                .Select(c => new                                            // busco as categorias existentes
                 {
                     categoryId = c.CategoryId,
                     categories = c.Categories
@@ -95,8 +95,8 @@ namespace Projetos_App1.Controllers
                 _whistleblowingService.SaveWhistleblowing(complaintVm, complaint.ComplaintId);
 
             }
-            Console.WriteLine("teste files " + complaintVm._files.Count);
-            if (complaintVm._files != null && complaintVm._files.Count > 0)//verifica se existe arquivo para verificar
+      
+            if (complaintVm._files != null && complaintVm._files.Count > 0)//verifica se existe arquivo para salvar
             {
 
                 List<AttachedFile> attachedFiles = _attacheFileService.UploadImg(complaintVm._files);
@@ -105,7 +105,7 @@ namespace Projetos_App1.Controllers
 
 
 
-            return View("Views/Complaint/ShowLogin.cshtml", complaint);
+            return View("Views/Complaint/ShowLogin.cshtml", complaint); //retorna para mostrar os dados de acesso
         }
 
         public IActionResult ShowLogin()
@@ -114,38 +114,36 @@ namespace Projetos_App1.Controllers
             return View();
         }
 
+
         [HttpPost]
         public IActionResult ShowLogin(Complaint complaint, string email)
         {
-            if (ModelState.IsValid)
-            {
-                // Aqui você pode verificar o valor de model.Complaint_Is_Confidential
-                // Se necessário, coloque um ponto de interrupção ou um log para verificar o valor
-                Console.WriteLine("outrooooooooooooo" + complaint.Complaint_Is_Confidential);
-            }
-            //verifica se esta vazio se sim, ja redireciona para view
+
+            //verifica se esta vazio, se sim, ja redireciona para view
             if (string.IsNullOrWhiteSpace(email))
             {
 
                 return RedirectToAction("Index", "Home");
             }
 
-           // se não envia email
+            // se não, envia email.
 
             // corpo do e-mail 
-            var message = $"Seu login é {complaint.ComplaintId} e sua senha é {complaint.PassWord}";
-             
-            //chamando a função que criei no helper
-            _email.SendEmail(email, "Sistema de Denúncias", message);
+            var message = $"Este é o seu código de acesso: {complaint.ComplaintId} e este é a sua senha: {complaint.PassWord}";
+                        
 
-            return RedirectToAction("Index", "Home");
+
+            //chamando a função que criei no helper
+            _email.SendEmail(email, "Informação da Denúncia", message);
+
+            return RedirectToAction("Index", "Home");// e volta apagina inicial
         }
 
-        public ActionResult ShowPDF(Guid id)
+        public ActionResult ShowPDF(Guid id) // formato para pdf
         {
 
             //cria um obj para enviar para view que ira criar o pdf
-            Complaint complaint = new Complaint
+            Complaint complaint = new()
             {
                 ComplaintId = id,
                 PassWord = _complaintRepository.GetComplaintPassWord(id)
@@ -165,7 +163,13 @@ namespace Projetos_App1.Controllers
 
             };
         }
-        
+
+        public IActionResult InfoTypeComplaint() // tipos de denuncias
+        {
+
+            return View();
+        }
+
 
 
 

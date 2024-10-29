@@ -19,13 +19,11 @@ namespace Projetos_App1.Models.Repositories
         public void SaveNewComplaint(Complaint complaint)
         {
 
-
-
             _context.Complaints.Add(complaint); // salvando denuncia em bd
             _context.SaveChanges();
         }
 
-        public async Task<Complaint> GetComplaintByIdAsync(Guid id) // buscar por id de forma assíncrona
+        public async Task<Complaint> GetComplaintByIdAsync(Guid id) // buscar por id e devovelve compalint de forma assíncrona
         {
             return await _context.Complaints.Include(c => c.CompaniesCategory)
                                               .Include(c => c.CompanyRelation)
@@ -34,12 +32,15 @@ namespace Projetos_App1.Models.Repositories
                                               .Include(c => c.ShippingMethods)
                                               .FirstOrDefaultAsync(x => x.ComplaintId == id);
         }
+
+        // busca por id devolve id
         public Guid FindComplaintId(Guid id)
         {
 
             return _context.Complaints.Where(x => x.ComplaintId == id).Select(x => x.ComplaintId).FirstOrDefault();
         }
 
+        // busca senha 
         public string GetComplaintPassWord(Guid id)
         {
 
@@ -49,13 +50,14 @@ namespace Projetos_App1.Models.Repositories
         }
 
 
-
+        // verica se pass existe
         public async Task<bool> PasswordExists(string password)
         {
             var complaint = await _context.Complaints.FirstOrDefaultAsync(x => x.PassWord.Equals(password));
             return complaint != null;
         }
 
+        //user existe devolve complaint
         public async Task<Complaint> UserExists(Guid id, string password)
         {
             var complaint = await _context.Complaints.Include(c => c.CompaniesCategory)

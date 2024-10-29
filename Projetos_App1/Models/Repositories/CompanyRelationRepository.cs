@@ -14,6 +14,7 @@ namespace Projetos_App1.Models.Repositories
 
         public IEnumerable<CompanyRelation> companyRelations => _context.CompanyRelations;
 
+        //busca o nome, baseado no id
        public async Task<string> CompanyRelation(int companyRelationId)
         {
             var relation = await _context.CompanyRelations.Where(r => r.CompanyRelationId == companyRelationId).Select(x => x.CompanyRelationship).FirstOrDefaultAsync();

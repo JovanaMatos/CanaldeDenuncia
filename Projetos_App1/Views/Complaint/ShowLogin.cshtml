@@ -11,7 +11,7 @@
 <div class="text-center">
     <strong>
         <p class="text-danger" style="display:inline;">Importante: </p>
-        <p style="display:inline;" class="text-dark inline">Guarde a password e o código apresentados abaixo. Precisará destes <br /> para acompanhar o estado e situação da sua denúncia.</p>
+        <p style="display:inline;" class="text-dark inline">Guarde a senha e o código apresentados abaixo. Precisará destes <br /> para acompanhar o estado e situação da sua denúncia.</p>
     </strong>
 </div>
 
@@ -25,7 +25,7 @@
         </div>
 
         <hr />
-
+         
         <br />
 
         <div class="password-container">
@@ -38,15 +38,16 @@
     </div>
 
     <hr />
+
     <br />
 
-  
 
     <div class="mb-4">
         <label for="InputEmail" class="form-label">Deseja enviar por email?</label>
         <br />
         <input name="Email" id="emailInput" type="email" style="outline:none; border: none;width:92%;" placeholder="Email (opcional)">
         <hr />
+      
         <span id="error"  class="text-danger"></span>
         
     </div>
@@ -64,24 +65,26 @@
 
 
 
-    <br />
+    <br /> <br />
 
     <div class="form-group form-check">
         <input type="checkbox" class="form-check-input" id="checkboxId">
-        <label class="form-check-label" for="checkboxId">Já Guardei o meu código e password da denúncia.</label>
+        <label class="form-check-label" for="checkboxId">Já Guardei o meu código e senha da denúncia.</label>
     </div>
 
     <br />
+     <br />
 
     <div class="d-grid gap-2">
-        <button id="buttonId" type="submit" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
+        <button style="background-color:rgba(26,51,94,255);" id="buttonId" type="submit" class="btn btn-secondary btn-lg btn-block align-content-center">FINALIZAR</button>
     </div>
+   
 </form>
-<br />
-<br />
+<br /><br />
+
 
 <section class="text-center">
-     <h6>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</h6>        
+     <p>Canal de denúcias em conformidade com a nova lei de proteção de denunciantes Lei n.º 93/2021</p>        
 </section>
 
 <script>
@@ -95,12 +98,14 @@
     const checkbox = document.getElementById("checkboxId");
     const finalButton = document.getElementById("buttonId");
 
-    finalButton.disabled = true;//desativava inicialmente
+    finalButton.disabled = true;//destiva inicialmente
 
     copyTextId.addEventListener('click', function () {
         identityId.select();
         document.execCommand('copy');
         alert('Código copiado: ' + identityId.value);
+      
+                           
     });
 
     copyPass.addEventListener('click', function () {
@@ -109,6 +114,8 @@
         document.execCommand('copy');
         password.type = 'password'; // Oculta a senha novamente
         alert('Senha copiada!');
+      
+
     });
 
     //função para mostrar e ocultar password

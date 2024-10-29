@@ -19,7 +19,7 @@ namespace Projetos_App1.Models.Repositories
         }
 
 
-
+        //retorna id daquela empresa e categoria relacionado
         public int GetCategoryIdByIdCompaniesCategory(int companyId, int categoryId)
         {
 
@@ -29,9 +29,10 @@ namespace Projetos_App1.Models.Repositories
             return companyCategoryId;
         }
 
+        //retorna a campo onde existe aquele id
         public async Task<List<CompaniesCategory>> SearchCompanyCategoryByID(int newCompaniesCategoryID)
         {
-           // aqui buscoa a empresa e categoria baseado id 
+           // aqui busco a empresa e categoria baseado id 
             var companiesCategories = await _context.CompaniesCategories
                 .Where(cc => cc.CompaniesCategoryId == newCompaniesCategoryID)
                 .ToListAsync();

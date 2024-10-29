@@ -13,6 +13,7 @@ namespace Projetos_App1.Models.Repositories
 
         public IEnumerable<Whistleblowing> whistleblowings => _context.Whistleblowings;
 
+        // salva Whistleblowing
         public void SaveWhistleblowing(Whistleblowing whistleblowing)
         {
             _context.Whistleblowings.Add(whistleblowing);

@@ -21,6 +21,7 @@ namespace Projetos_App1.Models.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
+        // para separar view model do complaint
         public Complaint SaveComplaint(ComplaintViewModel complaintViewModel)
         {
             Complaint complaint = new Complaint()
@@ -30,13 +31,12 @@ namespace Projetos_App1.Models.Services
                 CompanyRelationId = complaintViewModel.CompanyRelationId,
                 CompaniesCategoryId = _companiesCategoryRepository.GetCategoryIdByIdCompaniesCategory(complaintViewModel.companyid, complaintViewModel.categoryid),
                 ShippingMethodsId = 1,//metodo de envio 
-               
                 ComplaintStartDate = DateTime.Now,
                 ComplaintStatusId = 1 //id recebida
 
             };
             
-            if (complaintViewModel.Complaint_Is_Confidential == 1)
+            if (complaintViewModel.Complaint_Is_Confidential == 1)// verifica se é confidencial
             {
                 Console.WriteLine(complaintViewModel.Complaint_Is_Confidential);
                 complaint.Complaint_Is_Confidential = true;
@@ -46,12 +46,10 @@ namespace Projetos_App1.Models.Services
                 complaint.Complaint_Is_Confidential = false;
             }
 
-            complaint.ComplaintId = complaint.CreateId();
-            complaint.PassWord = complaint.CreatePassWord();
+            complaint.ComplaintId = complaint.CreateId(); // criando id
+            complaint.PassWord = complaint.CreatePassWord(); // acriando pass
 
-            Console.WriteLine(complaintViewModel.Complaint_Is_Confidential);
-            _complaintRepository.SaveNewComplaint(complaint);
-
+            _complaintRepository.SaveNewComplaint(complaint); // salva bd
 
 
             return complaint;
@@ -82,6 +80,7 @@ namespace Projetos_App1.Models.Services
             
         }
 
+        // finaliza sessão
         public async Task Logoff()
         {
             var ctx = _httpContextAccessor.HttpContext;

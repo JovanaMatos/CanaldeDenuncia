@@ -11,42 +11,42 @@ public class Email : IEmail
         _configuration = configuration;
     }
 
-    public async Task SendEmail(string email, string subject, string message)
+    public async Task SendEmail(string email, string subject, string message)//enviar emal
     {
-        string userName = _configuration.GetValue<string>("EmailSettings:UsernameEmail");
-        string password = _configuration.GetValue<string>("EmailSettings:UsernamePassword");
-        string name = _configuration.GetValue<string>("EmailSettings:Name");
+        string userName = _configuration.GetValue<string>("EmailSettings:UsernameEmail");//email cadastrado
+        string password = _configuration.GetValue<string>("EmailSettings:UsernamePassword");//senha cadastrado
+        string name = _configuration.GetValue<string>("EmailSettings:Name");//nome cadastrado
 
         try
         {
         
 
-            MailMessage mail = new MailMessage()
+            MailMessage mymail = new MailMessage()
             {
-                From = new MailAddress(userName, name) 
+                From = new MailAddress(userName, name) // criando formato de email
             };
 
-            mail.To.Add(new MailAddress(email));
-            mail.CC.Add(new MailAddress(_configuration.GetValue<string>("EmailSettings:CcEmail")));
+            mymail.To.Add(new MailAddress(email));//add email do denunciante
+            mymail.CC.Add(new MailAddress(_configuration.GetValue<string>("EmailSettings:CcEmail"))); //copia para um outro email (opcional)
 
-            mail.Subject = subject;
-            mail.Body = message;
-            mail.IsBodyHtml = true;
-            mail.Priority = MailPriority.High;
+            mymail.Subject = subject;// add assunto
+            mymail.Body = message;// mensagem
+            mymail.IsBodyHtml = true;
+            mymail.Priority = MailPriority.High;// importante
 
-         
+            //protocolo SMTP (Simple Mail Transfer Protocol). para envio de e-mails entre servidores e clientes de e-mail.
             using (SmtpClient smtp = new SmtpClient(
-                _configuration.GetValue<string>("EmailSettings:PrimaryDomain"),
-                _configuration.GetValue<int>("EmailSettings:PrimaryPort")))
+                _configuration.GetValue<string>("EmailSettings:PrimaryDomain"),//dominio
+                _configuration.GetValue<int>("EmailSettings:PrimaryPort")))//porta
             {
-                smtp.Credentials = new NetworkCredential(userName, password);
+                smtp.Credentials = new NetworkCredential(userName, password);//email e senha de quem vai enviar
                 smtp.EnableSsl = true;  //  conexão segura 
-                await smtp.SendMailAsync(mail);
+                await smtp.SendMailAsync(mymail);
             }
         }
         catch (SmtpException ex)
         {
-            // Log da exceção SMTP para facilitar a depuração
+            //futuro implementar erro
             Console.WriteLine($"Erro SMTP: {ex.StatusCode} - {ex.Message}");
             throw;
         }

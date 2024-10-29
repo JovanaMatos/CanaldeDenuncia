@@ -1,5 +1,81 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap" rel="stylesheet" />
+
+
+<style>
+    /* Cards */
+    .row {
+        display: flex;
+        background-color: #40bd6b;
+    }
+
+    .card {
+        flex: 1;
+        margin: 10px;
+        height: 200px;
+        max-width: 100%;
+        opacity: 0.7;
+    }
+
+    h5 {
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        opacity: 0.9;
+    }
+
+    p {
+        font-size: 16px;
+        color: black;
+        font-family: 'Roboto', sans-serif;
+        padding-top: 16px;
+    }
+
+</style>
+
+<div class="text-center" id="homeTitle">
+    <h1>Tipos de Denúncia</h1>
+</div>
+<br />
+<br />
+<br />
+<br />
+
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card-body border-0 ">
+                <h5 class="card-title">CONFIDENCIAL</h5>
+                <div class="card bg-light">
+
+                    <p class="card-text">
+                        Se selecionar a opção de reportar de forma confidencial, <br /> sua identificação apenas será conhecida <br /> pela entidade que fará o tratamento da denúncia de forma confidencial.
+                        <br /> Além disso, sua identidade aparecerá sempre como anônima e confidencial para todos os outros intervenientes, em caso de requisitos adicionais.
+                    </p>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card-body border-0 ">
+                <h5 class="card-title">ANÓNIMA</h5>
+                <div class="card bg-light">
+
+
+                    <p class="card-text">Se você selecionar a opção de reportar <br /> anonimamente, ninguém conhecerá sua identificação <br /> durante todo o processo.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<br />
+<br />
+<br />
+<br />
+
+<div class="d-grid gap-2 col-6 mx-auto">
+    <a id="buttonId" style="background-color:rgba(26,51,94,255);" class="btn btn-secondary" asp-controller="Complaint" asp-action="CreateComplaint" class="btn bnt-home1">CONTINUAR</a>
+</div>

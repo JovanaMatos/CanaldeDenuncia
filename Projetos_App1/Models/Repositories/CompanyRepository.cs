@@ -17,35 +17,19 @@ namespace Projetos_App1.Models.Repositories
 
         public IEnumerable<Company> companies => _context.Companies;
 
+        // funçao retorna o nome da empresa relacionado a companyCategoryId
         public async Task<string> GetCompanyByIdCompaniesCategory(int companyCategoryId)
         {
             var companiesCategories = await _companiesCategoryRepository.SearchCompanyCategoryByID(companyCategoryId);
 
 
-            //var companyName = await _context.Companies
-            //.Join(companiesCategories,
-            //      company => company.CompaniesId,
-            //      compCategory => compCategory.CompaniesId,
-            //      (company, compCategory) => company.Name)
-            //.FirstOrDefaultAsync();
-            //return companyName;
-
-
-            // Obtenha todos os IDs de empresas das categorias
-            var categoryIds = companiesCategories.Select(cc => cc.CompaniesId).ToList();
-
-            // Filtra as empresas usando a lista de IDs
+            // busca a  o nome da empresa onde companyid de companycategory é igual
             var companyName = await _context.Companies
-                .Where(company => categoryIds.Contains(company.CompaniesId))
+                .Where(category => companiesCategories.Select(cc => cc.CompaniesId).Contains(category.CompaniesId))
                 .Select(company => company.Name)
-                .FirstOrDefaultAsync(); // Obtém o primeiro nome da empresa ou valor padrão
+                .FirstOrDefaultAsync(); 
 
             return companyName;
-
-
-
-
-
 
 
         }
@@ -53,19 +37,3 @@ namespace Projetos_App1.Models.Repositories
 }
 
 
-
-//// fazendo joins com Companies e Categories 
-//var queryCompanyCategory = await _context.Companies
-//    .Join(companiesCategories,
-//          company => company.CompaniesId,
-//          compCategory => compCategory.CompaniesId,
-//          (company, compCategory) => new { company, compCategory })
-//    .Join(_context.Categories,
-//          compCategory => compCategory.compCategory.CategoryId,
-//          category => category.CategoryId,
-//          (compCategory, category) => new
-//          {
-//              CompanyName = compCategory.company.Name,
-//              CategoryName = category.Categories,  
-//          })
-//    .ToListAsync();

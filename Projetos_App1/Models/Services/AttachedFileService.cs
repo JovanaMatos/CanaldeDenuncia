@@ -13,8 +13,8 @@ namespace Projetos_App1.Models.Services
             _attachedFileRepository = repository;
         }
 
-       
 
+        // função para criar obj AttachedFile
         public List<AttachedFile> UploadImg(IList<IFormFile> attachedFileVM)
         {
             List<AttachedFile> listFiles = new List<AttachedFile>();
@@ -42,6 +42,7 @@ namespace Projetos_App1.Models.Services
             return listFiles;
         }
 
+        // salvar na bd com id
         public void SaveAttachedFile(List<AttachedFile> attachedFilesList, Guid complaintID)
         {
             foreach (var newAttachedFile in attachedFilesList)

@@ -6,35 +6,35 @@
 }
 
 
-<style>
- 
 
+<style>
+
+    /*input files*/
     .file-upload__input {
         display: none;
     }
 
     .file-upload__button {
-    border: 2px solid #191970; 
-    border-right: none; 
-    border-radius: 8px 8px 8px 8px;
-    padding: 0.5em 0.8em;
-    color: #ffffff;
-    cursor: pointer;
-    margin-right: 0; 
-    background-color: #191970;
-}
+        border: 2px solid #191970;
+        border-right: none;
+        border-radius: 8px 8px 8px 8px;
+        padding: 0.5em 0.8em;
+        color: #ffffff;
+        cursor: pointer;
+        margin-right: 0;
+        background-color: #191970;
+        
+    }
 
-.file-upload__label {
-    display: inline-block;
-    padding: 0.5em 0.8em; 
-    border: 2px solid #e9ecef; 
-    border-left: none; 
-    border-radius: 0 8px 8px 0; 
-    color: #565656;
-    width: 1120px;
-}
-
-
+    .file-upload__label {
+        display: inline-block;
+        padding: 0.5em 0.8em;
+        border: 2px solid #e9ecef;
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        color: #565656;
+        width: 1120px;
+    }
 
 </style>
 
@@ -98,7 +98,7 @@
 
 
             </select>
-           
+
 
         </div>
     </div>
@@ -144,33 +144,20 @@
 
     <br />
 
-    <div id="file-upload" class="input-group mb-3">
-    
-        <input asp-for="_files" class="file-upload__input" type="file" name="myFiles" id="myFiles" multiple style="display: none; " onchange="checkExtension(this)">
+    <div class="input-group mb-3 ">
 
-        <button class="file-upload__button" type="button">Selecionar Arquivos</button>
-
-    
-        <span class="file-upload__label">Nenhum arquivo selecionado</span>
-    </div>
-    <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
-
-
-    <div class="input-group mb-3">
-        <input asp-for="_files" type="file" class="form-control" id="myFiles" multiple title="Selecionar Ficheiros" onchange="checkExtension(this)" lang="pt-BR" />
-        <label class="input-group-text" for="file">Upload</label>
-        <span asp-validation-for="_files" class="text-danger"></span>
+        <input hidden placeholder="Selecionar Ficheiros" asp-for="_files" type="file" class="form-control" id="myFiles" multiple title="Selecionar Ficheiros" onchange="checkExtension(this)" lang="pt-BR" />
+        <label class="input-group-text file-upload__button " for="myFiles">Adicionar Arquivos</label>
+        <span class="file-upload__label" id="quantFile" asp-validation-for="_files" class="text-primary">Nenhum arquivo selecionado</span>
 
     </div>
     <span id="errorFile" asp-validation-for="_files" class="text-danger"></span>
-
-
 
 
     <br /> <br />
 
     <div class="d-grid gap-2 col-6 mx-auto text-center">
-        <button type="submit" value="CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
+        <button style="background-color:rgba(26,51,94,255);" type="submit" value="CreateComplaint" class="btn btn-secondary btn-lg">SUBMETER</button>
     </div>
     <br />
 </form>
@@ -187,11 +174,12 @@
 
 
 
+
 @section Scripts {
     @{
         <script>
 
-         
+
 
 
             //função para formata input
@@ -249,9 +237,9 @@
                 }
             }
 
-            //função para verificar input
+    
 
-           
+
 
             // função selecionar o tipo de denúncias
 
@@ -268,8 +256,10 @@
                 }
             }
 
+
+            //função para checar extenssão
             function checkExtension($input) {
-              
+
                 var allowedExtensions = ['jpg', 'png', 'gif', 'pdf', 'txt', 'doc', 'docx']; //definindo extenção
                 var files = $input.files; // pegando os arquivos
                 var error = false; // flag para verificar se há erros
@@ -297,43 +287,20 @@
                 // Se houver erro, limpa o campo input
                 if (error) {
                     inputFiles.value = "";
+                    $("#quantFile").html('');
 
+                } else {
+                    var quantFiles = files.length;
+
+                    if (quantFiles > 1) {
+                        $("#quantFile").html(
+                            '    ' + quantFiles + ' arquivos adicionados');
+                    } else {
+                        $("#quantFile").html(
+                           '    '+ quantFiles + ' arquivo adicionado');
+                    }
                 }
             };
-
-
-            // Script para controlar o clique e exibir a quantidade de arquivos
-            document.addEventListener("DOMContentLoaded", function () {
-                const button = document.querySelector(".file-upload__button");
-                const hiddenInput = document.getElementById("myFiles");
-                const label = document.querySelector(".file-upload__label");
-                const defaultLabelText = "Nenhum arquivo selecionado";
-
-                // Define o texto padrão do rótulo
-                label.textContent = defaultLabelText;
-                label.title = defaultLabelText;
-
-                // Clique no botão de seleção dispara o clique no input
-                button.addEventListener("click", function () {
-                    hiddenInput.click(); // Simula o clique no input de arquivos
-                });
-
-                // Evento de mudança no input para atualizar o rótulo
-                hiddenInput.addEventListener("change", function () {
-                    const fileCount = hiddenInput.files.length;
-                    if (fileCount > 0) {
-                        label.textContent = `${fileCount} ${fileCount > 1 ? "arquivos" : "arquivo"} selecionados`;
-                        label.title = label.textContent;
-                    } else {
-                        label.textContent = defaultLabelText;
-                        label.title = defaultLabelText;
-                    }
-                });
-            });
-
-
-
-
 
 
 
@@ -347,18 +314,8 @@
 
 @*
 falar sobre o produto
-aprensar
+se apresentar
 pode interroper quando falar
-
-
-
-
-- mostrar ficheiros (arrumar interFACE) - falta barra de progresso 
-- criar denuncia - falta input files
-- fazer uma página para denúncia especificada
-- tirar ferramenta de tradução, apenas se der tempo
-
-
 
 
  *@
@@ -378,7 +335,7 @@ pode interroper quando falar
 
 
 
-@* 
+@*
             // Script para controlar o clique e exibir a quantidade de arquivos
             document.addEventListener("DOMContentLoaded", function () {
                 const button = document.querySelector(".file-upload__button");
