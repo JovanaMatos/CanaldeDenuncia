@@ -7,7 +7,6 @@ using Projetos_App1.Models.Repositories.Interfaces;
 using Projetos_App1.Models.Services.Interfaces;
 using Projetos_App1.ViewModels;
 using Rotativa.AspNetCore;
-using System.Diagnostics.Contracts;
 
 
 namespace Projetos_App1.Controllers
@@ -81,7 +80,7 @@ namespace Projetos_App1.Controllers
             if (!ModelState.IsValid)
             {
 
-                return View(complaintVm);
+                return RedirectToAction("InfoTypeComplaint");
             }
 
            
