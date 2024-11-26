@@ -1,0 +1,2 @@
+Este é um aplicativo desenvolvido em C# utilizando o framework ASP.NET MVC, com integração de JavaScript, projetado para ser uma plataforma de denúncias anônimas e confidenciais voltada para o ambiente corporativo. 
+A ferramenta permite que colaboradores façam denúncias relacionadas à empresa de forma segura e discreta, garantindo o anonimato do denunciante e a confidencialidade das informações submetidas.
